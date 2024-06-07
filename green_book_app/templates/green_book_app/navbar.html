@@ -1,0 +1,63 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Forum</a>
+      </li>
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          DIY Projects
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Marketplace</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Messenger</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Eco-Challenges</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Explore</a>
+      </li>
+    </ul>
+{#    <form class="form-inline my-2 my-lg-0">#}
+{#      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+{#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+{#    </form>#}
+    <ul class="navbar-nav ml-3 mr-3">
+        {% if user.is_authenticated %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+            </li>
+        {% else %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'login' %}">Log in</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'register_user' %}">Sign Up</a>
+            </li>
+        {% endif %}
+
+    </ul>
+  </div>
+</nav>

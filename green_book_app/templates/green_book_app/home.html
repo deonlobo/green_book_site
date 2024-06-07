@@ -1,0 +1,21 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+        {% if user.is_authenticated %}
+            <h1>Hello {{ user_profile.user.last_name }} {{ user_profile.user.first_name }}!</h1>
+            <p>Your account was created on: {{ user_profile.created_at }}</p>
+            <h1>Welcome to Green Book!</h1>
+            <p>As of {{ date }} {{ time }}</p>
+        {% else %}
+            <h1>Hello There!!</h1>
+            <h1>Welcome to Green Book!</h1>
+            <h2>Login to unlock all the features of Green Book</h2>
+            <p>As of {{ date }} {{ time }}</p>
+        {% endif %}
+
+        <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" class="img-fluid w-25 h-auto">
+    </div>
+
+{% endblock %}
