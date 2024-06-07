@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
         {% if user.is_authenticated %}
-            <h1>Hello {{ user_profile.user.last_name }} {{ user_profile.user.first_name }}!</h1>
+            <h1>Hello {{ user_profile.user.first_name }} {{ user_profile.user.last_name }}!</h1>
             <p>Your account was created on: {{ user_profile.created_at }}</p>
             <h1>Welcome to Green Book!</h1>
             <p>As of {{ date }} {{ time }}</p>
