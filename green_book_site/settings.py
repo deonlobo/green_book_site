@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'green_book_app.apps.GreenBookAppConfig',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'green_book_messenger',
+    'marketplace'
 ]
 
 MIDDLEWARE = [
