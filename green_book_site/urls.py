@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('green_book_app.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
+    path('marketplace/',include('marketplace.urls')),
 ]
