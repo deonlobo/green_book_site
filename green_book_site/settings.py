@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+    'green_book_messenger',
+    'marketplace',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'green_book_app.apps.GreenBookAppConfig',
     'accounts.apps.AccountsConfig',
-    'green_book_messenger',
-    'marketplace'
+    
 ]
 
 MIDDLEWARE = [
@@ -73,6 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'green_book_site.wsgi.application'
+ASGI_APPLICATION = 'green_book_site.asgi.application'
 
 
 # Database
@@ -126,3 +130,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
