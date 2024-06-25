@@ -36,3 +36,8 @@ def save(request):
     for category in categories:
         response.write(category)
     return response
+
+def category(request, category_id ):
+    category = Category.objects.get(category_id=category_id)
+    categories = Category.objects.all()
+    return render(request, 'category.html', {'category': category,'categories':categories})
