@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'green_book_messenger',
     'marketplace',
     'forum.apps.ForumConfig'
+    'challenges'
 ]
 
 MIDDLEWARE = [
