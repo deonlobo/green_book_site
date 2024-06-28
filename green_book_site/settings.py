@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'green_book_app.apps.GreenBookAppConfig',
     'accounts.apps.AccountsConfig',
     'green_book_messenger',
-    'marketplace'
+    'marketplace',
+    'forum.apps.ForumConfig'
 ]
 
 MIDDLEWARE = [
