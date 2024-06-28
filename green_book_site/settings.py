@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'green_book_messenger',
     'marketplace',
-    'forum.apps.ForumConfig'
+    'forum.apps.ForumConfig',
     'challenges'
 ]
 
