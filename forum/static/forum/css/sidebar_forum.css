@@ -1,0 +1,39 @@
+.container-sidebar {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.sidebar {
+    background-color: #f0f0f0;
+    width: 200px;
+    height: 100vh; /* Full height of viewport */
+    padding-top: 20px;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.sidebar ul li:hover {
+    background-color: #ddd;
+}
+
+.content-sidebar {
+    flex: 1; /* Take remaining space */
+    padding: 20px;
+}
