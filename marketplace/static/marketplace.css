@@ -1,21 +1,15 @@
 /* styles.css */
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
 
-.header {
-    background-color: #232f3e;
+.category .header {
+    background-color: #9e733f;
     color: white;
-    padding: 20px 0;
+    padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header h1 {
+.category .header h1 {
     margin: 0;
     font-size: 2.5em;
 }
@@ -35,8 +29,9 @@ body {
     margin: 15px;
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 210px;
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
 }
 
 .product:hover {
@@ -50,28 +45,59 @@ body {
 }
 
 .product-info {
-    padding: 15px;
+    padding: 10px 12px;
     display: flex;
     flex-direction: column;
 }
 
-.product h5 {
-    font-size: 1.3em;
-    color: #cc8400;
-    margin: 10px 0;
+.product .title-price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product .title-price .title {
+    color: rgba(158, 115, 63, 0.71);
+    font-size: 0.8em;
+    font-weight: bold;
 }
 
 .product .description {
     color: #555;
-    font-size: 0.9em;
-    margin: 10px 0;
+    font-size: 0.75em;
+    margin: 5px 0 20px 0;
+    text-align: justify;
 }
 
 .product .price {
-    font-size: 1.2em;
+    font-size: 0.8em;
     font-weight: bold;
-    margin: 10px 0;
-    color: #b12704;
+    color: #9e733f;
+}
+
+.quality-bar {
+    background-color: #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    height: 10px;
+    width: 100%;
+    position: relative;
+}
+
+.quality-fill {
+    background-color: #9e733f;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.quality-labels {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7em;
+    color: #555;
+    padding: 0 2px;
 }
 
 .product .rating {
@@ -109,4 +135,41 @@ body {
 
 .product button:hover {
     background-color: #cc8400;
+}
+
+/* Badge styles specific to product */
+.product .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff9900;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: block;
+}
+
+.product .badge-new {
+    background-color: #28a745;
+}
+
+.product .badge-discount {
+    background-color: #dc3545;
+}
+
+.product .badge-bestseller {
+    background-color: #ffc107;
+}
+
+.product .icons{
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 1px
+}
+
+.product .fas{
+    color: #cc8400;
+    margin: 0 2px
 }
