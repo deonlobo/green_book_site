@@ -1,9 +1,117 @@
 {% extends 'green_book_app/base.html' %}
-
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'marketplace.css' %}" >
+{% endblock %}
 {% block content %}
-    <div class="container-fluid">
-        <div class="col-md-12 mx-auto shadow p-5 mt-5 bg-body rounded">
-            {{ category}}
+    <div class="container-fluid category">
+        <div class="col-md-12 mx-auto shadow p-0 bg-body rounded">
+           <div class="product-list">
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 2">
+                    <div class="product-info">
+                        <h3>Product 2</h3>
+{#                        <p class="description">This is another great product.</p>#}
+                        <p class="price">$20.00</p>
+{#                        <div class="rating">#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star-half-alt"></i>#}
+{#                            <i class="far fa-star"></i>#}
+{#                            <span>(50 reviews)</span>#}
+{#                        </div>#}
+{#                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>#}
+                    </div>
+               </div>
+
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 1">
+                    <div class="badge badge-new">New</div>
+                    <div class="product-info">
+                        <h5>Product 1</h5>
+                        <p class="description">This is a great product that offers high quality material at an affordable price. Durable and long-lasting.</p>
+                        <p class="price">$10.00 <span class="old-price">$15.00</span></p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(100 reviews)</span>
+                        </div>
+                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 2">
+                    <div class="product-info">
+                        <h3>Product 2</h3>
+                        <p class="description">This is another great product.</p>
+                        <p class="price">$20.00</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span>(50 reviews)</span>
+                        </div>
+                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+               </div>
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 2">
+                    <div class="product-info">
+                        <h3>Product 2</h3>
+                        <p class="description">This is another great product.</p>
+                        <p class="price">$20.00</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span>(50 reviews)</span>
+                        </div>
+                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+               </div>
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 2">
+                    <div class="product-info">
+                        <h3>Product 2</h3>
+                        <p class="description">This is another great product.</p>
+                        <p class="price">$20.00</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span>(50 reviews)</span>
+                        </div>
+                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+               </div>
+               <div class="product">
+                    <img src="https://via.placeholder.com/200" alt="Product 2">
+                    <div class="product-info">
+                        <h3>Product 2</h3>
+                        <p class="description">This is another great product.</p>
+                        <p class="price">$20.00</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                            <span>(50 reviews)</span>
+                        </div>
+                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+               </div>
+           </div>
         </div>
     </div>
 {% endblock %}
