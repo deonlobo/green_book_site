@@ -1,0 +1,95 @@
+.question-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.question-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    padding: 2em 4em;
+    margin: 4em 0em 8em 0em;
+    transition: box-shadow 0.3s ease;
+}
+
+#id_title {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#tag-search {
+    flex: 1;
+    border: none;
+    outline: none;
+    min-width: 150px; /* Ensure a minimum width for the input field */
+}
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+    top: 100%;
+}
+
+#search-results.with-border {
+    border: 1px solid #ccc;
+}
+
+.search-result-item {
+    background: #f0f0f0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-result-item:hover {
+    background: #7c7171;
+    color: #fff;
+}
+
+#tag-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to keep it within the container */
+    gap: 5px; /* Add spacing between tags */
+    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.tag-item {
+    background: #f0f0f0;
+    border-radius: 4px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.remove-tag {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin-left: 5px;
+}
