@@ -41,3 +41,8 @@ def category(request, category_id ):
     category = Category.objects.get(category_id=category_id)
     categories = Category.objects.all()
     return render(request, 'category.html', {'category': category,'categories':categories})
+
+def view_products(request, category_id, product_id):
+    product = Product.objects.get(id=product_id)
+    category = Category.objects.get(category_id=category_id)
+    return render(request, 'view_products.html', {'product':product},{'category':category})
