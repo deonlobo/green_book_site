@@ -119,7 +119,58 @@
 {% endblock %}
 
 {% block messenger_js %}
+<script>
+  const conversations_list_div = document.getElementsByClassName("messenger__list")
+  const conversation_list_elements = conversations_list_div[0].children;
+  for (let element = 0; element < conversation_list_elements.length; element++) {
+    conversation_list_elements[element].addEventListener("click", function (clickEvent) {
+      console.log(clickEvent);
+      const conversation_uuid = clickEvent.currentTarget.dataset["conversation_uuid"]
+      window.location.pathname = '/messenger/' + conversation_uuid + '/';
+    })
+  }
 
+  function getUrlPath() {
+    return window.location.pathname;
+  }
+
+  const conversation_name = "{{ selected_conversation_uuid }}"
+  if (conversation_name != "None") {
+    const chatSocket = new WebSocket(
+      'ws://'
+      + window.location.host
+      + '/ws/messenger/'
+      + conversation_name
+      + '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      document.querySelector('#chat-log').value += (data.message + '\n');
+    };
+
+    chatSocket.onclose = function (e) {
+      console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#messenger__chat__input').focus();
+    document.querySelector('#messenger__chat__input').onkeyup = function (e) {
+      if (e.keyCode === 13) {  // enter, return
+        document.querySelector('#messenger__chat__submit').click();
+      }
+    };
+
+    document.querySelector('#messenger__chat__submit').onclick = function (e) {
+      const messageInputDom = document.querySelector('#messenger__chat__input');
+      const message = messageInputDom.value;
+      chatSocket.send(JSON.stringify({
+        'message': message
+      }));
+      messageInputDom.value = '';
+    };
+  }
+
+</script>
 {% endblock %}
 {% block messenger_html %}
 <div class="messenger row m-0">
@@ -156,7 +207,8 @@
     </div>
     <div class="messenger__input d-flex flex-row align-items-center mt-2">
       <div class="messenger__input__text flex-grow-1 pr-4">
-        <input id="messenger__chat__input" type="text" class="form-control rounded-pill" id="message_input" placeholder="">
+        <input id="messenger__chat__input" type="text" class="form-control rounded-pill" id="message_input"
+          placeholder="">
       </div>
       <div class="messenger__input__button">
         <button id="messenger__chat__submit" type="button" class="btn">
