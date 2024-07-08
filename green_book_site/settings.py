@@ -29,6 +29,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+    'green_book_messenger',
+    'marketplace',
+    'forum.apps.ForumConfig',
+    'django_ckeditor_5',
+    'challenges',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,11 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'green_book_app.apps.GreenBookAppConfig',
     'accounts.apps.AccountsConfig',
-    'green_book_messenger',
-    'marketplace',
-    'forum.apps.ForumConfig',
-    'django_ckeditor_5',
-    'challenges'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'green_book_site.wsgi.application'
+ASGI_APPLICATION = 'green_book_site.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -125,6 +128,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 # django_ckeditor_5 CONFIGURATION this is for Interactive editor
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
