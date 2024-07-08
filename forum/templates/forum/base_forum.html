@@ -1,0 +1,23 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'forum/css/sidebar_forum.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-sidebar">
+        <div class="sidebar">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Users</a></li>
+            </ul>
+        </div>
+        <div class="content-sidebar">
+            {% block forum_base %}
+                <!-- Specific content for forum_base block -->
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
