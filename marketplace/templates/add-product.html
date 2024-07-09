@@ -4,7 +4,11 @@
 {% block content %}
     <div class="container-fluid">
         <div class="col-md-12 mx-auto shadow p-5 mt-5 bg-body rounded">
-            {{ product.name }}
+            <form action="{% url 'addproduct' %}" method="post">
+                {% csrf_token %}
+              {{ form}}
+                <button type="submit">Add Product</button>
+            </form>
         </div>
     </div>
 {% endblock %}

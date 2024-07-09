@@ -1,10 +1,10 @@
-from django import forms
+from django.forms import *
 from .models import Product
 from django.utils.html import mark_safe
 from django.contrib import admin
 
-class ProductForm(forms.ModelForm):
-    image_upload = forms.ImageField(required=False, label='Upload Image')
+class ProductForm(ModelForm):
+    image_upload = ImageField(required=False, label='Upload Image')
 
     class Meta:
         model = Product
@@ -17,3 +17,20 @@ class ProductForm(forms.ModelForm):
         if commit:
             product.save()
         return product
+
+class AddProductForm(ModelForm):
+    image_upload = ImageField(
+        widget=ClearableFileInput(attrs={'class': 'form-control'}),
+        required=False,
+        label='Upload Image'
+    )
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'stock','category','image_upload']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control'}),
+            'description': Textarea(attrs={'class': 'form-control'}),
+            'price': NumberInput(attrs={'class': 'form-control'}),
+            'stock': NumberInput(attrs={'class': 'form-control'}),
+            'category': Select(attrs={'class': 'form-control'}),
+        }

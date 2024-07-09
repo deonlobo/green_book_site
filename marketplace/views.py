@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
-
+from .forms import *
 
 # Create your views here.
 
@@ -45,4 +45,17 @@ def category(request, category_id ):
 def view_products(request, category_id, product_id):
     product = Product.objects.get(id=product_id)
     category = Category.objects.get(category_id=category_id)
-    return render(request, 'view_products.html', {'product':product},{'category':category})
+    return render(request, 'view-product.html', {'product':product,'category':category})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = AddProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+            return redirect('view_products', category_id=product.category_id,product_id=product.id)
+    else:
+         form = AddProductForm()
+
+    return render(request, 'add-product.html', {'form':form})
+
