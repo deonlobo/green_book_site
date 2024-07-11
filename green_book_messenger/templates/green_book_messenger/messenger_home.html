@@ -1,0 +1,233 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Greenbook Messenger</title>
+</head>
+
+<body>
+  What chat room would you like to enter?<br>
+  <input id="room-name-input" type="text" size="100"><br>
+  <input id="room-name-submit" type="button" value="Enter">
+
+  <script>
+    document.querySelector('#room-name-input').focus();
+    document.querySelector('#room-name-input').onkeyup = function (e) {
+      if (e.keyCode === 13) {  // enter, return
+        document.querySelector('#room-name-submit').click();
+      }
+    };
+
+    document.querySelector('#room-name-submit').onclick = function (e) {
+      var roomName = document.querySelector('#room-name-input').value;
+      window.location.pathname = '/chat/' + roomName + '/';
+    };
+  </script>
+</body>
+
+</html> -->
+<!-- https://colorhunt.co/palette/45526Cf4ce14127C56F8F5F1 -->
+{% block messenger_css %}
+<style>
+  .messenger {
+    --color_bg: #F8F5F1;
+    background-color: var(--color_bg);
+    color: #45526C;
+    max-height: calc(100vh - 4rem);
+
+    .messenger__list {
+      .messenger__list__element {
+        &:hover {
+          background: #41B06E;
+          color: #F8F5F1;
+          cursor: pointer;
+        }
+      }
+
+      .messenger__list__element--selected {
+        background: #41B06E;
+        color: #F8F5F1;
+      }
+    }
+
+    .messenger__conversation {
+      .messenger__conversation__container {
+        overflow-y: scroll;
+        max-height: 32rem;
+
+        .messenger_conversation__bubble {
+          --r: 1em;
+          /* the radius */
+          --t: 0.5em;
+          /* the size of the tail */
+
+          max-width: 300px;
+          padding: 0.5em;
+          border-inline: var(--t) solid #0000;
+          border-radius: calc(var(--r) + var(--t))/var(--r);
+          mask:
+            radial-gradient(100% 100% at var(--_p) 0, #0000 99%, #000 102%) var(--_p) 100%/var(--t) var(--t) no-repeat,
+            linear-gradient(#000 0 0) padding-box;
+          /* background: linear-gradient(135deg, #FE6D00, #1384C5) border-box; */
+          color: #F8F5F1;
+        }
+
+        .bubble__left {
+          --_p: 0;
+          border-bottom-left-radius: 0 0;
+          place-self: start;
+          background-color: #141E46;
+        }
+
+        .bubble__right {
+          --_p: 100%;
+          border-bottom-right-radius: 0 0;
+          place-self: end;
+          background-color: #41B06E;
+        }
+
+        .messenger_conversation__timestamp {
+          /* background-color: #141E46; */
+          color: #141e467c;
+        }
+      }
+    }
+
+    .messenger__input {
+      .messenger__input__text {
+        input {
+          background-color: #F8F5F1;
+          color: #45526C;
+        }
+      }
+
+      .messenger__input__button {
+        button {
+          background-color: #41B06E;
+          color: #45526C;
+        }
+      }
+
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block messenger_js %}
+<script>
+  const conversations_list_div = document.getElementsByClassName("messenger__list")
+  const conversation_list_elements = conversations_list_div[0].children;
+  for (let element = 0; element < conversation_list_elements.length; element++) {
+    conversation_list_elements[element].addEventListener("click", function (clickEvent) {
+      console.log(clickEvent);
+      const conversation_uuid = clickEvent.currentTarget.dataset["conversation_uuid"]
+      window.location.pathname = '/messenger/' + conversation_uuid + '/';
+    })
+  }
+
+  function getUrlPath() {
+    return window.location.pathname;
+  }
+
+  const conversation_name = "{{ selected_conversation_uuid }}"
+  if (conversation_name != "None") {
+    const chatSocket = new WebSocket(
+      'ws://'
+      + window.location.host
+      + '/ws/messenger/'
+      + conversation_name
+      + '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      document.querySelector('#chat-log').value += (data.message + '\n');
+    };
+
+    chatSocket.onclose = function (e) {
+      console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#messenger__chat__input').focus();
+    document.querySelector('#messenger__chat__input').onkeyup = function (e) {
+      if (e.keyCode === 13) {  // enter, return
+        document.querySelector('#messenger__chat__submit').click();
+      }
+    };
+
+    document.querySelector('#messenger__chat__submit').onclick = function (e) {
+      const messageInputDom = document.querySelector('#messenger__chat__input');
+      const message = messageInputDom.value;
+      chatSocket.send(JSON.stringify({
+        'message': message
+      }));
+      messageInputDom.value = '';
+    };
+  }
+
+</script>
+{% endblock %}
+{% block messenger_html %}
+<div class="messenger row m-0">
+  <div class="messenger__list col-3 border p-2">
+    {% for conversation in conversations_list %}
+    <div data-conversation_uuid={{ conversation.conversation_uuid }}
+      class="messenger__list__element d-flex p-2 mb-2 {% if selected_conversation_uuid == conversation.conversation_uuid|safe %}messenger__list__element--selected{% endif %}">
+      <span class="border border-primary rounded-circle overflow-hidden">
+        <img width="50" height="50" src="https://api.dicebear.com/9.x/pixel-art-neutral/svg" alt="">
+      </span>
+      <span class="d-flex align-items-center ml-2">{{ conversation.conversation_name }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="messenger__conversation col-9 border d-flex flex-column p-4">
+    <div class="messenger__conversation__container flex-grow-1 pb-4">
+      {% for message in messages %}
+      {% if message.sender.id == user_id %}
+      <div class="d-flex flex-row-reverse mb-2">
+        <span class="messenger_conversation__bubble bubble__right">{{ message.content }}</span>
+        <span class="messenger_conversation__timestamp badge rounded-pill align-self-end">{{ message.timestamp }}</span>
+      </div>
+      {% else %}
+      <div class="d-flex mb-2">
+        <span class="border border-primary rounded-circle overflow-hidden align-self-end">
+          <img width="30" height="30" src="https://api.dicebear.com/9.x/pixel-art-neutral/svg" alt="">
+        </span>
+        <span class="messenger_conversation__bubble bubble__left br-0">{{ message.content }}</span>
+        <span class="messenger_conversation__timestamp badge rounded-pill align-self-end">{{ message.timestamp }}</span>
+      </div>
+      {% endif %}
+      {%endfor %}
+
+    </div>
+    <div class="messenger__input d-flex flex-row align-items-center mt-2">
+      <div class="messenger__input__text flex-grow-1 pr-4">
+        <input id="messenger__chat__input" type="text" class="form-control rounded-pill" id="message_input"
+          placeholder="">
+      </div>
+      <div class="messenger__input__button">
+        <button id="messenger__chat__submit" type="button" class="btn">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25"
+            height="25" viewBox="0 0 256 256" xml:space="preserve">
+
+            <defs>
+            </defs>
+            <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+              transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+              <path
+                d="M 89.999 3.075 C 90 3.02 90 2.967 89.999 2.912 c -0.004 -0.134 -0.017 -0.266 -0.038 -0.398 c -0.007 -0.041 -0.009 -0.081 -0.018 -0.122 c -0.034 -0.165 -0.082 -0.327 -0.144 -0.484 c -0.018 -0.046 -0.041 -0.089 -0.061 -0.134 c -0.053 -0.119 -0.113 -0.234 -0.182 -0.346 C 89.528 1.382 89.5 1.336 89.469 1.29 c -0.102 -0.147 -0.212 -0.288 -0.341 -0.417 c -0.13 -0.13 -0.273 -0.241 -0.421 -0.344 c -0.042 -0.029 -0.085 -0.056 -0.129 -0.082 c -0.118 -0.073 -0.239 -0.136 -0.364 -0.191 c -0.039 -0.017 -0.076 -0.037 -0.116 -0.053 c -0.161 -0.063 -0.327 -0.113 -0.497 -0.147 c -0.031 -0.006 -0.063 -0.008 -0.094 -0.014 c -0.142 -0.024 -0.285 -0.038 -0.429 -0.041 C 87.03 0 86.983 0 86.936 0.001 c -0.141 0.003 -0.282 0.017 -0.423 0.041 c -0.035 0.006 -0.069 0.008 -0.104 0.015 c -0.154 0.031 -0.306 0.073 -0.456 0.129 L 1.946 31.709 c -1.124 0.422 -1.888 1.473 -1.943 2.673 c -0.054 1.199 0.612 2.316 1.693 2.838 l 34.455 16.628 l 16.627 34.455 C 53.281 89.344 54.334 90 55.481 90 c 0.046 0 0.091 -0.001 0.137 -0.003 c 1.199 -0.055 2.251 -0.819 2.673 -1.943 L 89.815 4.048 c 0.056 -0.149 0.097 -0.3 0.128 -0.453 c 0.008 -0.041 0.011 -0.081 0.017 -0.122 C 89.982 3.341 89.995 3.208 89.999 3.075 z M 75.086 10.672 L 37.785 47.973 L 10.619 34.864 L 75.086 10.672 z M 55.136 79.381 L 42.027 52.216 l 37.302 -37.302 L 55.136 79.381 z"
+                style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #F8F5F1; fill-rule: nonzero; opacity: 1;"
+                transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
