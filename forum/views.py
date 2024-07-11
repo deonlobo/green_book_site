@@ -6,9 +6,10 @@ from django.utils.timezone import localtime
 from accounts.models import UserProfile
 from .forms import QuestionForm, QuestionCommentForm
 from django.http import JsonResponse
-from .models import Tag, Question
+from .models import Tag, Question, Vote
 from django.contrib import messages
 import pytz
+from django.contrib.auth.decorators import login_required
 
 def home_forum(request):
     questions = Question.objects.all()
@@ -95,3 +96,50 @@ def display_question(request, id, question_id):
                    'user_time_zone': user_time_zone,
                    'question_comments': question_comments,
                    'comment_form': comment_form})
+
+
+@login_required
+def upvote_question(request, id):
+    question = get_object_or_404(Question, id=id)
+    user = request.user
+
+    # Check if the user has already voted on this question
+    existing_vote = Vote.objects.filter(question=question, user=user).first()
+
+    if existing_vote:
+        if existing_vote.vote_type == Vote.UPVOTE:
+            # If the existing vote is an upvote, do nothing
+            existing_vote.delete()
+            return JsonResponse({'status': 'already_upvoted', 'value': existing_vote.question.total_votes()})
+        else:
+            # If the existing vote is a downvote, change it to upvote
+            existing_vote.vote_type = Vote.UPVOTE
+            existing_vote.save()
+            return JsonResponse({'status': 'vote_changed', 'value': existing_vote.question.total_votes()})
+    else:
+        # If no existing vote, create a new upvote
+        new_vote = Vote.objects.create(question=question, user=user, vote_type=Vote.UPVOTE)
+        return JsonResponse({'status': 'upvoted','value': new_vote.question.total_votes()})
+
+@login_required
+def downvote_question(request, id):
+    question = get_object_or_404(Question, id=id)
+    user = request.user
+
+    # Check if the user has already voted on this question
+    existing_vote = Vote.objects.filter(question=question, user=user).first()
+
+    if existing_vote:
+        if existing_vote.vote_type == Vote.DOWNVOTE:
+            # If the existing vote is a downvote, delete
+            existing_vote.delete()
+            return JsonResponse({'status': 'already_downvoted', 'value': existing_vote.question.total_votes()})
+        else:
+            # If the existing vote is an upvote, change it to downvote
+            existing_vote.vote_type = Vote.DOWNVOTE
+            existing_vote.save()
+            return JsonResponse({'status': 'vote_changed', 'value': existing_vote.question.total_votes()})
+    else:
+        # If no existing vote, create a new downvote
+        new_vote = Vote.objects.create(question=question, user=user, vote_type=Vote.DOWNVOTE)
+        return JsonResponse({'status': 'downvoted','value': new_vote.question.total_votes()})

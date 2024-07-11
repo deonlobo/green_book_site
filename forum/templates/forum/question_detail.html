@@ -24,6 +24,9 @@
                         <path d="M12 5l7 7H5l7-7z"/>
                     </svg>
                 </button>
+                <div class="question-vote-count">
+                    {{ question.total_votes }}
+                </div>
                 <button class="vote-button downvote">
                     <!-- Downvote SVG icon -->
                     <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -85,6 +88,48 @@
             } else {
                 commentFormContainer.style.display = 'none';
                 addCommentLink.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.vote-button.upvote').addEventListener('click', function() {
+                handleVote('upvote');
+            });
+
+            document.querySelector('.vote-button.downvote').addEventListener('click', function() {
+                handleVote('downvote');
+            });
+
+            function handleVote(voteType) {
+                const questionId = '{{ question.id }}';  // Get question ID from Django template
+                const url = voteType === 'upvote'
+                    ? `{% url 'forum:upvote_question' question.id %}`
+                    : `{% url 'forum:downvote_question' question.id %}`;
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ vote_type: voteType })
+                })
+                .then(response => response.json())
+                .then(data => {
+                        updateVoteDisplay(data.value);  // Pass the new vote count to update the display
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            function updateVoteDisplay(newVoteCount) {
+                const voteCountElement = document.querySelector('.question-vote-count');
+                if (voteCountElement) {
+                    voteCountElement.innerHTML = newVoteCount;  // Update the vote count
+                } else {
+                    console.error('Vote count element not found.');
+                }
             }
         });
     </script>

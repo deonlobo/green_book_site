@@ -18,8 +18,33 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag, related_name='questions')
     created_ts = models.DateTimeField(auto_now_add=True)
     asked_by = models.ForeignKey(User, related_name='questions_asked', on_delete=models.CASCADE)
+
     def __str__(self):
         return self.title
+
+    def total_votes(self):
+        return self.votes.filter(vote_type='upvote').count() - self.votes.filter(vote_type='downvote').count()
+
+
+class Vote(models.Model):
+    UPVOTE = 'upvote'
+    DOWNVOTE = 'downvote'
+    VOTE_TYPES = [
+        (UPVOTE, 'Upvote'),
+        (DOWNVOTE, 'Downvote'),
+    ]
+
+    question = models.ForeignKey(Question, related_name='votes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='votes', on_delete=models.CASCADE)
+    vote_type = models.CharField(max_length=8, choices=VOTE_TYPES)
+    created_ts = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('question', 'user')
+
+    def __str__(self):
+        return f'{self.vote_type.capitalize()} by {self.user.username} on {self.question.title}'
+
 
 class QuestionComment(models.Model):
     question = models.ForeignKey(Question, related_name='comments', on_delete=models.CASCADE)
@@ -32,3 +57,5 @@ class QuestionComment(models.Model):
 
     def __str__(self):
         return f"Comment {self.id} on {self.question.title}"
+
+

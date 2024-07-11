@@ -26,8 +26,8 @@
     display: flex; /* Use flexbox to center SVGs */
     align-items: center; /* Center SVGs vertically */
     justify-content: center; /* Center SVGs horizontally */
-    background-color: #007bff; /* Button background color */
-    border: none; /* Remove default border */
+    background-color: #ffffff; /* Button background color */
+    border: 1px solid #cabebe;; /* Remove default border */
     cursor: pointer; /* Pointer cursor on hover */
     padding: 0; /* Remove padding */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
@@ -35,7 +35,7 @@
 
 /* Hover effect for vote buttons */
 .vote-button:hover {
-    background-color: #0056b3; /* Darker color on hover */
+    background-color: #c5a872; /* Darker color on hover */
 }
 
 /* Style for SVG icons */
@@ -46,7 +46,7 @@
 
 /* Ensure the SVG paths are filled with white */
 .vote-button svg path {
-    fill: #fff; /* Color of the SVG icon */
+    fill: #2e2929; /* Color of the SVG icon */
 }
 
 /* Optional: Add some extra styling for active/selected state */
