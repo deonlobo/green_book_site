@@ -7,9 +7,9 @@
 .sidebar {
     background-color: #f0f0f0;
     width: 200px;
-    height: 100vh; /* Full height of viewport */
     padding-top: 20px;
     flex-shrink: 0; /* Prevent sidebar from shrinking */
+    min-height: 100vh;
 }
 
 .sidebar ul {

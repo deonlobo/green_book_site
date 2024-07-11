@@ -1,6 +1,18 @@
 {% extends 'forum/base_forum.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'forum/css/home.css' %}">
+{% endblock %}
 
 {% block forum_base %}
-    Here is the home content
-    <a href="{% url 'forum:ask_question_forum' %}" class="btn btn-primary">Ask Question</a>
+    <div class="home-header">
+        <h2>Top questions</h2>
+        <a href="{% url 'forum:ask_question_forum' %}" class="btn btn-primary">Ask Question</a>
+    </div>
+    {% for question in questions %}
+        <a href="{% url 'forum:question_detail' question.id question.question_id %}">{{ question.title }}</a>
+    {% endfor %}
+
 {% endblock %}

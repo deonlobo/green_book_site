@@ -1,0 +1,92 @@
+{% extends 'forum/base_forum.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'forum/css/question_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'forum/css/ckeditor_custom.css' %}">
+{% endblock %}
+
+{% block forum_base %}
+
+    <div class="question-header">
+        <h1>{{ question.title }}</h1>
+        <p><strong>Asked:</strong> {{ question.created_ts|convert_to_timezone:user_time_zone }}</p>
+    </div>
+
+    <div class="question-detail">
+        <div class="question-actions">
+            <div class="question-vote">
+                <button class="vote-button upvote">
+                    <!-- Upvote SVG icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5l7 7H5l7-7z"/>
+                    </svg>
+                </button>
+                <button class="vote-button downvote">
+                    <!-- Downvote SVG icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 19l-7-7h14l-7 7z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="question-body-container">
+                <div class="question-body">
+                    {{ question.body|safe }}
+                </div>
+                <div class="question-tags">
+                    <ul>
+                        {% for tag in question.tags.all %}
+                            <li>{{ tag.name }}</li>
+                        {% empty %}
+                            <li>No tags available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="comments">
+                    {% for comment in question_comments %}
+                        <div class="comment-elements">
+                            {{ comment.body|safe }}
+                        </div>
+                        <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
+                    {% endfor %}
+                    <div class="add-question-comment">
+                        <a href="#" id="add-comment-link">Add a comment</a>
+                    </div>
+                    <div class="custom-ckeditor-css comment-form-container" id="comment-form-container">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ comment_form.non_field_errors }}
+                            {{ comment_form.media }}
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    {{ comment_form.body }}
+                                </div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-comment-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            var commentFormContainer = document.getElementById('comment-form-container');
+            var addCommentLink = document.querySelector('.add-question-comment');
+            if (commentFormContainer.style.display === 'none' || !commentFormContainer.style.display) {
+                commentFormContainer.style.display = 'block';
+                addCommentLink.style.display = 'none';
+            } else {
+                commentFormContainer.style.display = 'none';
+                addCommentLink.style.display = 'block';
+            }
+        });
+    </script>
+{% endblock %}
+
