@@ -1,0 +1,168 @@
+.question-header {
+    border-bottom: 1px solid #cccccc45; /* Light gray border */
+}
+
+/* Flex container for question actions and body */
+.question-actions {
+    display: flex; /* Use flexbox for layout */
+    align-items: flex-start; /* Align items to the top */
+    margin: 2em 4em 3em 0em;
+}
+
+/* Style for the vote buttons container */
+.question-vote {
+    width: 100px; /* Fixed width for the vote buttons container */
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;
+    gap: 5px; /* Space between buttons */
+}
+
+/* Style for the vote buttons */
+.vote-button {
+    width: 40px; /* Fixed width for circular buttons */
+    height: 40px; /* Fixed height for circular buttons */
+    border-radius: 50%; /* Make buttons circular */
+    display: flex; /* Use flexbox to center SVGs */
+    align-items: center; /* Center SVGs vertically */
+    justify-content: center; /* Center SVGs horizontally */
+    background-color: #007bff; /* Button background color */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 0; /* Remove padding */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for vote buttons */
+.vote-button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Style for SVG icons */
+.vote-button svg {
+    width: 24px; /* Size of the SVG icon */
+    height: 24px; /* Size of the SVG icon */
+}
+
+/* Ensure the SVG paths are filled with white */
+.vote-button svg path {
+    fill: #fff; /* Color of the SVG icon */
+}
+
+/* Optional: Add some extra styling for active/selected state */
+.vote-button.active {
+    background-color: #004080; /* Different color when active */
+}
+
+/* Flex container for question body and tags */
+.question-body-container {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column; /* Stack body and tags vertically */
+    overflow: hidden; /* Clear floats to ensure content wraps properly */
+}
+
+/* Style for the figure element */
+.image.image-style-align-left {
+    float: left; /* Align the figure to the left */
+    margin-right: 15px; /* Add some space to the right of the figure */
+    margin-bottom: 15px; /* Add some space below the figure */
+}
+
+/* Style for the figure element */
+.image.image-style-align-right {
+    float: right; /* Align the figure to the left */
+    margin-right: 15px; /* Add some space to the right of the figure */
+    margin-bottom: 15px; /* Add some space below the figure */
+}
+
+/* Style for the figure element */
+.image.image-style-side {
+    float: right; /* Align the figure to the left */
+    margin-right: 15px; /* Add some space to the right of the figure */
+    margin-bottom: 15px; /* Add some space below the figure */
+}
+
+/* Style for the figure element */
+.image.image-style-align-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Center the figure element */
+    margin-bottom: 15px; /* Add some space below the figure */
+    width: fit-content; /* Adjust width to fit the content */
+}
+
+/* Style for the image element inside the figure */
+.image_resized img {
+    max-width: 100%; /* Make sure the image doesn't overflow the figure */
+    height: auto; /* Maintain the aspect ratio of the image */
+    display: block; /* Remove extra space below the image */
+}
+
+/* Style for the tags */
+.question-detail .question-tags ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.question-detail .question-tags li {
+    display: inline;
+    background-color: #e1e1e1;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.question-detail .question-tags li + li {
+    margin-left: 10px;
+}
+
+.comments {
+    font-size: 0.75rem;
+    margin-left: 3rem;
+}
+
+.comment-elements {
+    border-top: 0.5px solid #cccccc45;
+}
+
+.comment-elements p{
+    margin: 0.4rem 0 0.3rem 0rem;
+}
+.comment-by {
+    font-style: italic;
+    color: gray;
+}
+
+.add-question-comment {
+    border-top: 0.5px solid #cccccc45;
+    padding: 0.7rem 0 2rem 0;
+}
+
+.add-question-comment a {
+    color: darkgrey;
+    text-decoration: none;
+}
+.add-question-comment a:hover {
+    color: grey;
+}
+
+.comment-form-container {
+    display: none;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+}
+.form-group {
+    width: 90%;
+    margin-right: 1em;
+}
+.form-inline .btn-primary{
+    font-size: 0.75rem;
+}

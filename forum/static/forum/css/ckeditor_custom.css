@@ -1,0 +1,45 @@
+/* CKEditor container */
+.custom-ckeditor-css .ck-editor-container {
+    font-size: 0.8rem; /* Adjust base font size */
+    max-width: 100%; /* Adjust width if needed */
+}
+
+/* CKEditor toolbar */
+.custom-ckeditor-css .ck-toolbar {
+    font-size: 0.75rem; /* Adjust toolbar font size */
+}
+
+/* CKEditor toolbar icons */
+.custom-ckeditor-css .ck-toolbar .ck-button .ck-button__icon {
+    width: 0.75rem; /* Adjust icon width */
+    height: 0.75rem; /* Adjust icon height */
+}
+
+.custom-ckeditor-css .ck.ck-content.ck-editor__editable {
+  min-height: 2.5em !important;
+}
+
+/* CKEditor editor area */
+.custom-ckeditor-css .ck-editor__editable {
+    font-size: 0.8rem; /* Adjust editor content font size */
+}
+
+/* Adjust spacing in the toolbar */
+.custom-ckeditor-css .ck-toolbar__items {
+    gap: 4px; /* Adjust gap between toolbar items */
+}
+
+/* Adjust toolbar dropdown button size */
+.custom-ckeditor-css .ck-dropdown .ck-button {
+    padding: 4px; /* Adjust dropdown button padding */
+}
+
+/* Optional: Adjust the label font size */
+.custom-ckeditor-css .ck-button__label {
+    font-size: 0.75rem; /* Adjust label font size */
+}
+
+/* Adjust the overall height of the editor container */
+.custom-ckeditor-css .ck-editor__top {
+    height: 40px; /* Adjust toolbar height if needed */
+}
