@@ -140,6 +140,7 @@
 .add-question-comment {
     border-top: 0.5px solid #cccccc45;
     padding: 0.7rem 0 2rem 0;
+    color: darkgrey;
 }
 
 .add-question-comment a {

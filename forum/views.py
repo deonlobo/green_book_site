@@ -10,6 +10,11 @@ from .models import Tag, Question, Vote
 from django.contrib import messages
 import pytz
 from django.contrib.auth.decorators import login_required
+def validate_user_login(request, message, redirect_url='login'):
+    if not request.user.is_authenticated:
+        messages.error(request, message)
+        return redirect(redirect_url)  # Redirect to login or another page
+    return None
 
 def home_forum(request):
     questions = Question.objects.all()
@@ -20,9 +25,7 @@ def home_forum(request):
                   })
 
 def ask_question_forum(request):
-    if not request.user.is_authenticated:
-        messages.error(request, 'You must be logged in to ask a question.')
-        return redirect('login')  # Redirect to login or another page
+    validate_user_login(request, 'You must be logged in to ask a question.')
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -80,6 +83,10 @@ def display_question(request, id, question_id):
     print(f"User Time Zone: {user_time_zone}")  # Debugging
 
     if request.method == "POST":
+        response = validate_user_login(request, 'You must be logged in to comment on a question.')
+        if response:
+            return response
+
         comment_form = QuestionCommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -90,15 +97,14 @@ def display_question(request, id, question_id):
     else:
         comment_form = QuestionCommentForm()
 
-    return render(request,
-                  'forum/question_detail.html',
-                  {'question': question,
-                   'user_time_zone': user_time_zone,
-                   'question_comments': question_comments,
-                   'comment_form': comment_form})
+    return render(request, 'forum/question_detail.html', {
+        'question': question,
+        'user_time_zone': user_time_zone,
+        'question_comments': question_comments,
+        'comment_form': comment_form
+    })
 
 
-@login_required
 def upvote_question(request, id):
     question = get_object_or_404(Question, id=id)
     user = request.user
@@ -121,7 +127,6 @@ def upvote_question(request, id):
         new_vote = Vote.objects.create(question=question, user=user, vote_type=Vote.UPVOTE)
         return JsonResponse({'status': 'upvoted','value': new_vote.question.total_votes()})
 
-@login_required
 def downvote_question(request, id):
     question = get_object_or_404(Question, id=id)
     user = request.user

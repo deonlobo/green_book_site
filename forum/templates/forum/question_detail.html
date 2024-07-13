@@ -56,11 +56,17 @@
                         </div>
                         <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                     {% endfor %}
-                    <div class="add-question-comment">
-                        <a href="#" id="add-comment-link">Add a comment</a>
-                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="add-question-comment">
+                            <a href="#" id="add-comment-link">Add a comment</a>
+                        </div>
+                    {% else %}
+                        <div class="add-question-comment">
+                            Login to comment
+                        </div>
+                    {% endif %}
                     <div class="custom-ckeditor-css comment-form-container" id="comment-form-container">
-                        <form method="post" enctype="multipart/form-data">
+                        <form id="comment-form" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ comment_form.non_field_errors }}
                             {{ comment_form.media }}
@@ -130,6 +136,19 @@
                 } else {
                     console.error('Vote count element not found.');
                 }
+            }
+        });
+
+        document.getElementById('comment-form').addEventListener('submit', function(event) {
+            localStorage.setItem('scrollPosition', window.scrollY);
+        });
+
+        // Restore scroll position on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollPosition = localStorage.getItem('scrollPosition');
+            if (scrollPosition !== null) {
+                window.scrollTo(0, parseInt(scrollPosition));
+                localStorage.removeItem('scrollPosition'); // Clear the scroll position
             }
         });
     </script>
