@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'marketplace',
     'forum.apps.ForumConfig',
     'django_ckeditor_5',
-    'challenges',
+    'green_book_challenges',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
