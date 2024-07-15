@@ -1,0 +1,175 @@
+.messenger {
+  .messenger__converstaion__container {
+    max-height: 33.34rem;
+  }
+
+  .messenger_private_conversation_model {
+    background-color: #FCF8F3;
+    top: 100%;
+    z-index: 1000;
+
+    .private_converstation_close_button {
+      background: #45526c;
+      color: #f8f5f1;
+      cursor: pointer;
+    }
+
+    .name__badge {
+      background: #41b06e;
+      color: #f8f5f1;
+    }
+
+    .user_name_button {
+      button {
+        background-color: #41b06e;
+        color: #45526c;
+      }
+    }
+
+    .search__result__container {
+      .search__list__item {
+        &:hover {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  --color_bg: #EEF0E5;
+  background-color: var(--color_bg);
+  color: #45526c;
+  transition: all linear 0.5s;
+
+  .messenger__header__left {
+    .messenger__header__left__container {
+      background-color: #FCF8F3;
+      border-radius: 1rem;
+
+      .messenger__search__input {
+        input {
+          background-color: #f8f5f1;
+          color: #45526c;
+        }
+      }
+
+      .messenger__header__add__button {
+        button {
+          background-color: #41b06e;
+          color: #45526c;
+        }
+      }
+    }
+  }
+
+  .messenger__header__right {
+    .messenger__header__right__container {
+      background-color: #FCF8F3;
+      border-radius: 1rem;
+    }
+  }
+
+  .messenger__list {
+    max-height: 100%;
+
+    .messenger__list__container {
+      background-color: #FCF8F3;
+      border-radius: 1rem;
+      overflow-y: auto;
+
+      .messenger__list__element {
+        .conversation__pin {
+          display: none;
+          left: 90%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          background-color: #41b06e;
+        }
+        &:hover {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+          .conversation__pin {
+            display: block;
+          }
+        }
+        
+        
+      }
+
+      .messenger__list__element--selected {
+        background: #41b06e;
+        color: #f8f5f1;
+      }
+    }
+
+  }
+
+  .messenger__conversation {
+
+    .messenger__conversation__div {
+      background-color: #FCF8F3;
+      border-radius: 1rem;
+
+      .messenger__conversation__container {
+        overflow-y: auto;
+        max-height: 25rem;
+
+        .messenger_conversation__bubble {
+          --r: 1em;
+          /* the radius */
+          --t: 0.5em;
+          /* the size of the tail */
+          padding: 0.5em;
+          /* border-inline: var(--t) solid #0000; */
+          border-radius: 1rem;
+          mask: radial-gradient(100% 100% at var(--_p) 0, #0000 99%, #000 102%) var(--_p) 100% / var(--t) var(--t) no-repeat,
+            linear-gradient(#000 0 0) padding-box;
+          /* background: linear-gradient(135deg, #FE6D00, #1384C5) border-box; */
+          color: #f8f5f1;
+        }
+
+        .bubble__left {
+          --_p: 0;
+          border-bottom-left-radius: 0 0;
+          place-self: start;
+          background-color: #141e46;
+          word-break: break-word;
+          /* margin-left: 1rem; */
+        }
+
+        .bubble__right {
+          --_p: 100%;
+          border-bottom-right-radius: 0 0;
+          place-self: end;
+          background-color: #41b06e;
+          word-break: break-word;
+          /* margin-right: 1rem; */
+        }
+
+        .messenger_conversation__timestamp {
+          /* background-color: #141E46; */
+          color: #141e467c;
+        }
+      }
+    }
+
+  }
+
+  .messenger__input {
+    .messenger__input__text {
+      input {
+        background-color: #f8f5f1;
+        color: #45526c;
+      }
+    }
+
+    .messenger__input__button {
+      button {
+        background-color: #41b06e;
+        color: #45526c;
+      }
+    }
+  }
+}
