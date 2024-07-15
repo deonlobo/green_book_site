@@ -11,77 +11,245 @@
 {% block forum_base %}
 
     <div class="question-header">
-        <h1>{{ question.title }}</h1>
+        <h2>{{ question.title }}</h2>
         <p><strong>Asked:</strong> {{ question.created_ts|convert_to_timezone:user_time_zone }}</p>
     </div>
 
-    <div class="question-detail">
-        <div class="question-actions">
-            <div class="question-vote">
-                <button class="vote-button upvote">
-                    <!-- Upvote SVG icon -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5l7 7H5l7-7z"/>
-                    </svg>
-                </button>
-                <div class="question-vote-count">
-                    {{ question.total_votes }}
-                </div>
-                <button class="vote-button downvote">
-                    <!-- Downvote SVG icon -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 19l-7-7h14l-7 7z"/>
-                    </svg>
-                </button>
-            </div>
+    <div class="detail-section-main">
+        <div class="detail-area">
+            <div class="question-detail">
+                <div class="question-actions">
+                    <div class="question-vote">
+                        <button class="vote-button upvote">
+                            <!-- Upvote SVG icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5l7 7H5l7-7z"/>
+                            </svg>
+                        </button>
+                        <div class="question-vote-count">
+                            {{ question.total_votes }}
+                        </div>
+                        <button class="vote-button downvote">
+                            <!-- Downvote SVG icon -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 19l-7-7h14l-7 7z"/>
+                            </svg>
+                        </button>
+                    </div>
 
-            <div class="question-body-container">
-                <div class="question-body">
-                    {{ question.body|safe }}
-                </div>
-                <div class="question-tags">
-                    <ul>
-                        {% for tag in question.tags.all %}
-                            <li>{{ tag.name }}</li>
-                        {% empty %}
-                            <li>No tags available.</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                    <div class="question-body-container">
+                        <div class="question-body">
+                            {{ question.body|safe }}
+                        </div>
+                        <div class="question-tags">
+                            <ul>
+                                {% for tag in question.tags.all %}
+                                    <li>{{ tag.name }}</li>
+                                {% empty %}
+                                    <li>No tags available.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
-                <div class="comments">
-                    {% for comment in question_comments %}
-                        <div class="comment-elements">
-                            {{ comment.body|safe }}
+                        <div class="answered-by">
+                            - {{ question.asked_by.username }} asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
                         </div>
-                        <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
-                    {% endfor %}
-                    {% if user.is_authenticated %}
-                        <div class="add-question-comment">
-                            <a href="#" id="add-comment-link">Add a comment</a>
-                        </div>
-                    {% else %}
-                        <div class="add-question-comment">
-                            Login to comment
-                        </div>
-                    {% endif %}
-                    <div class="custom-ckeditor-css comment-form-container" id="comment-form-container">
-                        <form id="comment-form" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ comment_form.non_field_errors }}
-                            {{ comment_form.media }}
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    {{ comment_form.body }}
+
+                        <div class="comments">
+                            {% for comment in question_comments %}
+                                <div class="comment-elements">
+                                    {{ comment.body|safe }}
                                 </div>
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
+                            {% endfor %}
+                            {% if user.is_authenticated %}
+                                <div class="add-question-comment">
+                                    <a href="#" id="add-comment-link">Add a comment</a>
+                                </div>
+                            {% else %}
+                                <div class="add-question-comment">
+                                    Login to comment
+                                </div>
+                            {% endif %}
+                            <div class="custom-ckeditor-css comment-form-container" id="comment-form-container">
+                                <form id="comment-form" method="post" enctype="multipart/form-data" action="{% url 'forum:question_comment' question.id %}">
+                                    {% csrf_token %}
+                                    {{ answer_comment_form.non_field_errors }}
+                                    {{ answer_comment_form.media }}
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            {{ answer_comment_form.body }}
+                                        </div>
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Existing question details here -->
+
+            <div class="answers-section">
+                <div class="answer-header">
+                    <h3>{{ answers.count }} Answers</h3>
+                </div>
+                {% for answer in answers %}
+                    <div class="answer">
+                        <div class="answer-detail">
+                            <div class="answer-actions">
+                                <div class="answer-vote">
+                                    <button class="vote-button answer-upvote" data-answer-id="{{ answer.id }}">
+                                        <!-- Upvote SVG icon -->
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 5l7 7H5l7-7z"/>
+                                        </svg>
+                                    </button>
+                                    <div class="answer-vote-count" data-answer-id="{{ answer.id }}">
+                                        {{ answer.total_votes }}
+                                    </div>
+                                    <button class="vote-button answer-downvote" data-answer-id="{{ answer.id }}">
+                                        <!-- Downvote SVG icon -->
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 19l-7-7h14l-7 7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="answer-body-container">
+                                    <div class="answer-body">
+                                        {{ answer.body|safe }}
+                                    </div>
+                                    <div class="answered-by">
+                                         {{ answer.asked_by.username }} answered on {{ answer.created_ts|convert_to_timezone:user_time_zone }}
+                                    </div>
+                                    <div class="comments">
+                                        {% for comment in answer.answer_comments.all %}
+                                            <div class="comment-elements">
+                                                {{ comment.body|safe }}
+                                            </div>
+                                            <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
+                                        {% endfor %}
+                                        {% if user.is_authenticated %}
+                                            <div class="add-answer-comment" data-answer-id="{{ answer.id }}">
+                                                <a href="#" class="add-answer-comment-link" data-answer-id="{{ answer.id }}">Add a comment</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="add-answer-comment">
+                                                Login to comment
+                                            </div>
+                                        {% endif %}
+                                        <div class="custom-ckeditor-css comment-form-container" id="comment-form-container-{{ answer.id }}">
+                                            <form class="comment-form" method="post" enctype="multipart/form-data" data-answer-id="{{ answer.id }} " action="{% url 'forum:answer_comment' answer.id %}">
+                                                {% csrf_token %}
+                                                {{ comment_form.non_field_errors }}
+                                                {{ comment_form.media }}
+                                                <div class="form-inline">
+                                                    <div class="form-group">
+                                                        {{ comment_form.body }}
+                                                    </div>
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="answer-the-question">
+                <div class="your-answer-header">
+                    <h3> Your Answer</h3>
+                </div>
+                <div class="custom-answer-ckeditor-css">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'forum:answer' question.id %}">
+                        {% csrf_token %}
+                        {{ answer_form.non_field_errors }}
+                        {{ answer_form.media }}
+                        <div>
+                            {{ answer_form.body }}
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit">Post your answer</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
+        <div class="advertise-area">
+            <div class="card">
+              <div class="card-header d-flex align-items-center">
+                Featured on Green Book
+              </div>
+              <div class="card-body">
+                  <ul>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/earth.png' %}" alt="earth fevicon"/>
+                              <a href="https://greenly.earth/en-us/blog/ecology-news/everything-you-need-to-know-about-green-technology-in-2022" target="_blank">Everything You Need to Know About Green Technology in 2024</a>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/earth.png' %}" alt="earth fevicon"/>
+                              <a href="https://theconversation.com/how-recycling-could-solve-the-shortage-of-minerals-essential-to-clean-energy-211474" target="_blank">How recycling could solve the shortage of minerals essential to clean energy</a>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/tree-planting.png' %}" alt="earth fevicon"/>
+                              <a href="https://education.nationalgeographic.org/resource/conserving-earth/" target="_blank">Tips and tricks on Conserving Earth</a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <div class="card-header d-flex align-items-center">
+                New updates !
+              </div>
+              <div class="card-body">
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/tick.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:home_forum' %}" >This sping enjoy the major update on the Green Book forum</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/help.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:home_forum' %}" target="_blank">Help others find answers on going green</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/tick.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:ask_question_forum' %}" target="_blank">Initiate a discussion on Green Technologies</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/login.png' %}" alt="earth fevicon"/>
+                      <a href="#" >Unlock all Green Book forum features by logging in</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/add.gif' %}" alt="earth fevicon"/>
+                      <a href="#" >Unlock all Green Book forum features by logging in</a>
+                  </div>
+              </div>
+            </div>
+            <div class="hot-questions">
+                <h5>Hot Network Questions</h5>
+                {% for t_question in top_questions %}
+                <div class="hot-questions-flex">
+                    <div class="no-of-votes">
+                        {{ t_question.total_votes }}
+                    </div>
+                    <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
     </div>
+
+
+
 
     <script>
         document.getElementById('add-comment-link').addEventListener('click', function(event) {
@@ -151,6 +319,85 @@
                 localStorage.removeItem('scrollPosition'); // Clear the scroll position
             }
         });
+
+        {# Answer section #}
+        document.querySelectorAll('.add-answer-comment-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var answerId = this.getAttribute('data-answer-id');
+            var commentFormContainer = document.getElementById('comment-form-container-' + answerId);
+            var addCommentLink = document.querySelector('.add-answer-comment[data-answer-id="' + answerId + '"]');
+            if (commentFormContainer.style.display === 'none' || !commentFormContainer.style.display) {
+                commentFormContainer.style.display = 'block';
+                addCommentLink.style.display = 'none';
+            } else {
+                commentFormContainer.style.display = 'none';
+                addCommentLink.style.display = 'block';
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.vote-button.answer-upvote').forEach(function(button) {
+            button.addEventListener('click', function() {
+                handleVote('upvote', this.getAttribute('data-answer-id'));
+            });
+        });
+
+        document.querySelectorAll('.vote-button.answer-downvote').forEach(function(button) {
+            button.addEventListener('click', function() {
+                handleVote('downvote', this.getAttribute('data-answer-id'));
+            });
+        });
+
+        function handleVote(voteType, answerId) {
+
+            const url = voteType === 'upvote'
+                ? `/forum/answer/${answerId}/upvote/`
+                : `/forum/answer/${answerId}/downvote/`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ vote_type: voteType })
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateVoteDisplay(data.value, answerId);  // Pass the new vote count to update the display
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function updateVoteDisplay(newVoteCount, answerId) {
+            console.log(newVoteCount,answerId)
+            const voteCountElement = document.querySelector('.answer-vote-count[data-answer-id="' + answerId + '"]');
+            if (voteCountElement) {
+                voteCountElement.innerHTML = newVoteCount;  // Update the vote count
+            } else {
+                console.error('Vote count element not found for answer ID:', answerId);
+            }
+        }
+    });
+
+    document.querySelectorAll('.comment-form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            localStorage.setItem('scrollPosition', window.scrollY);
+        });
+    });
+
+    // Restore scroll position on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+            window.scrollTo(0, parseInt(scrollPosition));
+            localStorage.removeItem('scrollPosition'); // Clear the scroll position
+        }
+    });
     </script>
 {% endblock %}
 

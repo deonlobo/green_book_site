@@ -43,3 +43,7 @@
 .custom-ckeditor-css .ck-editor__top {
     height: 40px; /* Adjust toolbar height if needed */
 }
+
+.custom-answer-ckeditor-css .ck.ck-content.ck-editor__editable {
+  min-height: 12em !important;
+}

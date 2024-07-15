@@ -1,6 +1,6 @@
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
-from .models import Question, Tag, QuestionComment
+from .models import Question, Tag, QuestionComment, Answer, AnswerComment
 
 
 class QuestionForm(forms.ModelForm):
@@ -31,6 +31,36 @@ class QuestionCommentForm(forms.ModelForm):
 
     class Meta:
         model = QuestionComment
+        fields = ('body',)
+        widgets = {
+            'body': CKEditor5Widget(
+                attrs={'class': 'django_ckeditor_5'}, config_name='comment_config'
+            )
+        }
+
+
+class AnswerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["body"].required = False
+
+    class Meta:
+        model = Answer
+        fields = ('body',)
+        widgets = {
+            'body': CKEditor5Widget(
+                attrs={'class': 'django_ckeditor_5'}, config_name='comment_config'
+            )
+        }
+
+
+class AnswerCommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["body"].required = False
+
+    class Meta:
+        model = AnswerComment
         fields = ('body',)
         widgets = {
             'body': CKEditor5Widget(

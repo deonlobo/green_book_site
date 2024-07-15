@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     searchInput.addEventListener('keydown', function(e) {
-        if (e.key === ' ') {
+        if (e.key === ' ' || e.key === 'Enter') {
             e.preventDefault();
             const tag = searchInput.value.trim();
             if (tag && !tags.has(tag)) {

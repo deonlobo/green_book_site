@@ -5,11 +5,13 @@
 }
 
 .sidebar {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     width: 200px;
     padding-top: 20px;
     flex-shrink: 0; /* Prevent sidebar from shrinking */
     min-height: 100vh;
+    border-right: 1px solid #e3e6e8ff;;
+    padding-left: 3em;
 }
 
 .sidebar ul {
@@ -18,22 +20,24 @@
     margin: 0;
 }
 
-.sidebar ul li {
-    padding: 10px;
-    text-align: center;
-}
-
-.sidebar ul li a {
+.sidebar ul a {
+    font-size: 1em;
     text-decoration: none;
     color: #333;
-    display: block;
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    padding: 10px; /* Optional: Add padding for better click area */
 }
 
-.sidebar ul li:hover {
-    background-color: #ddd;
+.sidebar ul li:hover a {
+    background-color: #ddd; /* Change background color on hover */
+    border-radius: 0.5em;
+}
+
+.svg-icon {
+    margin-right: 8px; /* Optional: Add space between the icon and text */
 }
 
 .content-sidebar {
     flex: 1; /* Take remaining space */
-    padding: 20px;
 }

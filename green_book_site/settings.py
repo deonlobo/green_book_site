@@ -206,8 +206,24 @@ CKEDITOR_5_CONFIGS = {
         }
     },
     'comment_config': {
+        'blockToolbar': [
+                    'bulletedList', 'numberedList',
+        ],
         'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
-        'code','subscript', 'superscript', 'highlight', '|', 'removeFormat',],
+        'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|', 'removeFormat',],
+        'image': {
+                    'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                                'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+                    'styles': [
+                        'full',
+                        'side',
+                        'alignLeft',
+                        'alignRight',
+                        'alignCenter',
+                    ]
+
+        },
     },
     'list': {
         'properties': {

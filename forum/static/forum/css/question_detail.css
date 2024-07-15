@@ -1,12 +1,17 @@
+.content-sidebar {
+    padding: 2em;
+}
+
 .question-header {
-    border-bottom: 1px solid #cccccc45; /* Light gray border */
+    border-bottom: 1px solid #e3e6e8ff; /* Light gray border */
+    color: #4e4d4d;
 }
 
 /* Flex container for question actions and body */
 .question-actions {
     display: flex; /* Use flexbox for layout */
     align-items: flex-start; /* Align items to the top */
-    margin: 2em 4em 3em 0em;
+    margin: 0em 2em 2em 0em;
 }
 
 /* Style for the vote buttons container */
@@ -35,7 +40,7 @@
 
 /* Hover effect for vote buttons */
 .vote-button:hover {
-    background-color: #c5a872; /* Darker color on hover */
+    background-color: #ffe1b1; /* Darker color on hover */
 }
 
 /* Style for SVG icons */
@@ -100,6 +105,32 @@
     display: block; /* Remove extra space below the image */
 }
 
+/* Basic styling for code elements */
+code {
+  font-family: "Courier New", Courier, monospace; /* Monospace font for better readability */
+  background-color: #f5f5f5;  /* Light grey background */
+  border: 1px solid #e1e1e8;  /* Light grey border */
+  border-radius: 3px;  /* Rounded corners */
+  padding: 2px 4px;  /* Padding around the text */
+  font-size: 0.9em;  /* Slightly smaller font size */
+  color: #d63384;  /* Magenta text color */
+}
+
+/* Styling for code blocks (pre elements) */
+pre {
+  background-color: #f5f5f5;  /* Light grey background */
+  border: 1px solid #e1e1e8;  /* Light grey border */
+  border-radius: 3px;  /* Rounded corners */
+  padding: 10px;  /* Padding around the text */
+  font-size: 0.9em;  /* Slightly smaller font size */
+  overflow: auto;  /* Scroll if the content overflows */
+}
+
+pre code {
+  background-color: transparent;  /* Inherit the background from pre element */border: none;
+  padding: 0;  /* No padding for code inside pre */
+  color: inherit;  /* Inherit the color from pre element */
+}
 /* Style for the tags */
 .question-detail .question-tags ul {
     list-style-type: none;
@@ -108,16 +139,21 @@
 
 .question-detail .question-tags li {
     display: inline;
-    background-color: #e1e1e1;
-    border-radius: 3px;
-    padding: 5px 10px;
-    margin: 0 5px;
-    font-size: 0.9em;
+    background-color: #e6e6e6;
+    border-radius: 7px;
+    padding: 6px 5px;
+    margin: 0 2px;
+    font-size: 0.8em;
+    font-weight: bold;
     color: #333;
 }
 
+.question-detail .question-tags li:hover {
+    background-color: #c8c6c6;
+}
+
 .question-detail .question-tags li + li {
-    margin-left: 10px;
+
 }
 
 .comments {
@@ -126,7 +162,7 @@
 }
 
 .comment-elements {
-    border-top: 0.5px solid #cccccc45;
+    border-top: 1px solid #e3e6e8ff;
 }
 
 .comment-elements p{
@@ -138,7 +174,7 @@
 }
 
 .add-question-comment {
-    border-top: 0.5px solid #cccccc45;
+    border-top: 1px solid #e3e6e8ff;
     padding: 0.7rem 0 2rem 0;
     color: darkgrey;
 }
@@ -153,6 +189,7 @@
 
 .comment-form-container {
     display: none;
+    margin: 1em 0 1em 0;
 }
 
 .form-inline {
@@ -166,4 +203,187 @@
 }
 .form-inline .btn-primary{
     font-size: 0.75rem;
+}
+
+/*Answer css*/
+.answers-section {
+    margin-top: 3rem;
+}
+
+.answer {
+    border-bottom: 1px solid #e3e6e8ff
+}
+.answer-header{
+    color: #706e6e;
+    border-bottom: 1px solid #e3e6e8ff
+}
+
+.answer-actions {
+    display: flex;
+    align-items: flex-start;
+    margin: 2em 2em 0em 0em;
+}
+
+.answered-by{
+    font-style: italic;
+    color: gray;
+    text-align: end;
+    font-size: small;
+    margin-bottom: 0.5em;
+}
+
+.answer-vote {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.answer-vote .vote-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 1px solid #cabebe;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s;
+}
+
+.answer-vote .vote-button:hover {
+    background-color: #ffe1b1;
+}
+
+.answer-vote .vote-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.answer-vote .vote-button svg path {
+    fill: #2e2929;
+}
+
+.answer-body-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.answer-body {
+    margin-bottom: 1rem;
+}
+
+.add-answer-comment {
+    border-top: 1px solid #e3e6e8ff;
+    padding: 0.7rem 0 2rem 0;
+    color: darkgrey;
+}
+
+.add-answer-comment a {
+    color: darkgrey;
+    text-decoration: none;
+}
+
+.add-answer-comment a:hover {
+    color: grey;
+}
+
+
+.detail-section-main {
+    display: flex;
+    flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+    margin-top: 2rem;
+    flex-direction: row;
+}
+
+.detail-area {
+    flex: 60% /* Initial size */;
+    max-width: 75%;
+}
+
+.advertise-area {
+    font-size: 0.7em;
+    width: 25%; /* Initial size */
+    display: block; /* Ensure the element is displayed as a block */
+    padding: 0.5em 2em 4em 2em; /* Optional: add padding for visibility */
+    word-wrap: break-word;
+    color: #4c4b4b;
+}
+
+@media (max-width: 80rem) {
+    .advertise-area {
+        display: none;
+    }
+}
+
+.advertise-area .card-header {
+    background-color: hsl(43,85%,88%);
+    height: 3em;
+    font-weight: bold;
+}
+
+.advertise-area .card-body {
+    background-color: hsl(43,85%,95%);
+}
+
+.advertise-area .card-body ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.advertise-li {
+    display: flex;
+    margin: 0.5em;
+}
+
+/*use this color for fevicon #40A0DA*/
+.advertise-li img {
+    height: 1.5em;
+    margin-right: 0.5em;
+}
+
+.advertise-li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.hot-questions {
+    margin-top: 2em;
+}
+
+.hot-questions-flex {
+    display: flex;
+}
+
+.hot-questions-flex a {
+    text-decoration: none;
+    display: flex; /* Ensure the <a> element itself is a flex container */
+    align-items: center; /* Vertically align items inside the <a> element */
+}
+
+.no-of-votes {
+    background-color: #d3efd1;
+    border-radius: 2px;
+    padding: 2px 5px;
+    margin: 0.5em 1em 0.5em 0em;
+    width: 2.5em;
+    text-align: center;
+}
+
+.answer-the-question {
+    margin-top: 2em;
+}
+
+.custom-answer-ckeditor-css {
+    margin-right: 3em;
+}
+
+.your-answer-header{
+    color: #706e6e;
 }

@@ -61,8 +61,7 @@ class QuestionComment(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
-    title = models.CharField(max_length=500)
-    body = CKEditor5Field('Text', config_name='body_config')
+    body = CKEditor5Field('Text', config_name='comment_config')
     created_ts = models.DateTimeField(auto_now_add=True)
     asked_by = models.ForeignKey(User, related_name='answered_by', on_delete=models.CASCADE)
 
