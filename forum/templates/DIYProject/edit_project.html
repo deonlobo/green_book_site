@@ -1,0 +1,16 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form action="{% url 'DIYProject:newproject' %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_table }}
+
+    <input type="submit" name="submit1" value="Upload" />
+
+    </form>
+
+{% endblock %}
