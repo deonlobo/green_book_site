@@ -25,8 +25,10 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
     path('marketplace/',include('marketplace.urls')),
+    path("messenger/", include("green_book_messenger.urls")),
     path('forum/',include('forum.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls')),  # Include CKEditor URLs
+    path('challenges/', include('green_book_challenges.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
