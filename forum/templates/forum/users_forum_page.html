@@ -110,12 +110,6 @@
                 searchResults.innerHTML = '';
             }
 
-            searchInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    window.location.href = `${searchRedirectUrl}?search=${encodeURIComponent(searchInput.value.trim())}&user=True`;
-                }
-            });
         });
     </script>
 
