@@ -21,3 +21,6 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    def getSteps(self):
+        return self.process.splitlines()

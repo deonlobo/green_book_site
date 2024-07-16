@@ -3,11 +3,11 @@
 
 {% block content %}
 
-    <form action="{% url 'DIYProject:newproject' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'DIYProject:editproject' temp_project.pk %}" method="post" enctype="multipart/form-data">
 
     {% csrf_token %}
 
-    {{ form.as_table }}
+    {{ form.as_p }}
 
     <input type="submit" name="submit1" value="Upload" />
 
