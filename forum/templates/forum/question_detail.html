@@ -58,7 +58,7 @@
                         <div class="question-tags">
                             <ul>
                                 {% for tag in question.tags.all %}
-                                    <li>{{ tag.name }}</li>
+                                    <a href="{% url 'forum:home_forum' %}?search={{ tag.name }}&tag=True"><li>{{ tag.name }}</li></a>
                                 {% empty %}
                                     {# <li>No tags available.</li>#}
                                 {% endfor %}
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="answered-by">
-                            - {{ question.asked_by.username }} asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
+                            - <a id="custom-color-a" href="{% url 'forum:user_details' user.id %}">{{ question.asked_by.username }}</a> asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
                         </div>
 
                         <div class="comments">
@@ -75,7 +75,7 @@
                                     <div class="comment-elements">
                                         {{ comment.body|safe }}
                                     </div>
-                                    <div class="comment-by"> {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
+                                    <div class="comment-by"> <a id="custom-color-a" href="{% url 'forum:user_details' user.id %}">{{ comment.commented_by.username }}</a> on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                                 </div>
                             {% endfor %}
                             {% if user.is_authenticated %}
@@ -138,7 +138,7 @@
                                         {{ answer.body|safe }}
                                     </div>
                                     <div class="answered-by">
-                                         {{ answer.asked_by.username }} answered on {{ answer.created_ts|convert_to_timezone:user_time_zone }}
+                                        <a id="custom-color-a" href="{% url 'forum:user_details' user.id %}">{{ answer.asked_by.username }}</a> answered on {{ answer.created_ts|convert_to_timezone:user_time_zone }}
                                     </div>
                                     <div class="comments">
                                         {% for comment in answer.answer_comments.all %}
@@ -146,7 +146,7 @@
                                                 <div class="comment-elements">
                                                     {{ comment.body|safe }}
                                                 </div>
-                                                <div class="comment-by"> {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
+                                                <div class="comment-by"> <a id="custom-color-a" href="{% url 'forum:user_details' user.id %}">{{ comment.commented_by.username }}</a> on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                                             </div>
                                         {% endfor %}
                                         {% if user.is_authenticated %}

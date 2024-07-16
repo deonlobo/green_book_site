@@ -9,6 +9,19 @@
 
 {% block forum_base %}
     <div class="detail-section-main">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <br/>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="quesiton-area">
             <div class="display-heading">
                 <div class="home-header">
@@ -47,7 +60,7 @@
                                 <div class="question-tags">
                                     <ul>
                                         {% for tag in question.tags.all %}
-                                            <li>{{ tag.name }}</li>
+                                            <a href="{% url 'forum:home_forum' %}?search={{ tag.name }}&tag=True"><li>{{ tag.name }}</li></a>
                                         {% empty %}
                                             {#<li>No tags available.</li>#}
                                         {% endfor %}

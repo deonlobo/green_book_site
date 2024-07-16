@@ -107,6 +107,15 @@ def ask_question_forum(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
+
+            # Extract the cleaned data from the form
+            body = form.cleaned_data.get('body', '').strip()
+            # Check if the body field is empty or contains only non-visible content
+            if is_blank_html(body):
+                # Add a form error if body is blank or contains only non-visible content
+                messages.error(request, 'The comment cannot be blank')
+                return render(request, 'forum/question_forum.html', {'form': form})
+
             # Save the question
             question = form.save(commit=False)
             question_id = re.sub(r'[^A-Za-z0-9\s]', '', question.title)
@@ -129,8 +138,8 @@ def ask_question_forum(request):
                 # Save the question
                 question.save()
                 question.tags.set(tag_objects)
-
-                return redirect('home')  # Redirect to home or another page
+                messages.success(request, 'Question submitted successfully')
+                return redirect('forum:home_forum')  # Redirect to home or another page
     else:
         form = QuestionForm()
 

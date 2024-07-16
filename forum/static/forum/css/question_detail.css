@@ -239,6 +239,16 @@ pre code {
     margin-bottom: 0.5em;
 }
 
+#custom-color-a {
+    text-decoration: none;
+    color: #1B75D0FF;
+}
+
+#custom-color-a:hover {
+    color: #155CA2FF;
+}
+
+
 .answer-vote {
     width: 100px;
     display: flex;

@@ -18,7 +18,6 @@ def convert_to_timezone(value, timezone_str):
         return value
     try:
         tz = pytz.timezone(timezone_str)
-        print(f"time zone {tz} {localtime(value, tz)}")
         return localtime(value, tz).strftime("%B %d, %Y at %H:%M")
     except pytz.UnknownTimeZoneError:
         return value
