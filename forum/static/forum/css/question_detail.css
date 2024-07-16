@@ -5,6 +5,7 @@
 .question-header {
     border-bottom: 1px solid #e3e6e8ff; /* Light gray border */
     color: #4e4d4d;
+    max-width: 80%;
 }
 
 /* Flex container for question actions and body */
@@ -137,19 +138,19 @@ pre code {
     padding: 0;
 }
 
-.question-detail .question-tags li {
-    display: inline;
-    background-color: #e6e6e6;
+.question-tags li {
+    display: inline-block;
+    background-color: #efefef;
     border-radius: 7px;
     padding: 6px 5px;
-    margin: 0 2px;
-    font-size: 0.8em;
+    margin: 0 2px 2px 2px;
+    font-size: 0.7em;
     font-weight: bold;
     color: #333;
 }
 
-.question-detail .question-tags li:hover {
-    background-color: #c8c6c6;
+.question-tags li:hover {
+    background-color: #e3e3e3;
 }
 
 .question-detail .question-tags li + li {
@@ -161,8 +162,14 @@ pre code {
     margin-left: 3rem;
 }
 
-.comment-elements {
+.comment-container {
+    display: flex;
+    flex-direction: column;
     border-top: 1px solid #e3e6e8ff;
+}
+
+.comment-elements {
+    word-break: break-word; /* Ensures long words break correctly */
 }
 
 .comment-elements p{
@@ -302,8 +309,8 @@ pre code {
 }
 
 .detail-area {
-    flex: 60% /* Initial size */;
-    max-width: 75%;
+    flex: 65% /* Initial size */;
+    max-width: 60em;
 }
 
 .advertise-area {
@@ -361,19 +368,33 @@ pre code {
     display: flex;
 }
 
-.hot-questions-flex a {
+.hot-question-link {
+    flex: 1;
     text-decoration: none;
-    display: flex; /* Ensure the <a> element itself is a flex container */
-    align-items: center; /* Vertically align items inside the <a> element */
+    display: flex;  /* Ensure the <a> element itself is a flex container */
+    align-items: center;  /* Vertically align items inside the <a> element */
+    overflow: hidden;  /* Hide overflow content */
+}
+
+.hot-question-link a {
+    display: -webkit-box;  /* Use webkit box model for multi-line truncation */
+    -webkit-line-clamp: 2; /* Limit text to 2 lines */
+    -webkit-box-orient: vertical; /* Vertical box orientation */
+    overflow: hidden;  /* Hide text overflow */
+    text-overflow: ellipsis;  /* Show ellipsis for overflow text */
 }
 
 .no-of-votes {
+    margin: 0.5em 1em 0.5em 0em;
+}
+
+.no-of-votes-item {
     background-color: #d3efd1;
     border-radius: 2px;
     padding: 2px 5px;
-    margin: 0.5em 1em 0.5em 0em;
-    width: 2.5em;
+    width: 3em;  /* Fixed width */
     text-align: center;
+    word-wrap: break-word;
 }
 
 .answer-the-question {

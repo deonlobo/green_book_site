@@ -10,6 +10,20 @@
 
 {% block forum_base %}
 
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <br/>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <div class="question-header">
         <h2>{{ question.title }}</h2>
         <p><strong>Asked:</strong> {{ question.created_ts|convert_to_timezone:user_time_zone }}</p>
@@ -46,7 +60,7 @@
                                 {% for tag in question.tags.all %}
                                     <li>{{ tag.name }}</li>
                                 {% empty %}
-                                    <li>No tags available.</li>
+                                    {# <li>No tags available.</li>#}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -57,10 +71,12 @@
 
                         <div class="comments">
                             {% for comment in question_comments %}
-                                <div class="comment-elements">
-                                    {{ comment.body|safe }}
+                                <div class="comment-container">
+                                    <div class="comment-elements">
+                                        {{ comment.body|safe }}
+                                    </div>
+                                    <div class="comment-by"> {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                                 </div>
-                                <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                             {% endfor %}
                             {% if user.is_authenticated %}
                                 <div class="add-question-comment">
@@ -126,10 +142,12 @@
                                     </div>
                                     <div class="comments">
                                         {% for comment in answer.answer_comments.all %}
-                                            <div class="comment-elements">
-                                                {{ comment.body|safe }}
+                                            <div class="comment-container">
+                                                <div class="comment-elements">
+                                                    {{ comment.body|safe }}
+                                                </div>
+                                                <div class="comment-by"> {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                                             </div>
-                                            <div class="comment-by">by {{ comment.commented_by.username }} on {{ comment.created_ts|convert_to_timezone:user_time_zone }}</div>
                                         {% endfor %}
                                         {% if user.is_authenticated %}
                                             <div class="add-answer-comment" data-answer-id="{{ answer.id }}">
@@ -166,7 +184,7 @@
                     <h3> Your Answer</h3>
                 </div>
                 <div class="custom-answer-ckeditor-css">
-                    <form method="post" enctype="multipart/form-data" action="{% url 'forum:answer' question.id %}">
+                    <form class="answer-form" method="post" enctype="multipart/form-data" action="{% url 'forum:answer' question.id %}">
                         {% csrf_token %}
                         {{ answer_form.non_field_errors }}
                         {{ answer_form.media }}
@@ -228,7 +246,7 @@
                   </div>
                   <div class="advertise-li">
                       <img src="{% static '/forum/images/add.gif' %}" alt="earth fevicon"/>
-                      <a href="#" >Unlock all Green Book forum features by logging in</a>
+                      <a href="{% url 'forum:ask_question_forum'  %}" target="_blank">This is your chance to make an impact on society</a>
                   </div>
               </div>
             </div>
@@ -237,9 +255,13 @@
                 {% for t_question in top_questions %}
                 <div class="hot-questions-flex">
                     <div class="no-of-votes">
-                        {{ t_question.total_votes }}
+                        <div class="no-of-votes-item">
+                            {{ t_question.total_votes }}
+                        </div>
                     </div>
-                    <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                    <div class="hot-question-link">
+                        <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -385,6 +407,12 @@
     });
 
     document.querySelectorAll('.comment-form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            localStorage.setItem('scrollPosition', window.scrollY);
+        });
+    });
+
+    document.querySelectorAll('.answer-form').forEach(function(form) {
         form.addEventListener('submit', function(event) {
             localStorage.setItem('scrollPosition', window.scrollY);
         });

@@ -10,16 +10,25 @@
 {% block forum_base %}
     <div class="detail-section-main">
         <div class="quesiton-area">
-            <div class="home-header">
-                <h3>{{ header }}</h3>
-                <div class="search-wrapper">
-                    <input type="text" id="question-search" placeholder="Search ..." />
-                    <div id="search-results">
-                        <!-- Search results will be displayed here -->
+            <div class="display-heading">
+                <div class="home-header">
+                    <h3>{{ header }}</h3>
+                    <div class="search-wrapper">
+                        <div class="search-input">
+                            <img src="{% static 'forum/images/search.png' %}">
+                            <input type="text" id="question-search" placeholder="Search ..." />
+                        </div>
+                        <div id="search-results">
+                            <!-- Search results will be displayed here -->
+                        </div>
                     </div>
+                    <a href="{% url 'forum:ask_question_forum' %}" class="btn btn-primary">Ask Question</a>
                 </div>
-                <a href="{% url 'forum:ask_question_forum' %}" class="btn btn-primary">Ask Question</a>
+                {% if query %}
+                        <div class="query">Results for {{ query }}</div>
+                {% endif %}
             </div>
+
             <div class="question-list">
                 {% for question in questions %}
                     <div class="question-item">
@@ -40,7 +49,7 @@
                                         {% for tag in question.tags.all %}
                                             <li>{{ tag.name }}</li>
                                         {% empty %}
-                                            <li>No tags available.</li>
+                                            {#<li>No tags available.</li>#}
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -106,7 +115,7 @@
                   </div>
                   <div class="advertise-li">
                       <img src="{% static '/forum/images/add.gif' %}" alt="earth fevicon"/>
-                      <a href="#" >Unlock all Green Book forum features by logging in</a>
+                      <a href="{% url 'forum:ask_question_forum'  %}" target="_blank">This is your chance to make an impact on society</a>
                   </div>
               </div>
             </div>
@@ -115,9 +124,13 @@
                 {% for t_question in top_questions %}
                 <div class="hot-questions-flex">
                     <div class="no-of-votes">
-                        {{ t_question.total_votes }}
+                        <div class="no-of-votes-item">
+                            {{ t_question.total_votes }}
+                        </div>
                     </div>
-                    <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                    <div class="hot-question-link">
+                        <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                    </div>
                 </div>
                 {% endfor %}
             </div>

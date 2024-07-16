@@ -1,7 +1,13 @@
 import re
+from datetime import timedelta, datetime
 
+from bs4 import BeautifulSoup
+from django.contrib.auth.models import User
+from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Count, F, Q
+from django.db.models import Count, F, Q, OuterRef, Subquery, Value
+from django.utils import timezone
+from django.utils.timezone import now
 
 from accounts.models import UserProfile
 from .forms import QuestionForm, QuestionCommentForm, AnswerForm, AnswerCommentForm
@@ -20,13 +26,19 @@ def search_questions(request):
     query = request.GET.get('q', '')
     if query:
         questions = Question.objects.filter(
-            Q(title__icontains=query) | Q(body__icontains=query)
-        ).values('id', 'question_id', 'title', 'body')
+            Q(title__icontains=query) |
+            Q(body__icontains=query) |
+            Q(tags__name__icontains=query)  # Search in tags
+        ).annotate(
+            total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(
+                votes__vote_type='downvote'))
+        ).order_by('-total_votes')[:10].values('id', 'question_id', 'title', 'body')
         return JsonResponse({'questions': list(questions)})
     return JsonResponse({'questions': []})
 
 
 def home_forum(request):
+    header = 'Top Questions'
     top_questions = (
         Question.objects.annotate(
             total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(votes__vote_type='downvote'))
@@ -35,15 +47,33 @@ def home_forum(request):
     user_time_zone = get_user_time_zone(request)
 
     query = request.GET.get('search', '')
+    tag = request.GET.get('tag', '')
     if query:
-        questions = Question.objects.filter(
-            Q(title__icontains=query) | Q(body__icontains=query)
-        ).annotate(
-            total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(
-                votes__vote_type='downvote'))
-        ).order_by('-total_votes')
+        header = 'Search Results'
+        if tag:
+            questions = Question.objects.filter(
+                Q(tags__name=query)  # Search in tags
+            ).annotate(
+                total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(
+                    votes__vote_type='downvote'))
+            ).order_by('-total_votes')
+        else:
+            questions = Question.objects.filter(
+                Q(title__icontains=query) |
+                Q(body__icontains=query) |
+                Q(tags__name__icontains=query)  # Search in tags
+            ).annotate(
+                total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(
+                    votes__vote_type='downvote'))
+            ).order_by('-total_votes')
     else:
-        questions = Question.objects.annotate(
+        # Calculate the date 30 days ago
+        thirty_days_ago = datetime.now() - timedelta(days=30)
+
+        # Filter, annotate, and order the questions
+        questions = Question.objects.filter(
+            created_ts__gte=thirty_days_ago  # Filter questions from the past 30 days
+        ).annotate(
             total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes', filter=Q(
                 votes__vote_type='downvote'))
         ).order_by('-total_votes')
@@ -52,7 +82,8 @@ def home_forum(request):
                   {'questions': questions,
                    'top_questions': top_questions,
                    'user_time_zone': user_time_zone,
-                   'header': 'Top Questions'})
+                   'header': header,
+                   'query': query})
 
 def question_tab_forum(request):
     top_questions = (
@@ -62,13 +93,7 @@ def question_tab_forum(request):
     )
     user_time_zone = get_user_time_zone(request)
 
-    query = request.GET.get('search', '')
-    if query:
-        questions = Question.objects.filter(
-            Q(title__icontains=query) | Q(body__icontains=query)
-        )
-    else:
-        questions = Question.objects.all()
+    questions = Question.objects.all().order_by('-created_ts')
 
     return render(request, 'forum/home_forum.html',
                   {'questions': questions,
@@ -76,8 +101,9 @@ def question_tab_forum(request):
                    'user_time_zone': user_time_zone,
                    'header': 'All Questions'})
 def ask_question_forum(request):
-    validate_user_login(request, 'You must be logged in to ask a question.')
-
+    response = validate_user_login(request, 'You must be logged in to ask a question.')
+    if response:
+        return response
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -259,6 +285,14 @@ def question_comment(request, id):
         comment_form = QuestionCommentForm(request.POST)
 
         if comment_form.is_valid():
+            # Extract the cleaned data from the form
+            body = comment_form.cleaned_data.get('body', '').strip()
+
+            # Check if the body field is empty or contains only non-visible content
+            if is_blank_html(body):
+                # Add a form error if body is blank or contains only non-visible content
+                messages.error(request, 'The comment cannot be blank')
+                return redirect('forum:question_detail', id=question.id, question_id=question.question_id)
             comment = comment_form.save(commit=False)
             comment.question = question
             comment.commented_by = request.user
@@ -274,12 +308,25 @@ def answer_comment(request, id):
 
         answer_comment_form = AnswerCommentForm(request.POST)
         if answer_comment_form.is_valid():
+            # Extract the cleaned data from the form
+            body = answer_comment_form.cleaned_data.get('body', '').strip()
+
+            # Check if the body field is empty or contains only non-visible content
+            if is_blank_html(body):
+                # Add a form error if body is blank or contains only non-visible content
+                messages.error(request, 'The comment cannot be blank')
+                return redirect('forum:question_detail', id=answer.question.id, question_id=answer.question.question_id)
             answer_comment = answer_comment_form.save(commit=False)
             answer_comment.commented_by = request.user
             answer_comment.question = answer.question
             answer_comment.answer = answer
             answer_comment.save()
             return redirect('forum:question_detail', id=answer.question.id, question_id=answer.question.question_id)
+
+def is_blank_html(html_content):
+    soup = BeautifulSoup(html_content, 'lxml')
+    text = soup.get_text(strip=True)
+    return not text
 
 def answer(request, id):
     question = get_object_or_404(Question, id=id)
@@ -290,8 +337,117 @@ def answer(request, id):
 
     answer_form = AnswerForm(request.POST)
     if answer_form.is_valid():
+        # Extract the cleaned data from the form
+        body = answer_form.cleaned_data.get('body', '').strip()
+
+        # Check if the body field is empty or contains only non-visible content
+        if is_blank_html(body):
+            # Add a form error if body is blank or contains only non-visible content
+            messages.error(request, 'The answer cannot be blank')
+            return redirect('forum:question_detail', id=question.id, question_id=question.question_id)
+
         answer = answer_form.save(commit=False)
         answer.question = question
         answer.asked_by = request.user
         answer.save()
         return redirect('forum:question_detail', id=question.id, question_id=question.question_id)
+
+
+def display_search_tags(request):
+    query = request.GET.get('q', '')
+
+    if query:
+        tags = Tag.objects.filter(name__icontains=query).annotate(
+            question_count=Coalesce(Count('questions'), Value(0))
+        ).values('id', 'name', 'question_count')
+    else:
+        tags = Tag.objects.all().annotate(
+            question_count=Coalesce(Count('questions'), Value(0))
+        ).values('id', 'name', 'question_count')
+
+    return JsonResponse({'tags': list(tags)})
+
+
+def forum_tags(request):
+    tags = Tag.objects.all()
+
+    return render(request,
+                  'forum/tag_page.html',
+                  {'tags': tags})
+
+
+def search_users(request):
+    query = request.GET.get('q', '')
+
+    question_subquery = Question.objects.filter(asked_by=OuterRef('pk')).values('asked_by').annotate(count=Count('*')).values('count')
+    answer_subquery = Answer.objects.filter(asked_by=OuterRef('pk')).values('asked_by').annotate(count=Count('*')).values('count')
+
+    users = User.objects.annotate(
+        question_count=Coalesce(Subquery(question_subquery), Value(0)),
+        answer_count=Coalesce(Subquery(answer_subquery), Value(0))
+    )
+
+    if query:
+        users = users.filter(username__icontains=query)
+
+    users = users.values('id', 'username', 'question_count', 'answer_count')
+
+    return JsonResponse({'users': list(users)})
+
+def user_page(request):
+    # Annotate users with their question count and order by question count
+    users = User.objects.annotate(
+        question_count=Count('questions_asked')
+    ).order_by('-question_count')
+
+    return render(request, 'forum/users_forum_page.html', {'users': users})
+
+
+def user_details(request, id):
+    # Fetch the user and their profile
+    user = get_object_or_404(User, id=id)
+    user_profile = get_object_or_404(UserProfile, user=user)
+
+    # Calculate membership duration
+    created_date = user_profile.created_at
+    membership_duration = calculate_duration(created_date)
+
+    # Annotate questions and answers with their total votes
+    questions = Question.objects.filter(asked_by=user).annotate(
+        total_votes=Count('votes', filter=Q(votes__vote_type='upvote')) - Count('votes',
+                                                                                filter=Q(votes__vote_type='downvote'))
+    ).order_by('-total_votes')
+
+    # Step 1: Compute total votes for each answer
+    answers_with_votes = Answer.objects.annotate(
+        total_votes=Count('answer_votes', filter=Q(answer_votes__vote_type='upvote')) - Count('answer_votes', filter=Q(
+            answer_votes__vote_type='downvote'))
+    )
+
+    # Step 2: Find the top-voted answer per question
+    top_answer_subquery = answers_with_votes.filter(
+        question=OuterRef('question')
+    ).order_by('-total_votes').values('id')[:1]
+
+    # Step 3: Filter answers to get only the top-voted answer for each question
+    top_answers = answers_with_votes.filter(
+        id__in=Subquery(top_answer_subquery)
+    ).order_by('-total_votes')
+
+    return render(request, 'forum/user_detail.html', {
+        'user': user,
+        'questions': questions,
+        'questions_count': questions.count(),
+        'answers_count': answers_with_votes.count(),
+        'answers': top_answers,
+        'membership_duration': membership_duration
+    })
+
+
+def calculate_duration(created_date):
+    now_date = now()
+    delta = now_date - created_date
+    years = delta.days // 365
+    months = (delta.days % 365) // 30
+    days = (delta.days % 365) % 30
+    return f"{years} years, {months} month{'s' if months != 1 else ''}, {days} day{'s' if days != 1 else ''}"

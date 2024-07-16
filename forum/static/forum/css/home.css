@@ -6,17 +6,32 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 0 2em 2em;
-    border-bottom: 1px solid #e3e6e8ff;
     color: #4e4d4d;
 }
 
-.home-header h2 {
-    color: #333333;
+.display-heading {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 2em 2em;
+    border-bottom: 1px solid #e3e6e8ff;
 }
 
-.home-header a {
+.home-header h3 {
+    margin: 0;
+}
+
+.query {
     font-size: small;
+    color: grey;
+}
+
+.home-header .btn {
+    font-size: small;
+    background-color: #1B75D0FF;
+}
+
+.home-header .btn:hover{
+    background-color: #155CA2FF;
 }
 
 .search-wrapper {
@@ -30,11 +45,22 @@
     box-sizing: border-box;
 }
 
+.search-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 #question-search {
     flex: 1;
     border: none;
     outline: none;
     min-width: 150px; /* Ensure a minimum width for the input field */
+    font-size: small;
+}
+
+.search-input img {
+    height: 1.5em;
 }
 
 #search-results {
@@ -66,11 +92,18 @@
     display: flex;
     align-items: center;
     width: 100%;
+    font-size: small;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
 }
 
 .search-result-item:hover {
     background: #dadada;
-    color: #fff;
+    color: #1f216e;
 }
 
 /*Advertisement area css*/
@@ -140,19 +173,33 @@
     display: flex;
 }
 
-.hot-questions-flex a {
+.hot-question-link {
+    flex: 1;
     text-decoration: none;
-    display: flex; /* Ensure the <a> element itself is a flex container */
-    align-items: center; /* Vertically align items inside the <a> element */
+    display: flex;  /* Ensure the <a> element itself is a flex container */
+    align-items: center;  /* Vertically align items inside the <a> element */
+    overflow: hidden;  /* Hide overflow content */
+}
+
+.hot-question-link a {
+    display: -webkit-box;  /* Use webkit box model for multi-line truncation */
+    -webkit-line-clamp: 2; /* Limit text to 2 lines */
+    -webkit-box-orient: vertical; /* Vertical box orientation */
+    overflow: hidden;  /* Hide text overflow */
+    text-overflow: ellipsis;  /* Show ellipsis for overflow text */
 }
 
 .no-of-votes {
+    margin: 0.5em 1em 0.5em 0em;
+}
+
+.no-of-votes-item {
     background-color: #d3efd1;
     border-radius: 2px;
     padding: 2px 5px;
-    margin: 0.5em 1em 0.5em 0em;
-    width: 2.5em;
+    width: 3em;  /* Fixed width */
     text-align: center;
+    word-wrap: break-word;
 }
 
 /*display questions css*/
@@ -187,6 +234,11 @@
 .question-values a {
     text-decoration: none;
     margin-bottom: 0.5em;
+    color: #1B75D0FF;
+}
+
+.question-values a:hover {
+    color: #155CA2FF;
 }
 
 /* Style for the tags */
@@ -198,7 +250,7 @@
 
 .question-tags li {
     display: inline-block;
-    background-color: #e6e6e6;
+    background-color: #efefef;
     border-radius: 7px;
     padding: 6px 5px;
     margin: 0 2px 2px 2px;
