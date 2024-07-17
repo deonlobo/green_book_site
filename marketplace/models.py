@@ -32,3 +32,64 @@ class Product(models.Model):
         return "No Image"
 
     image_tag.short_description = 'Image'
+
+class ProductStep1(models.Model):
+    quality_choices = [('L','Low'),('M','Medium'),('H','High')]
+    discounted_choices = [(True,'Yes'),(False,'No')]
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    quality = models.CharField(choices=quality_choices, max_length=20)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
+    category = models.ForeignKey(Category, related_name='productcategory',on_delete=models.CASCADE)
+    discounted = models.BooleanField(choices=discounted_choices,default=False)
+    percent = models.DecimalField(max_digits=10, decimal_places=2)
+
+class ProductStep2(models.Model):
+    image_upload1 = models.BinaryField()
+    image_upload2 = models.BinaryField()
+
+
+    def image_upload1_tag(self):
+        if self.image_upload1:
+            from base64 import b64encode
+            return mark_safe(
+                f'<img src="data:image/png;base64,{b64encode(self.image_upload1).decode()}" width="150" height="150" />')
+        return "No Image"
+
+    image_upload1_tag.short_description = 'Image'
+
+    def image_upload2_tag(self):
+        if self.image_upload2:
+            from base64 import b64encode
+            return mark_safe(
+                f'<img src="data:image/png;base64,{b64encode(self.image_upload2).decode()}" width="150" height="150" />')
+        return "No Image"
+
+    image_upload2_tag.short_description = 'Image'
+
+    def image_upload3_tag(self):
+        if self.image_upload3:
+            from base64 import b64encode
+            return mark_safe(
+                f'<img src="data:image/png;base64,{b64encode(self.image_upload3).decode()}" width="150" height="150" />')
+        return "No Image"
+
+    image_upload3_tag.short_description = 'Image'
+
+    def image_upload4_tag(self):
+        if self.image_upload4:
+            from base64 import b64encode
+            return mark_safe(
+                f'<img src="data:image/png;base64,{b64encode(self.image_upload4).decode()}" width="150" height="150" />')
+        return "No Image"
+
+    image_upload4_tag.short_description = 'Image'
+
+class ProductStep3(models.Model):
+    textarea = models.TextField()
+
+class SearchProduct(models.Model):
+    search_text = models.TextField()
+    from_date = models.DateField()
+    to_date = models.DateField()

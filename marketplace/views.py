@@ -59,3 +59,15 @@ def add_product(request):
 
     return render(request, 'add-product.html', {'form':form})
 
+# def dumy(request):
+#     if request.method == 'POST':
+#         form = ProductStep2Form(request.POST, request.FILES)
+#         if form.is_valid():
+#             product = form.save(commit=False)
+#             product.save()
+#             return redirect('view_products', category_id=product.category_id,product_id=product.id)
+#     else:
+#          form = ProductStep2Form()
+#
+#     return render(request, 'demo.html', {'form':form})
+
