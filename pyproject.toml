@@ -12,6 +12,10 @@ channels = "^4.1.0"
 daphne = "^4.1.2"
 uuid = "^1.30"
 django-ckeditor-5 = "^0.2.13"
+pytz = "^2024.1"
+django-imagekit = "^5.0.0"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.2.2"
 
 
 [build-system]
