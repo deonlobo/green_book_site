@@ -64,6 +64,10 @@ def myProjectView(request):
     projects = Project.objects.filter(posted_by=request.user).order_by('-posted_on')
     return render(request,'DIYProject/my_projects.html',{'projects': projects})
 
+def projectView(request,id):
+    project = get_object_or_404(Project, pk=id)
+    return render(request,'DIYProject/view_project.html',{'project': project})
+
 @login_required(login_url='login')
 def deleteProjectView(request,project_id):
     temp_project = get_object_or_404(Project, pk=project_id)
