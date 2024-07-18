@@ -17,3 +17,6 @@ class NewProject(forms.ModelForm):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['image_2'].required = False
+
+class SearchProject(forms.Form):
+    term  = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3', 'placeholder': 'Search Projects '}),)

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'green_book_app.apps.GreenBookAppConfig',
     'accounts.apps.AccountsConfig',
-    'DIYProject'
+    'DIYProject.apps.DiyprojectConfig',
 ]
 
 MIDDLEWARE = [

@@ -12,6 +12,7 @@ class ProjectCategory(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
+    tools = models.CharField(max_length=200)
     project_category = models.ForeignKey(ProjectCategory, on_delete=models.CASCADE)
     process = models.TextField()
     img_1 = models.ImageField(upload_to='images/DIYProjects/ProjectImages')
