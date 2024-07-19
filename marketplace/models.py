@@ -6,7 +6,7 @@ from django.utils.html import mark_safe
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(choices=[(True,'Yes'),(False,'No')])
     creation_time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.category_name

@@ -59,6 +59,20 @@ def add_product(request):
 
     return render(request, 'add-product.html', {'form':form})
 
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.save()
+            return  render(request, 'add-category.html', {'form':form,'categories':Category.objects.all()})
+        else:
+            return render(request, 'add-category.html', {'form': form, 'categories': Category.objects.all()})
+    else:
+        return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
+
+
 # def dumy(request):
 #     if request.method == 'POST':
 #         form = ProductStep2Form(request.POST, request.FILES)

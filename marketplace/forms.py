@@ -1,7 +1,6 @@
 from django.forms import *
 from .models import *
-from django.utils.html import mark_safe
-from django.contrib import admin
+
 
 class ProductForm(ModelForm):
     image_upload = ImageField(required=False, label='Upload Image')
@@ -105,6 +104,20 @@ class ProductStep3Form(ModelForm):
             'textarea': Textarea(attrs={'class': 'form-control'}),
         }
 
+class CategoryForm(ModelForm):
+
+    class Meta:
+        model = Category
+        fields = ['category_name','is_active']
+        widgets = {
+            'category_name': TextInput(attrs={'class': 'form-control'}),
+            'is_active': Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'category_name': 'Category',
+            'is_active': 'Is Active?',
+        }
+
 class SearchProductForm(ModelForm):
     class Meta:
         model = SearchProduct
@@ -127,6 +140,4 @@ class SearchProductForm(ModelForm):
                 self.add_error('from_date', 'This field is required.')
             if not to_date:
                 self.add_error('to_date', 'This field is required.')
-
-
         return cleaned_data
