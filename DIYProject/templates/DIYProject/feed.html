@@ -79,7 +79,7 @@
                     <h6><i>How to make it ?</i></h6>
                     <ul>
                         {% for step in project.getSteps %}
-                            <li>{{ step }}</li>
+                            <li>{{ step | capfirst}}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="my-1">
                     <div class="row">
                         <div class="col-lg-6 text-left"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}</div>
-                        <div class="col-lg-6 text-right"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by }}</div>
+                        <div class="col-lg-6 text-right"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}</div>
                     </div>
                 </div>
 

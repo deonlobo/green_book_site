@@ -25,3 +25,13 @@ class Project(models.Model):
 
     def getSteps(self):
         return self.process.splitlines()
+
+class Thought(models.Model):
+    content = models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    posted_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+

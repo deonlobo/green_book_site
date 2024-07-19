@@ -1,5 +1,5 @@
-from DIYProject.forms import NewProject, SearchProject
-from DIYProject.models import Project, ProjectCategory
+from DIYProject.forms import NewProject, SearchProject, ThoughtForm
+from DIYProject.models import Project, ProjectCategory, Thought
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -66,7 +66,17 @@ def myProjectView(request):
 
 def projectView(request,id):
     project = get_object_or_404(Project, pk=id)
-    return render(request,'DIYProject/view_project.html',{'project': project})
+    thoughts = Thought.objects.filter(project=project)
+    tf = ThoughtForm()
+    if request.method=='POST':
+        tf = ThoughtForm(request.POST)
+        if tf.is_valid():
+            instance = tf.save(commit=False)
+            instance.project = project
+            instance.posted_by = request.user
+            instance.save()
+
+    return render(request,'DIYProject/view_project.html',{'project': project,'thoughts':thoughts,'ThoughtForm':tf})
 
 @login_required(login_url='login')
 def deleteProjectView(request,project_id):
