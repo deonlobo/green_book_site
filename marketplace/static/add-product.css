@@ -37,8 +37,7 @@ button:focus,
 	background-color: #333;
 }
 .signup-step-container{
-	padding: 150px 0px;
-	padding-bottom: 60px;
+	padding: 2rem 0;
 }
 
 .category-register{

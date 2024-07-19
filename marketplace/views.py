@@ -59,6 +59,17 @@ def add_product(request):
 
     return render(request, 'add-product.html', {'form':form})
 
+def add_product_step_one(request):
+    if request.method == 'POST':
+        form = ProductStep1Form(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+    else:
+        form = ProductStep1Form()
+
+    return render(request, 'add-product-step-one.html', {'form' : form})
+
 
 def add_category(request):
     if request.method == 'POST':
