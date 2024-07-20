@@ -48,6 +48,9 @@ class ProductStep1(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')], max_length=1)
 
+    def __str__(self):
+        return self.name
+
 
 class ProductStep2(models.Model):
     image_upload1 = models.BinaryField()

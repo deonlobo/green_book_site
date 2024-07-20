@@ -15,7 +15,7 @@ admin.site.register(ProductStep3)
 @admin.register(ProductStep2)
 class ProductStep2Admin(admin.ModelAdmin):
     form = ProductStep2Form
-    list_display = ('image_upload1_tag','image_upload2_tag','image_upload3_tag','image_upload4_tag')
+    list_display = ('image_upload1_tag','image_upload2_tag','image_upload3_tag','image_upload4_tag','product_step1')
     readonly_fields = ('image_upload1_tag','image_upload2_tag','image_upload3_tag','image_upload4_tag')
 
 

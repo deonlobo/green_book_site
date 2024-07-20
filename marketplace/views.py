@@ -93,6 +93,24 @@ def add_category(request):
     else:
         return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
+def add_product_step_two(request, product_id):
+    if request.method == 'POST':
+        form = ProductStep2Form(request.POST,request.FILES)
+        if form.is_valid():
+            imageform = form.save(commit=False)
+            productstep1 = ProductStep1.objects.get(id=product_id)
+            imageform.product_step1 = productstep1
+            imageform.save()
+            return render(request,'add-product-step-two.html',{'form':ProductStep2Form(),'product_id':product_id})
+    else:
+        form = ProductStep2Form()
+        images = ProductStep2.objects.all().filter(product_step1__id=product_id)
+        context = {
+            'form': form,
+            'product_id': product_id,
+            'images': images  # Pass images queryset to the template context
+        }
+        return render(request,'add-product-step-two.html',context)
 
 # def dumy(request):
 #     if request.method == 'POST':

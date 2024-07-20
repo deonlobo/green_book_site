@@ -101,12 +101,11 @@ class ProductStep2Form(ModelForm):
 
     def save(self, commit=True):
         productStep2 = super().save(commit=False)
-        if (self.cleaned_data.get('image_upload1') and self.cleaned_data.get('image_upload2')
-                and self.cleaned_data.get('image_upload3') and self.cleaned_data.get('image_upload4')):
-            productStep2.image_upload1 = self.cleaned_data['image_upload1'].read()
-            productStep2.image_upload2 = self.cleaned_data['image_upload2'].read()
-            productStep2.image_upload3 = self.cleaned_data['image_upload3'].read()
-            productStep2.image_upload4 = self.cleaned_data['image_upload4'].read()
+        if self.cleaned_data.get('image1') and self.cleaned_data.get('image2') and self.cleaned_data.get('image3') and self.cleaned_data.get('image4'):
+            productStep2.image_upload1 = self.cleaned_data['image1'].read()
+            productStep2.image_upload2 = self.cleaned_data['image2'].read()
+            productStep2.image_upload3 = self.cleaned_data['image3'].read()
+            productStep2.image_upload4 = self.cleaned_data['image4'].read()
         if commit:
             productStep2.save()
         return productStep2
