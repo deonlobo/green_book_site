@@ -61,16 +61,33 @@
   </style>
 
   {% block messenger_css %} {% endblock %}
+
+  <!-- Use this to Load the static CSS -->
+  {% block css %}
+  {% endblock %}
+  
+  <!-- Use this to Load Additional headers -->
+  {% block header %}
+  {% endblock %}
+  
+  <title>{% block title %}Green Book{% endblock %}</title>
 </head>
 
 <body class="vh-100">
 
+  <!-- navbar -->
   {% include 'green_book_app/navbar.html' %}
 
+  <!-- forem app block-->
   {% block content %} {% endblock %}
 
+  <!-- messenger app block -->
   {% block messenger_html %} {% endblock %}
 
+  <!-- footer -->
+  {% include 'green_book_app/footer.html' %}
+
+  <!-- scripts section so scripts are loaded after the html -->
   {% block messenger_js %} {% endblock %}
 
 </body>

@@ -1,0 +1,95 @@
+.user-main-body {
+    margin: 2em;
+    color: #2e2929;
+}
+
+
+.search-wrapper {
+    position: relative;
+    width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.search-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#user-search {
+    flex: 1;
+    border: none;
+    outline: none;
+    min-width: 150px; /* Ensure a minimum width for the input field */
+    font-size: small;
+}
+
+.search-input img {
+    height: 1.5em;
+}
+
+
+.all-users{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.user-item {
+    color: #1B75D0FF;
+}
+
+.user-item:hover {
+    color: #155CA2FF;
+}
+
+.card-custom {
+    width: 14em;
+    min-height: 7em;
+    padding: 1.2em;
+    display: flex;
+    flex-direction: row;
+}
+
+.card-custom:hover {
+    background-color: #eaeaea;
+    border-radius: 1em;
+}
+
+.card-image {
+    width: 3em; /* Adjust as necessary */
+    height: 3em;
+    margin-right: 1em; /* Add some space between image and text */
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image is scaled properly */
+}
+
+.card-body-custom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the content vertically */
+}
+
+.card-body-custom a{
+    text-decoration: none;
+}
+
+.user-info {
+    text-align: left;
+    color: grey;
+    font-size: small;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+}

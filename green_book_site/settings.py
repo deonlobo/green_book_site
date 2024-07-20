@@ -24,6 +24,9 @@ SECRET_KEY = 'django-insecure-oo^^9%bmhlwukao@gd+3yo!t2ajr1g10le-cl=%3wq9a!j#u4-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+LOGIN_URL = '/accounts/login_user/'
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -35,7 +38,7 @@ INSTALLED_APPS = [
     'marketplace',
     'forum.apps.ForumConfig',
     'django_ckeditor_5',
-    'challenges',
+    'green_book_challenges',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -111,11 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_TZ = True
+TIME_ZONE = 'UTC'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -210,6 +212,26 @@ CKEDITOR_5_CONFIGS = {
                 { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
             ]
         }
+    },
+    'comment_config': {
+        'blockToolbar': [
+                    'bulletedList', 'numberedList',
+        ],
+        'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+        'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|', 'removeFormat',],
+        'image': {
+                    'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                                'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+                    'styles': [
+                        'full',
+                        'side',
+                        'alignLeft',
+                        'alignRight',
+                        'alignCenter',
+                    ]
+
+        },
     },
     'list': {
         'properties': {
