@@ -43,7 +43,7 @@ class ProductStep1Form(ModelForm):
             'quality': Select(attrs={'class': 'form-control'}),
             'price': NumberInput(attrs={'class': 'form-control'}),
             'stock': NumberInput(attrs={'class': 'form-control'}),
-            'category': CheckboxSelectMultiple(),
+            'category': Select(attrs={'class': 'form-control'}),
             'discounted': Select(attrs={'class': 'form-control'}),
             'percent': NumberInput(attrs={'class': 'form-control'}),
 

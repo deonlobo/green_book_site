@@ -41,7 +41,7 @@ class ProductStep1(models.Model):
     quality = models.CharField(choices=quality_choices, max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    category = models.ManyToManyField(Category, related_name='product_category')
+    category = models.ForeignKey(Category,null=True, related_name='product_category',on_delete=models.CASCADE)
     discounted = models.BooleanField(choices=discounted_choices,default=False)
     percent = models.DecimalField(max_digits=10, decimal_places=2 , blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

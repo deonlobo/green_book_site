@@ -87,13 +87,7 @@
                                              <div class="form-group">
                                                  <label>{{ form.category.label }}</label>
 {#                                                {{ form.stock }}#}
-                                             </div>
-                                             <div class="row">
-                                                  {% for checkbox in form.category %}
-                                                        <div class="col-md-4">
-                                                            {{ checkbox }}
-                                                        </div>
-                                                    {% endfor %}
+                                                  {{form.category}}
                                              </div>
                                         </div>
 

@@ -93,21 +93,6 @@ def add_category(request):
     else:
         return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
-def add_product_step_two(request, product_id):
-    if request.method == 'POST':
-        form = ProductStep2Form(request.POST,request.FILES)
-        print(form)
-        if form.is_valid():
-            # form.product_step1 = ProductStep1.objects.get(id=product_id)
-            imageform = form.save(commit=False)
-            imageform.product_step1 = ProductStep1.objects.get(id=product_id)
-            imageform.save()
-            print(imageform)
-            return render(request,'add-product-step-two.html',{'form':ProductStep2Form(),'product_id':product_id})
-    else:
-        form = ProductStep2Form()
-        return render(request,'add-product-step-two.html',{'form':form,'product_id':product_id})
-
 
 # def dumy(request):
 #     if request.method == 'POST':
