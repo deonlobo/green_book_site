@@ -66,11 +66,13 @@ def add_product_step_one(request):
         print(form.cleaned_data)
 
         if form.is_valid():
-            product = form.save(commit=False)
-            product.save()
-            test = ProductStep1.objects.get(id=product.id)
-            categories = test.category.all()
-            print(categories)
+            productStep1 = form.save(commit=False)
+            productStep1.save()
+            test = ProductStep1.objects.get(id=productStep1.id)
+            # categories = test.category.all()
+            # print(categories)
+
+            return redirect('marketplace:view_products', product_id=test.id)
 
 
     else:
@@ -90,6 +92,21 @@ def add_category(request):
             return render(request, 'add-category.html', {'form': form, 'categories': Category.objects.all()})
     else:
         return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
+
+def add_product_step_two(request, product_id):
+    if request.method == 'POST':
+        form = ProductStep2Form(request.POST,request.FILES)
+        print(form)
+        if form.is_valid():
+            # form.product_step1 = ProductStep1.objects.get(id=product_id)
+            imageform = form.save(commit=False)
+            imageform.product_step1 = ProductStep1.objects.get(id=product_id)
+            imageform.save()
+            print(imageform)
+            return render(request,'add-product-step-two.html',{'form':ProductStep2Form(),'product_id':product_id})
+    else:
+        form = ProductStep2Form()
+        return render(request,'add-product-step-two.html',{'form':form,'product_id':product_id})
 
 
 # def dumy(request):

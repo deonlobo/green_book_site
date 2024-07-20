@@ -74,22 +74,22 @@ class ProductStep1Form(ModelForm):
         return cleaned_data
 
 class ProductStep2Form(ModelForm):
-    image_upload1 = ImageField(
+    image1 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
         label='Upload Image 1'
     )
-    image_upload2 = ImageField(
+    image2 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
         label='Upload Image 2'
     )
-    image_upload3 = ImageField(
+    image3 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
         label='Upload Image 3'
     )
-    image_upload4 = ImageField(
+    image4 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
         label='Upload Image 4'
@@ -97,7 +97,19 @@ class ProductStep2Form(ModelForm):
 
     class Meta:
         model = ProductStep2
-        fields = []
+        fields = ['image1', 'image2', 'image3', 'image4']
+
+    def save(self, commit=True):
+        productStep2 = super().save(commit=False)
+        if (self.cleaned_data.get('image_upload1') and self.cleaned_data.get('image_upload2')
+                and self.cleaned_data.get('image_upload3') and self.cleaned_data.get('image_upload4')):
+            productStep2.image_upload1 = self.cleaned_data['image_upload1'].read()
+            productStep2.image_upload2 = self.cleaned_data['image_upload2'].read()
+            productStep2.image_upload3 = self.cleaned_data['image_upload3'].read()
+            productStep2.image_upload4 = self.cleaned_data['image_upload4'].read()
+        if commit:
+            productStep2.save()
+        return productStep2
 
 
 class ProductStep3Form(ModelForm):
