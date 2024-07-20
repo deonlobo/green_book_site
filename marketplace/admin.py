@@ -10,4 +10,8 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('image_tag',)
 
 admin.site.register(Category)
+admin.site.register(ProductStep1)
+admin.site.register(ProductStep3)
+admin.site.register(ProductStep2)
+
 

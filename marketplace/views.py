@@ -62,9 +62,17 @@ def add_product(request):
 def add_product_step_one(request):
     if request.method == 'POST':
         form = ProductStep1Form(request.POST)
+        print(form.is_valid())
+        print(form.cleaned_data)
+
         if form.is_valid():
             product = form.save(commit=False)
             product.save()
+            test = ProductStep1.objects.get(id=product.id)
+            categories = test.category.all()
+            print(categories)
+
+
     else:
         form = ProductStep1Form()
 

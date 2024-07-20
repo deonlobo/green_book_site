@@ -51,8 +51,8 @@ class ProductStep1Form(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Customize how categories are displayed if needed
         self.fields['category'].queryset = Category.objects.all()
+
     def clean(self):
         cleaned_data = super().clean()
         price = cleaned_data.get('price')
