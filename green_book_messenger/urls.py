@@ -5,8 +5,8 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.messenger_home, name="messenger_home"),
-    path("<str:param_conversation_uuid>/", views.messenger_home, name="messenger_home"),
+    path("", views.get_messenger_list_template, name="messenger_list"),
+    path("<str:param_conversation_uuid>/", views.get_conversation_template, name="messenger_conversation"),
     path(
         "ajax/validate_username/",
         views.get_messages_by_conversation_id,
@@ -25,6 +25,16 @@ urlpatterns = [
     path(
         "ajax/toggle_conversation_pin",
         views.toggle_conversation_pin,
-        name="toggle_conversation_pin"
-    )
+        name="toggle_conversation_pin",
+    ),
+    path(
+        "ajax/get_pinned_conversations",
+        views.get_pinned_conversations,
+        name="get_pinned_conversations",
+    ),
+    path(
+        "ajax/get_private_conversations",
+        views.get_private_conversations,
+        name="get_private_conversations",
+    ),
 ]

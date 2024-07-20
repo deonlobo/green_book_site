@@ -7,6 +7,7 @@ from channels.db import database_sync_to_async
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        print("---------------------", self.scope)
         self.conversation_uuid = self.scope["url_route"]["kwargs"][
             "param_conversation_uuid"
         ]

@@ -4,6 +4,35 @@ from .models import Conversation, Message, User
 from .forms import PrivateConversationForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.core import serializers
+
+
+@login_required
+def get_messenger_list_template(request):
+    return render(
+        request,
+        "green_book_messenger/messenger_list_template.html",
+        {},
+    )
+
+
+@login_required
+def get_conversation_template(request, param_conversation_uuid):
+    messages = None
+    if param_conversation_uuid is not None:
+        messages = Message.objects.filter(
+            conversation__conversation_uuid=param_conversation_uuid
+        ).order_by("-timestamp")
+
+    return render(
+        request,
+        "green_book_messenger/messenger_conversation_template.html",
+        {
+            "selected_conversation_uuid": param_conversation_uuid,
+            "messages": messages,
+            "user_id": request.user.id
+        },
+    )
 
 
 @login_required
@@ -23,7 +52,7 @@ def messenger_home(request, param_conversation_uuid=None):
         ).order_by("-timestamp")
     return render(
         request,
-        "green_book_messenger/messenger_home.html",
+        "green_book_messenger/messenger_list.html",
         {
             "conversations_list": conversations_list,
             "private_conversations_list": private_conversations_list,
@@ -125,5 +154,28 @@ def toggle_conversation_pin(request):
         conversation.pinned = True
 
     conversation.save()
-    
+
     return JsonResponse({"status": "success", "pin_updated": True})
+
+
+@login_required
+def get_pinned_conversations(request):
+    filter = request.GET.get("filter", None)
+    pinned_conversations_list = Conversation.objects.filter(
+        pinned=True, conversation_name__icontains=filter
+    )
+    serialized_list = serializers.serialize("json", pinned_conversations_list)
+    jsonData = {"pinned_conversations": serialized_list}
+    return JsonResponse(jsonData)
+
+
+@login_required
+def get_private_conversations(request):
+    filter = request.GET.get("filter", None)
+    print("$$$$$$$$$$$$$$$", filter)
+    private_conversations_list = Conversation.objects.filter(
+        conversation_type="private", conversation_name__icontains=filter, pinned=False
+    )
+    serialized_list = serializers.serialize("json", private_conversations_list)
+    jsonData = {"private_conversations": serialized_list}
+    return JsonResponse(jsonData)

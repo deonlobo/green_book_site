@@ -30,6 +30,14 @@
     *::before,
     *::after {
       box-sizing: border-box;
+      --color-background: #EEF0E5;
+      --color-surface: #EEF0E5;
+      --color-primary: #EEF0E5;
+      --color-secondary: #EEF0E5;
+      --color-onBackground: #373A40;
+      --color-onSurface: #023047;
+      --color-onPrimary: #EEEEEE;
+      --color-onSecondary: #EEEEEE;
     }
 
     html,
@@ -39,6 +47,16 @@
 
     nav {
       max-height: 5rem;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 
