@@ -31,7 +31,6 @@ class AddProductForm(ModelForm):
             'description': Textarea(attrs={'class': 'form-control'}),
             'price': NumberInput(attrs={'class': 'form-control'}),
             'stock': NumberInput(attrs={'class': 'form-control'}),
-            'category': Select(attrs={'class': 'form-control'}),
         }
 
 class ProductStep1Form(ModelForm):
@@ -44,11 +43,16 @@ class ProductStep1Form(ModelForm):
             'quality': Select(attrs={'class': 'form-control'}),
             'price': NumberInput(attrs={'class': 'form-control'}),
             'stock': NumberInput(attrs={'class': 'form-control'}),
-            'category': Select(attrs={'class': 'form-control'}),
+            'category': CheckboxSelectMultiple(),
             'discounted': Select(attrs={'class': 'form-control'}),
             'percent': NumberInput(attrs={'class': 'form-control'}),
 
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Customize how categories are displayed if needed
+        self.fields['category'].queryset = Category.objects.all()
     def clean(self):
         cleaned_data = super().clean()
         price = cleaned_data.get('price')

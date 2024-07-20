@@ -41,14 +41,20 @@ class ProductStep1(models.Model):
     quality = models.CharField(choices=quality_choices, max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    category = models.ForeignKey(Category, related_name='productcategory',on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='product_category',on_delete=models.CASCADE)
     discounted = models.BooleanField(choices=discounted_choices,default=False)
     percent = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')], max_length=1)
+
 
 class ProductStep2(models.Model):
     image_upload1 = models.BinaryField()
     image_upload2 = models.BinaryField()
-
+    image_upload3 = models.BinaryField()
+    image_upload4 = models.BinaryField()
+    product_step1 = models.ForeignKey(ProductStep1, related_name='product_step2',on_delete=models.CASCADE)
 
     def image_upload1_tag(self):
         if self.image_upload1:
@@ -88,6 +94,7 @@ class ProductStep2(models.Model):
 
 class ProductStep3(models.Model):
     textarea = models.TextField()
+    product_step1 = models.ForeignKey(ProductStep1, related_name='product_step3',on_delete=models.CASCADE)
 
 class SearchProduct(models.Model):
     search_text = models.TextField()
