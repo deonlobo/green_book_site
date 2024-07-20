@@ -172,13 +172,17 @@
                                         <!-- Bootstrap Carousel -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
+{#        {{ images }}#}
             {% for image in images %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    {% if image.image_upload1 %}
-                        {{ image.image_upload1 }}
-                    {% else %}
-                        <p>No image available</p>
-                    {% endif %}
+                    <img src="data:image/png;base64,{{ image }}"  />
+{#                    {{ image.image_upload1_tag }}#}
+
+{#                    {% if images.image_upload1 %}#}
+{#                        {{ images }}#}
+{#                    {% else %}#}
+{#                        <p>No image available</p>#}
+{#                    {% endif %}#}
                 </div>
             {% empty %}
                 <p>No images found.</p>

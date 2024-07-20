@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import *
+import base64
+from base64 import b64encode
 
 # Create your views here.
 
@@ -104,12 +106,18 @@ def add_product_step_two(request, product_id):
             return render(request,'add-product-step-two.html',{'form':ProductStep2Form(),'product_id':product_id})
     else:
         form = ProductStep2Form()
-        images = ProductStep2.objects.all().filter(product_step1__id=product_id)
+        images = ProductStep2.objects.all().filter(product_step1__id=product_id).order_by('-pk')
+        imageList = []
+        for image in images:
+            imageList.append(base64.b64encode(image.image_upload1).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload2).decode('utf-8'))
+
         context = {
             'form': form,
             'product_id': product_id,
-            'images': images  # Pass images queryset to the template context
+            'images': imageList # Pass images queryset to the template context
         }
+       # // print(images[0].image_upload1)
         return render(request,'add-product-step-two.html',context)
 
 # def dumy(request):
