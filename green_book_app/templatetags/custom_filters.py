@@ -21,3 +21,9 @@ def convert_to_timezone(value, timezone_str):
         return localtime(value, tz).strftime("%B %d, %Y at %H:%M")
     except pytz.UnknownTimeZoneError:
         return value
+
+@register.filter
+def trim_text(value, length=15):
+    if len(value) > length:
+        return value[:length] + '...'
+    return value
