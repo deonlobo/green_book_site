@@ -46,7 +46,7 @@ class ProductStep1(models.Model):
     percent = models.DecimalField(max_digits=10, decimal_places=2 , blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')])
+    status = models.IntegerField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')],default=0)
 
     def __str__(self):
         return self.name
@@ -110,6 +110,6 @@ class ProductStep3(models.Model):
     product_step1 = models.ForeignKey(ProductStep1, related_name='product_step3',on_delete=models.CASCADE)
 
 class SearchProduct(models.Model):
-    search_text = models.TextField()
-    from_date = models.DateField()
-    to_date = models.DateField()
+    search_text = models.TextField(blank=True,null=True)
+    from_date = models.DateField(blank=True,null=True)
+    to_date = models.DateField(blank=True,null=True)

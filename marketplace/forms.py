@@ -139,9 +139,10 @@ class SearchProductForm(ModelForm):
         fields = ['search_text','from_date','to_date']
         widgets = {
             'search_text': TextInput(attrs={'class': 'form-control'}),
-            'from_date': DateInput(attrs={'class': 'form-control'}),
-            'to_date': DateInput(attrs={'class': 'form-control'}),
+            'from_date': DateInput(attrs={'class': 'form-control','type':'date'}),
+            'to_date': DateInput(attrs={'class': 'form-control','type':'date'}),
         }
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -150,9 +151,4 @@ class SearchProductForm(ModelForm):
         if from_date and to_date:
             if from_date > to_date:
                 self.add_error('from_date', 'From date cannot be greater than to date.')
-        else:
-            if not from_date:
-                self.add_error('from_date', 'This field is required.')
-            if not to_date:
-                self.add_error('to_date', 'This field is required.')
         return cleaned_data

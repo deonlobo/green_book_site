@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from .models import *
 from .forms import *
@@ -64,23 +64,53 @@ def add_product(request):
 def add_product_step_one(request):
     if request.method == 'POST':
         form = ProductStep1Form(request.POST)
-        print(form.is_valid())
-        print(form.cleaned_data)
-
         if form.is_valid():
             productStep1 = form.save(commit=False)
             productStep1.save()
             test = ProductStep1.objects.get(id=productStep1.id)
-            # categories = test.category.all()
-            # print(categories)
-
             return redirect('marketplace:view_products', product_id=test.id)
-
-
     else:
         form = ProductStep1Form()
-
     return render(request, 'add-product-step-one.html', {'form' : form})
+
+def modify_add_product_step_one(request,product_id):
+    product = get_object_or_404(ProductStep1, id=product_id)
+    if request.method == 'POST':
+        form = ProductStep1Form(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return render(request, 'add-product-step-one.html', {'form': form, 'success': True})
+    else:
+        form = ProductStep1Form(instance=product)
+
+    return render(request, 'add-product-step-one.html', {'form': form})
+
+def modify_add_product_step_two(request,product_id):
+    if request.method == 'POST':
+        form = ProductStep2Form(request.POST,request.FILES)
+        if form.is_valid():
+            imageform = form.save(commit=False)
+            productstep1 = ProductStep1.objects.get(id=product_id)
+            imageform.product_step1 = productstep1
+            imageform.save()
+            return render(request,'add-product-step-two.html',{'form':ProductStep2Form(),'product_id':product_id})
+    else:
+        form = ProductStep2Form()
+        images = ProductStep2.objects.all().filter(product_step1__id=product_id).order_by('-pk')
+        imageList = []
+        for image in images:
+            imageList.append(base64.b64encode(image.image_upload1).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload2).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload3).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload4).decode('utf-8'))
+
+        context = {
+            'form': form,
+            'product_id': product_id,
+            'images': imageList # Pass images queryset to the template context
+        }
+       # // print(images[0].image_upload1)
+        return render(request,'add-product-step-two.html',context)
 
 
 def add_category(request):
@@ -142,6 +172,28 @@ def add_product_step_three(request, product_id):
 
 
         return render(request, 'add-product-step-three.html', {'product': product, 'images': imageList})
+
+def admin_manage_products(request):
+    if request.method == "POST":
+        searchProduct = SearchProductForm(request.POST)
+        if searchProduct.is_valid():
+            products = (ProductStep1.objects.filter(name__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(description__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(category__category_name__icontains=searchProduct.cleaned_data['search_text']) |
+                        # ProductStep1.objects.filter(status__icontains=searchProduct.cleaned_data['search_text']) |
+                        # ProductStep1.objects.filter(quality__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(price__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(stock__icontains=searchProduct.cleaned_data['search_text'])
+                        )
+            return render(request, "manage-product.html", {'form': searchProduct, 'products': products})
+        else:
+            return render(request,"manage-product.html",{'form': searchProduct, 'products' : ProductStep1.objects.all()})
+
+    else:
+        form = SearchProductForm()
+        # messages.success(request, 'Product updated successfully!')
+        products = ProductStep1.objects.all()
+        return render(request,"manage-product.html", {'form':form,'products':products})
 
 # def dumy(request):
 #     if request.method == 'POST':
