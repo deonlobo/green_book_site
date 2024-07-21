@@ -33,7 +33,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
             {% for category in categories %}
-          <a class="dropdown-item" href="#">{{ category.category_name }}</a>
+          <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>
             {% endfor %}
         </div>
       </li>

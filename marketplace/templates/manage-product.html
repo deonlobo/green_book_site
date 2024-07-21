@@ -1,0 +1,112 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'marketplace.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'add-product.css' %}" >
+{% endblock %}
+{% block content %}
+    <div class="container-fluid category">
+        <div class="col-md-12 mx-auto shadow p-0 bg-body rounded">
+            <header class="header">
+                <h4>Manage Products</h4>
+            </header>
+            <section class="category-register mt-2">
+{#                <div class="container">#}
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <form action="{% url 'marketplace:admin_manage_products' %}" method="post" novalidate>
+                                {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-3">
+                                     <div class="form-group">
+                                            <label>{{ form.search_text.label }}</label>
+                                            {{ form.search_text }}
+                                            {% for error in form.search_text.errors %}
+                                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                            {% endfor %}
+                                     </div>
+                                </div>
+                                <div class="col-sm-3">
+                                     <div class="form-group">
+                                            <label>{{ form.from_date.label }}</label>
+                                            {{ form.from_date }}
+                                            {% for error in form.from_date.errors %}
+                                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                            {% endfor %}
+                                     </div>
+                                </div>
+                                 <div class="col-sm-3">
+                                     <div class="form-group">
+                                            <label>{{ form.to_date.label }}</label>
+                                            {{ form.to_date }}
+                                            {% for error in form.to_date.errors %}
+                                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                            {% endfor %}
+                                     </div>
+                                </div>
+                                <div class="col-sm-3">
+                                     <ul class="list-inline">
+                                         <li><button type="submit" class="default-btn next-step">Submit</button></li>
+                                         <li><button type="button" class="default-btn prev-step">Back</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            </form>
+
+                        </div>
+                    </div>
+                <div class="row mt-4 table-responsive">
+                                <table class="table table-sm table-bordered">
+  <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Product</th>
+            <th scope="col">Category</th>
+            <th scope="col">Quality</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            <th scope="col">Discounted</th>
+            <th scope="col">Percent</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Updated On</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+{#      <th scope="col">Handle</th>#}
+        </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+        <tr>
+        <td>{{ product.pk }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+         <td>{{ product.get_quality_display }}</td>
+        <td>{{ product.stock }}</td>
+         <td>{{ product.price }}</td>
+        <td>{{ product.get_discounted_display }}</td>
+        <td>{{ product.percent }}</td>
+        <td>{{ product.created_at }}</td>
+        <td>{{ product.updated_at }}</td>
+        <td>
+
+            {% if product.get_is_active_display %}
+                Active
+            {% else %}
+                Inactive
+            {% endif %}
+        </td>
+        <td class="text-center">
+            <a href="#"><i class="fas fa-edit"></i></a>
+            <a href="#"><i class="fas fa-check-circle"></i></a>
+            <a href="#"><i class="fas fa-times-circle"></i></a>
+        </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+                            </div>
+{#                </div>#}
+            </section>
+        </div>
+    </div>
+{% endblock %}
