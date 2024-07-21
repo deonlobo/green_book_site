@@ -1,0 +1,100 @@
+{% extends 'green_book_app/base.html' %}
+
+{% load static %}
+
+<!-- https://colorhunt.co/palette/45526Cf4ce14127C56F8F5F1 -->
+{% block messenger_css %}
+<link rel="stylesheet" href="{% static 'green_book_messenger/css/messenger_list.css' %}" />
+{% endblock %}
+
+{% block messenger_js %}
+<script data-pinned_conversations_url="{% url 'get_pinned_conversations' %}"
+  data-private_conversations_url="{% url 'get_private_conversations' %}"
+  data-toggle_conversation_pin_url="{% url 'toggle_conversation_pin' %}" data-get_users_url="{% url 'get_users' %}"
+  data-csrf_token="{{ csrf_token }}" type="text/javascript"
+  data-add_private_conversation_url='{% url "add_private_conversation" %}'
+  src="{% static 'green_book_messenger/js/messenger_list.js' %}"></script>
+{% endblock %}
+
+{% block messenger_html %}
+<div id="messenger--container" class="messenger container-fluid position-relative overflow-hidden d-flex flex-column">
+  {% include './private_conversation_modal.html' %}
+  <div class="row gx-2 messenger__header__container">
+    <div class="messenger__header__left col-8 p-1 mx-auto">
+      <div class="messenger__header__left__container d-flex justify-content-between align-items-center p-4">
+        <span class="m-0 flex-grow-1 mr-2">
+          <input id="messenger__search__input" onkeyup="filter_conversations_debounce()" type="text"
+            class="form-control rounded-pill" placeholder="Search Conversations" />
+        </span>
+        <span class="messenger__header__add__button position-relative">
+          <button onclick="add_button_toggle()" id="add_conversation_btn" type="button"
+            class="btn rounded-circle p-2 m-0 b-0">
+            <svg id="add_conversation_btn_svg" width="25.4" height="22" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 12H20M12 4V20" stroke="#f8f5f1" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </span>
+
+      </div>
+      <div id="add__button__modal"
+        class="add__button__modal d-flex justify-content-evenly pt-2 pb-0 overflow-hidden h-0">
+        <button class="btn btn-primary rounded-pill" onclick="open_private_conversation_modal()">
+          <span>
+            <svg height="20" width="20" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 502.987 502.987" xml:space="preserve">
+              <g>
+                <g>
+                  <circle style="fill:#f8f5f1;" cx="185.994" cy="102.008" r="102.008" />
+                  <path style="fill:#f8f5f1;" d="M334.444,261.459c-13.244,0-25.95,2.243-37.9,6.191c-25.216-32.335-65.273-53.323-110.55-53.323
+          			c-76.361,0.022-138.226,59.471-138.226,132.898v73.794h172.437c16.221,47.585,61.261,81.969,114.239,81.969
+          			c66.611,0,120.775-54.186,120.775-120.775S401.055,261.459,334.444,261.459z M240.309,382.213
+          			c0-51.899,42.236-94.156,94.135-94.156c51.942,0,94.178,42.257,94.178,94.156c0,51.921-42.236,94.156-94.178,94.156
+          			C282.545,476.369,240.309,434.134,240.309,382.213z" />
+                  <path style="fill:#f8f5f1;" d="M351.269,312.97h-29.983c-0.022,14.366,0,52.158,0,52.158s-32.529,0-48.621,0.043v29.962
+          			c16.092-0.022,48.621-0.022,48.621-0.022s0,37.749-0.022,52.18h29.983c0.022-14.431,0.022-52.18,0.022-52.18s32.507,0,48.599,0
+          			v-29.983c-16.092,0-48.599,0-48.599,0S351.226,327.337,351.269,312.97z" />
+                </g>
+              </g>
+            </svg>
+          </span>Private Conversation</button>
+        <button class="btn btn-primary rounded-pill b-0">
+          <span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="9" r="3" fill="#f8f5f1" stroke-width="2" stroke-linecap="round" />
+              <path
+                d="M12.2679 9C12.5332 8.54063 12.97 8.20543 13.4824 8.06815C13.9947 7.93086 14.5406 8.00273 15 8.26795C15.4594 8.53317 15.7946 8.97 15.9319 9.48236C16.0691 9.99472 15.9973 10.5406 15.7321 11C15.4668 11.4594 15.03 11.7946 14.5176 11.9319C14.0053 12.0691 13.4594 11.9973 13 11.7321C12.5406 11.4668 12.2054 11.03 12.0681 10.5176C11.9309 10.0053 12.0027 9.45937 12.2679 9L12.2679 9Z"
+                fill="#f8f5f1" stroke-width="2" />
+              <path
+                d="M13.8816 19L12.9013 19.1974L13.0629 20H13.8816V19ZM17.7202 17.9042L18.6627 17.5699L17.7202 17.9042ZM11.7808 15.7105L11.176 14.9142L10.0194 15.7927L11.2527 16.5597L11.7808 15.7105ZM16.8672 18H13.8816V20H16.8672V18ZM16.7777 18.2384C16.7707 18.2186 16.7642 18.181 16.7725 18.1354C16.7804 18.0921 16.7982 18.0593 16.8151 18.0383C16.8474 17.9982 16.874 18 16.8672 18V20C18.0132 20 19.1414 18.9194 18.6627 17.5699L16.7777 18.2384ZM14 16C15.6416 16 16.4027 17.1811 16.7777 18.2384L18.6627 17.5699C18.1976 16.2588 16.9485 14 14 14V16ZM12.3857 16.5069C12.7702 16.2148 13.282 16 14 16V14C12.8381 14 11.9028 14.3622 11.176 14.9142L12.3857 16.5069ZM11.2527 16.5597C12.2918 17.206 12.7271 18.3324 12.9013 19.1974L14.8619 18.8026C14.644 17.7204 14.0374 15.9364 12.309 14.8614L11.2527 16.5597Z"
+                fill="#f8f5f1" />
+              <path
+                d="M9 15C12.5715 15 13.5919 17.5512 13.8834 19.0089C13.9917 19.5504 13.5523 20 13 20H5C4.44772 20 4.00829 19.5504 4.11659 19.0089C4.4081 17.5512 5.42846 15 9 15Z"
+                fill="#f8f5f1" stroke-width="2" stroke-linecap="round" />
+              <path d="M19 3V7" stroke="#f8f5f1" stroke-width="2" stroke-linecap="round" />
+              <path d="M21 5L17 5" stroke="#f8f5f1" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+          Group Conversation</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
+    <div class="messenger__conversation__list col-8 p-1 position-relative mx-auto">
+      <div id="messenger__list__container" class="messenger__list__container h-100 py-4 position-relative">
+        <div id="list__loader" class="loader position-absolute w-100">
+          <div class="loading-container">
+            <div class="loading-progress"></div>
+          </div>
+        </div>
+        <div id="pinned__list" class="pinned__list"></div>
+        <div id="private__list" class="private__list mt-4"></div>
+        <div id="group__list" class="group__list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

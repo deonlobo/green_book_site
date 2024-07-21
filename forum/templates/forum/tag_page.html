@@ -1,0 +1,115 @@
+{% extends 'forum/base_forum.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'forum/css/tags.css' %}">
+{% endblock %}
+
+{% block forum_base %}
+    <div class="tag-main-body">
+        <h3>Tags</h3>
+        <p>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
+        <div class="search-wrapper">
+            <div class="search-input">
+                <img src="{% static 'forum/images/search.png' %}">
+                <input type="text" id="tag-search" placeholder="Search ..." />
+            </div>
+        </div>
+
+        <div class="question-tags" id="question-tags">
+            {% for tag in tags %}
+                <div class="card" >
+                    <div class="card-body-custom">
+                        <a href="{% url 'forum:home_forum' %}?search={{ tag.name }}&tag=True">
+                            <div class="tag-item">
+                                {{ tag.name }}
+                            </div>
+                        </a>
+                        <div class="tag-info">
+                            {{ tag.questions.all.count }} questions
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const searchUrl = "{% url 'forum:display_search_tags' %}";  // Use namespacing here
+        const searchRedirectUrl = "{% url 'forum:home_forum' %}";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('tag-search');
+            const searchResults = document.getElementById('question-tags');
+            let debounceTimeout;
+
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value.trim();
+
+                if (debounceTimeout) {
+                    clearTimeout(debounceTimeout);
+                }
+
+                debounceTimeout = setTimeout(() => {
+                    if (query.length > 0) {
+                        fetch(`${searchUrl}?q=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                displaySearchResults(data.tags);
+                            });
+                    } else {
+                        fetch(`${searchUrl}?q=`)
+                            .then(response => response.json())
+                            .then(data => {
+                                displaySearchResults(data.tags);
+                            });
+                    }
+                }, 300); // Adjust the delay as needed (300ms in this case)
+            });
+
+            function displaySearchResults(tags) {
+                clearSearchResults();
+
+                if (tags.length > 0) {
+                    tags.forEach(tag => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'card';
+                        resultItem.innerHTML = `
+                            <div class="card-body-custom">
+                                <a href="${searchRedirectUrl}?search=${tag.name}&tag=True">
+                                    <div class="tag-item">
+                                        ${tag.name}
+                                    </div>
+                                </a>
+                                <div class="tag-info">
+                                    ${tag.question_count} questions
+                                </div>
+                            </div>
+                        `;
+                        searchResults.appendChild(resultItem);
+                    });
+                } else {
+                    const noResultsItem = document.createElement('div');
+                    noResultsItem.className = 'no-results';
+                    noResultsItem.textContent = 'No tags found';
+                    noResultsItem.style.marginLeft = '1em';  // Adding left margin
+                    noResultsItem.style.marginTop = '1.em';
+                    noResultsItem.style.color = 'grey';      // Setting color to grey
+                    searchResults.appendChild(noResultsItem);
+                }
+            }
+
+            function clearSearchResults() {
+                searchResults.innerHTML = '';
+            }
+
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    window.location.href = `${searchRedirectUrl}?search=${encodeURIComponent(searchInput.value.trim())}&tag=True`;
+                }
+            });
+        });
+    </script>
+{% endblock %}

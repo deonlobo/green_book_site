@@ -1,6 +1,19 @@
 {% extends 'green_book_app/base.html' %}
 
 {% block content %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <br/>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     <div class="container">
 
@@ -14,7 +27,7 @@
             </div>
         {% endif %}
 
-        <div class="col-md-9 mx-auto shadow p-5 mt-5 bg-body rounded">
+        <div class="col-md-9 mx-auto shadow p-5 mt-5 bg-body rounded mb-5">
             <h1 class="text-center">Register</h1>
             <br/>
             <form action="{% url 'register_user' %}" method=POST>

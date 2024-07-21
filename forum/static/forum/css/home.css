@@ -1,0 +1,279 @@
+.content-sidebar {
+    padding: 2em 2em 2em 0;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4e4d4d;
+}
+
+.display-heading {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 2em 2em;
+    border-bottom: 1px solid #e3e6e8ff;
+}
+
+.home-header h3 {
+    margin: 0;
+}
+
+.query {
+    font-size: small;
+    color: grey;
+}
+
+.home-header .btn {
+    font-size: small;
+    background-color: #1B75D0FF;
+}
+
+.home-header .btn:hover{
+    background-color: #155CA2FF;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.search-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#question-search {
+    flex: 1;
+    border: none;
+    outline: none;
+    min-width: 150px; /* Ensure a minimum width for the input field */
+    font-size: small;
+}
+
+.search-input img {
+    height: 1.5em;
+}
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+    top: 100%;
+    border-radius: 9px;
+}
+
+#search-results a {
+    text-decoration: none;
+}
+
+#search-results.with-border {
+    border: 1px solid #ccc;
+}
+
+.search-result-item {
+    background: #f0f0f0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: small;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+.search-result-item:hover {
+    background: #dadada;
+    color: #1f216e;
+}
+
+/*Advertisement area css*/
+.detail-section-main {
+    display: flex;
+    flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+    flex-direction: row;
+}
+
+.quesiton-area {
+    flex: 50% /* Initial size */;
+    max-width: 70%;
+}
+
+.advertise-area {
+    font-size: 0.7em;
+    width: 27%; /* Initial size */
+    display: block; /* Ensure the element is displayed as a block */
+    padding: 0.25em 2em 4em 4em; /* Optional: add padding for visibility */
+    word-wrap: break-word;
+    color: #4c4b4b;
+}
+
+@media (max-width: 80rem) {
+    .advertise-area {
+        display: none;
+    }
+}
+
+.advertise-area .card-header {
+    background-color: hsl(43,85%,88%);
+    height: 3em;
+    font-weight: bold;
+}
+
+.advertise-area .card-body {
+    background-color: hsl(43,85%,95%);
+}
+
+.advertise-area .card-body ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.advertise-li {
+    display: flex;
+    margin: 0.5em;
+}
+
+/*use this color for fevicon #40A0DA*/
+.advertise-li img {
+    height: 1.5em;
+    margin-right: 0.5em;
+}
+
+.advertise-li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.hot-questions {
+    margin-top: 2em;
+}
+
+.hot-questions-flex {
+    display: flex;
+}
+
+.hot-question-link {
+    flex: 1;
+    text-decoration: none;
+    display: flex;  /* Ensure the <a> element itself is a flex container */
+    align-items: center;  /* Vertically align items inside the <a> element */
+    overflow: hidden;  /* Hide overflow content */
+}
+
+.hot-question-link a {
+    display: -webkit-box;  /* Use webkit box model for multi-line truncation */
+    -webkit-line-clamp: 2; /* Limit text to 2 lines */
+    -webkit-box-orient: vertical; /* Vertical box orientation */
+    overflow: hidden;  /* Hide text overflow */
+    text-overflow: ellipsis;  /* Show ellipsis for overflow text */
+}
+
+.no-of-votes {
+    margin: 0.5em 1em 0.5em 0em;
+}
+
+.no-of-votes-item {
+    background-color: #d3efd1;
+    border-radius: 2px;
+    padding: 2px 5px;
+    width: 3em;  /* Fixed width */
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/*display questions css*/
+.question-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.question-item {
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    min-height: 6em;
+    border-bottom: 1px solid #e3e6e8ff;
+}
+
+.question-calculations {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 11em;
+    font-size: small;
+    padding-right: 1.5em;
+}
+
+.question-values {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.question-values a {
+    text-decoration: none;
+    margin-bottom: 0.5em;
+    color: #1B75D0FF;
+}
+
+.question-values a:hover {
+    color: #155CA2FF;
+}
+
+/* Style for the tags */
+.question-tags ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.question-tags li {
+    display: inline-block;
+    background-color: #efefef;
+    border-radius: 7px;
+    padding: 6px 5px;
+    margin: 0 2px 2px 2px;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #333;
+}
+
+.question-tags li:hover {
+    background-color: #c8c6c6;
+}
+
+.tag-user-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.user-info {
+    margin-left: auto;
+    font-size: small;
+    font-style: italic;
+    color: gray;
+}
+
+
+

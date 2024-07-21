@@ -1,0 +1,164 @@
+{% extends 'forum/base_forum.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'forum/css/home.css' %}">
+{% endblock %}
+
+{% block forum_base %}
+    <div class="detail-section-main">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <br/>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="quesiton-area">
+            <div class="display-heading">
+                <div class="home-header">
+                    <h3>{{ header }}</h3>
+                    <div class="search-wrapper">
+                        <div class="search-input">
+                            <img src="{% static 'forum/images/search.png' %}">
+                            <input type="text" id="question-search" placeholder="Search ..." />
+                        </div>
+                        <div id="search-results">
+                            <!-- Search results will be displayed here -->
+                        </div>
+                    </div>
+                    <a href="{% url 'forum:ask_question_forum' %}" class="btn btn-primary">Ask Question</a>
+                </div>
+                {% if query %}
+                        <div class="query">Results for {{ query }}</div>
+                {% endif %}
+            </div>
+
+            <div class="question-list">
+                {% for question in questions %}
+                    <div class="question-item">
+                        <div class="question-calculations">
+                            <div>
+                                {{ question.total_votes }} votes
+                            </div>
+                            <div>
+                                {{ question.answers.count }} answers
+                            </div>
+                        </div>
+                        <div class="question-values">
+                            <a href="{% url 'forum:question_detail' question.id question.question_id %}">{{ question.title }}</a>
+
+                            <div class="tag-user-info">
+                                <div class="question-tags">
+                                    <ul>
+                                        {% for tag in question.tags.all %}
+                                            <a href="{% url 'forum:home_forum' %}?search={{ tag.name }}&tag=True"><li>{{ tag.name }}</li></a>
+                                        {% empty %}
+                                            {#<li>No tags available.</li>#}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="user-info">
+                                    {{ question.asked_by.username }} asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+         <div class="advertise-area">
+            <div class="card">
+              <div class="card-header d-flex align-items-center">
+                Featured on Green Book
+              </div>
+              <div class="card-body">
+                  <ul>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/earth.png' %}" alt="earth fevicon"/>
+                              <a href="https://greenly.earth/en-us/blog/ecology-news/everything-you-need-to-know-about-green-technology-in-2022" target="_blank">Everything You Need to Know About Green Technology in 2024</a>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/earth.png' %}" alt="earth fevicon"/>
+                              <a href="https://theconversation.com/how-recycling-could-solve-the-shortage-of-minerals-essential-to-clean-energy-211474" target="_blank">How recycling could solve the shortage of minerals essential to clean energy</a>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="advertise-li">
+                              <img src="{% static '/forum/images/tree-planting.png' %}" alt="earth fevicon"/>
+                              <a href="https://education.nationalgeographic.org/resource/conserving-earth/" target="_blank">Tips and tricks on Conserving Earth</a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <div class="card-header d-flex align-items-center">
+                New updates !
+              </div>
+              <div class="card-body">
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/tick.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:home_forum' %}" >This sping enjoy the major update on the Green Book forum</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/help.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:home_forum' %}" target="_blank">Help others find answers on going green</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/tick.png' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:ask_question_forum' %}" target="_blank">Initiate a discussion on Green Technologies</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/login.png' %}" alt="earth fevicon"/>
+                      <a href="#" >Unlock all Green Book forum features by logging in</a>
+                  </div>
+                  <div class="advertise-li">
+                      <img src="{% static '/forum/images/add.gif' %}" alt="earth fevicon"/>
+                      <a href="{% url 'forum:ask_question_forum'  %}" target="_blank">This is your chance to make an impact on society</a>
+                  </div>
+              </div>
+            </div>
+            <div class="hot-questions">
+                <h5>Hot Network Questions</h5>
+                {% for t_question in top_questions %}
+                <div class="hot-questions-flex">
+                    <div class="no-of-votes">
+                        <div class="no-of-votes-item">
+                            {{ t_question.total_votes }}
+                        </div>
+                    </div>
+                    <div class="hot-question-link">
+                        <a href="{% url 'forum:question_detail' t_question.id t_question.question_id %}">{{ t_question.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        const searchUrl = "{% url 'forum:search_questions' %}";  // Use namespacing here
+        const searchRedirectUrl = "{% url 'forum:home_forum' %}";
+    </script>
+    <script src="{% static '/forum/js/search.js' %}"></script>
+{% endblock %}
+
+
