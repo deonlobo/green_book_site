@@ -46,7 +46,7 @@ class ProductStep1(models.Model):
     percent = models.DecimalField(max_digits=10, decimal_places=2 , blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')], max_length=1)
+    status = models.IntegerField(choices=[(0 , 'Pending'),(1, 'Active'),(2, 'Out of Stock')])
 
     def __str__(self):
         return self.name
@@ -62,19 +62,16 @@ class ProductStep2(models.Model):
     def image_tag(self, field_name):
         image_field = getattr(self, field_name)
         if image_field:
-            # Decode the binary data and encode it as base64
             encoded_image = base64.b64encode(image_field).decode('utf-8')
-            print("Hi i am image")
             return mark_safe(f'<img src="data:image/png;base64,{encoded_image}" width="150" height="150" />')
         return "No Image"
 
     image_tag.short_description = 'Image'
 
     def image_upload1_tag(self):
-        rint("Hi i am image")
+
         if self.image_upload1:
             from base64 import b64encode
-            print("Hi i am image")
             return mark_safe(
                 f'<img src="data:image/png;base64,{b64encode(self.image_upload1).decode()}" width="150" height="150" />')
         return "No Image"

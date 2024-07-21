@@ -111,6 +111,8 @@ def add_product_step_two(request, product_id):
         for image in images:
             imageList.append(base64.b64encode(image.image_upload1).decode('utf-8'))
             imageList.append(base64.b64encode(image.image_upload2).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload3).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload4).decode('utf-8'))
 
         context = {
             'form': form,
@@ -119,6 +121,27 @@ def add_product_step_two(request, product_id):
         }
        # // print(images[0].image_upload1)
         return render(request,'add-product-step-two.html',context)
+
+def add_product_step_three(request, product_id):
+    if request.method == 'POST':
+        # form = ProductStep3Form(request.POST)
+        # if form.is_valid():
+        #     productStep3 = form.save(commit=False)
+        #     productStep3.save()
+             return redirect('view_products', product_id=product_id)
+    else:
+        # form = ProductStep3Form()
+        product = ProductStep1.objects.get(id=product_id)
+        images = ProductStep2.objects.all().filter(product_step1__id=product_id).order_by('-pk')
+        imageList = []
+        for image in images:
+            imageList.append(base64.b64encode(image.image_upload1).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload2).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload3).decode('utf-8'))
+            imageList.append(base64.b64encode(image.image_upload4).decode('utf-8'))
+
+
+        return render(request, 'add-product-step-three.html', {'product': product, 'images': imageList})
 
 # def dumy(request):
 #     if request.method == 'POST':
