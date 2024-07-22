@@ -35,3 +35,9 @@ class Thought(models.Model):
     def __str__(self):
         return self.content
 
+class Favourite(models.Model):
+    holder =models.OneToOneField(User, on_delete=models.CASCADE)
+    fav_projects = models.ManyToManyField(Project, blank=True)
+
+    def __str__(self):
+        return str(self.holder)

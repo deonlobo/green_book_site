@@ -1,5 +1,5 @@
 from DIYProject.forms import NewProject, SearchProject, ThoughtForm
-from DIYProject.models import Project, ProjectCategory, Thought
+from DIYProject.models import Project, ProjectCategory, Thought, Favourite
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -49,15 +49,17 @@ def categoriesView(request):
     return render(request,'DIYProject/categories.html',{'categories':categories})
 
 def feedView(request):
+    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
     projects = Project.objects.order_by('-posted_on')
-    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm})
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
 
 def filterCategoryView(request, category_id):
+    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
     category_name=ProjectCategory.objects.get(pk=category_id)
     projects = Project.objects.filter(project_category=category_name).order_by('-posted_on')
-    return render(request, 'DIYProject/feed.html', {'projects': projects,'SearchForm':SearchForm})
+    return render(request, 'DIYProject/feed.html', {'projects': projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
 
 @login_required(login_url='login')
 def myProjectView(request):
@@ -75,8 +77,41 @@ def projectView(request,id):
             instance.project = project
             instance.posted_by = request.user
             instance.save()
+            return redirect('DIYProject:viewproject',project.id)
 
     return render(request,'DIYProject/view_project.html',{'project': project,'thoughts':thoughts,'ThoughtForm':tf})
+
+@login_required(login_url='login')
+def addToFavouriteView(request, project_id):
+    try:
+        MyBookmark = Favourite.objects.get(holder=request.user)
+    except:
+        MyBookmark = Favourite()
+        MyBookmark.holder = request.user
+        MyBookmark.save()
+    TempProject = Project.objects.get(pk=project_id)
+    if TempProject in MyBookmark.fav_projects.all():
+        messages.error(request,'Project already saved')
+        return redirect('DIYProject:bookmarks')
+    else:
+        MyBookmark.fav_projects.add(TempProject)
+        MyBookmark.save()
+        messages.success(request,'Project saved')
+        return redirect('DIYProject:bookmarks')
+
+def bookmarkView(request):
+    SearchForm = SearchProject()
+    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    try:
+        MyBookmark = Favourite.objects.get(holder=request.user)
+    except:
+        MyBookmark = Favourite(holder=request.user)
+        MyBookmark.save()
+    AllProjects = MyBookmark.fav_projects.all()
+    if not AllProjects:
+        messages.error('No Projects saved yet')
+        return redirect('DIYProject:feed')
+    return render(request, 'DIYProject/feed.html', {'projects': AllProjects, 'SearchForm': SearchForm, 'fav_projects':fav_projects})
 
 @login_required(login_url='login')
 def deleteProjectView(request,project_id):
@@ -94,7 +129,8 @@ def SearchProjectView(request):
                 messages.error(request,'No matching projects found')
                 return redirect('DIYProject:feed')
             messages.success(request, 'Search completed successfully!')
-            return render(request, "DIYProject/feed.html", {'projects': projects, 'SearchForm': form})
+            fav_projects  = Favourite.objects.get(holder=request.user).fav_projects.all()
+            return render(request, "DIYProject/feed.html", {'projects': projects, 'SearchForm': form, 'fav_projects':fav_projects})
         else:
             messages.error(request, 'Invalid search term')
             return redirect('DIYProject:feed')
