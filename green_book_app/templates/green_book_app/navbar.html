@@ -32,11 +32,15 @@
             Marketplace
         </a>
         <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+{#         <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
+
             {% for category in categories %}
           <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>
             {% endfor %}
         </div>
+
       </li>
+
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'messenger_list' %}">Messenger</a>
       </li>
@@ -61,6 +65,15 @@
 {#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
 {#    </form>#}
     <ul class="navbar-nav ml-3 mr-3">
+        <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
+            <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Manage Products</a>
+        </div>
+      </li>
         {% if user.is_authenticated %}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'logout' %}">Log out</a>
@@ -73,7 +86,6 @@
                 <a class="nav-link" href="{% url 'register_user' %}">Sign Up</a>
             </li>
         {% endif %}
-
     </ul>
   </div>
 </nav>
