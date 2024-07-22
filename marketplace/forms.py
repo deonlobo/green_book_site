@@ -132,6 +132,37 @@ class CategoryForm(ModelForm):
             'category_name': 'Category',
             'is_active': 'Is Active?',
         }
+        error_messages = {
+            'category_name': {
+                'required': 'Category name is required.',
+            },
+            'is_active': {
+                'required': 'Please select whether the category is active or not.',
+            },
+        }
+
+    def clean_category_name(self):
+        category_name = self.cleaned_data.get('category_name')
+        if not category_name:
+            raise forms.ValidationError('Category name is required.')
+        if Category.objects.filter(category_name=category_name).exclude(category_id=self.instance.category_id).exists():
+            raise forms.ValidationError('A category with this name already exists.')
+        return category_name
+
+    def clean_is_active(self):
+        is_active = self.cleaned_data.get('is_active')
+        if is_active is None:
+            raise forms.ValidationError('Please select whether the category is active or not.')
+        return is_active
+
+    def clean(self):
+        cleaned_data = super().clean()
+        category_name = cleaned_data.get('category_name')
+        is_active = cleaned_data.get('is_active')
+        if category_name and is_active is None:
+            self.add_error('is_active', 'Please select whether the category is active or not.')
+        return cleaned_data
+
 
 class SearchProductForm(ModelForm):
     class Meta:

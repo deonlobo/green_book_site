@@ -5,11 +5,13 @@ from django.utils.html import mark_safe
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=100)
+    category_name = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(choices=[(True,'Yes'),(False,'No')],default=True)
     creation_time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.category_name
+    def activate(self):
+        self.is_active = True
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 import base64
 from base64 import b64encode
+from django.contrib import messages
 
 # Create your views here.
 
@@ -119,11 +120,52 @@ def add_category(request):
         if form.is_valid():
             category = form.save(commit=False)
             category.save()
+            messages.success(request, 'Category added successfully')
             return  render(request, 'add-category.html', {'form':form,'categories':Category.objects.all()})
         else:
             return render(request, 'add-category.html', {'form': form, 'categories': Category.objects.all()})
     else:
         return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
+
+
+def modify_category(request, category_id):
+    category = get_object_or_404(Category, category_id=category_id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Category {category.category_name} has been updated')
+            return redirect('marketplace:add_category')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'add-category.html', {
+        'form': form,
+        'categories': Category.objects.all(),
+        'editing': True
+    })
+
+
+def activate_category(request, category_id):
+    category = get_object_or_404(Category, category_id=category_id)
+    if category is not None:
+        category.activate()
+        category.save()
+        messages.success(request, f'Category {category.category_name} activated')
+        return redirect('marketplace:add_category')
+    else:
+        messages.success(request, 'Category does not exist')
+        return render(request,'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
+
+
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, category_id=category_id)
+    if category is not None:
+        category.delete()
+        messages.success(request, 'Category deleted successfully')
+        return redirect('marketplace:add_category')
+    else:
+        messages.success(request, 'Category does not exist')
+        return render(request,'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
 def add_product_step_two(request, product_id):
     if request.method == 'POST':
