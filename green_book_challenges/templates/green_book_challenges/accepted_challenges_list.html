@@ -1,0 +1,136 @@
+{% extends 'green_book_app/base.html' %}
+
+{% block content %}
+<style>
+    .card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card img {
+        height: 200px; /* Adjust height as needed */
+        object-fit: cover;
+    }
+
+    .card-body {
+        flex: 1; /* Make sure the card body takes the remaining space */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+</style>
+
+<h2>Accepted Challenges</h2>
+<div class="container">
+    <div class="row">
+        {% for accepted_challenge in accepted_challenges %}
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+            <div class="card">
+                <img src="{{ accepted_challenge.challenge.image.url }}" class="card-img-top" alt="{{ accepted_challenge.challenge.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ accepted_challenge.challenge.title }}</h5>
+                    <p class="card-text">{{ accepted_challenge.challenge.task }}</p>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postFormModal" data-challenge-id="{{ accepted_challenge.challenge.id }}">
+                        Post
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No accepted challenges.</p>
+        {% endfor %}
+    </div>
+</div>
+
+    <!-- Display Completed Tasks -->
+<h2>Your Posts</h2>
+<div class="row">
+    {% for completed_task in completed_tasks %}
+    <div class="col-md-4 mb-4 d-flex align-items-stretch">
+        <div class="card">
+            <img src="{{ completed_task.image.url }}" class="card-img-top" alt="{{ completed_task.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ completed_task.challenge }}</h5>
+                <p class="card-text">{{ completed_task.caption }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No completed tasks yet.</p>
+    {% endfor %}
+</div>
+
+
+<!-- Pop-up Form Modal -->
+<div class="modal fade" id="postFormModal" tabindex="-1" role="dialog" aria-labelledby="postFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postFormModalLabel">Submit Completed Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Django Form -->
+                <!-- Inside your modal body -->
+                <form id="completedTaskForm" method="post" action="{% url 'submit_completed_task' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_challenge">Select Challenge</label>
+                        <select class="form-control" id="id_challenge" name="challenge">
+                            {% for accepted_challenge in accepted_challenges %}
+                                <option value="{{ accepted_challenge.challenge.id }}">{{ accepted_challenge.challenge.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {{ completed_task_form.as_p }}  <!-- Renders all other fields as paragraphs -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#postFormModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var challengeId = button.data('challenge-id'); // Extract challenge ID from data-* attributes
+        var modal = $(this);
+        modal.find('#id_challenge').val(challengeId); // Set the challenge ID in the dropdown
+    });
+
+    document.getElementById('completedTaskForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        fetch("{% url 'submit_completed_task' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                $('#postFormModal').modal('hide');
+                alert('Completed task submitted successfully!');
+                location.reload();
+            } else {
+                console.log(data.errors);
+                alert('Failed to submit completed task. Please try again.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+
+
+
+{% endblock %}

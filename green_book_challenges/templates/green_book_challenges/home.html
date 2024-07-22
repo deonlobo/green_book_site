@@ -1,35 +1,31 @@
 
 {% extends 'green_book_app/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container-fluid p-0">
     <!-- Image with text overlay -->
-    <!-- Image with text overlay -->
     <div class="position-relative">
-        <img src="../../static/challenges_images/headingImg.jpg" class="img-fluid w-100" style="height: 500px;" alt="Eco-friendly lifestyle">
-
+        <img src="{% static 'challenges_images/headingImg.jpg' %}" class="img-fluid w-100" style="height: 500px;" alt="Eco-friendly lifestyle">
         <!-- Conditional overlay text based on authentication -->
         {% if user.is_authenticated %}
             <div class="overlay-text text-center text-white">
-                <h2 style="font-size: 54px; color: deepskyblue">Welcome {{ User.first_name }}!</h2>
+                <h2 style="font-size: 54px; color: deepskyblue">Welcome {{ user.first_name }}!</h2>
                 <p>Challenge yourself and others to live sustainably</p>
                 <p>Together, we can make a difference!</p>
                 <button id="openModal" class="btn btn-success btn-lg mt-3">Post Challenge</button>
-
-
-
             </div>
         {% else %}
             <div class="overlay-text text-center text-white">
                 <h2>Join Us in Living Eco-Friendly</h2>
                 <p>Discover eco-challenges and sustainable practices</p>
                 <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Think Green</p>
-                <a href="#" class="btn btn-success btn-lg mt-3">Participate</a>
+                <a href="{% url 'login' %}" class="btn btn-success btn-lg mt-3">Participate</a>
             </div>
         {% endif %}
     </div>
 
-<!-- Modal for Post Challenge Form -->
+    <!-- Modal for Post Challenge Form -->
     <div class="modal fade" id="postChallengeModal" tabindex="-1" role="dialog" aria-labelledby="postChallengeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -40,8 +36,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form to post challenge -->
-                    <form id="postChallengeForm" method="post" action="{% url 'challenge1' %}">
+                    <form id="postChallengeForm" method="post" action="{% url 'challenge1' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
@@ -52,31 +47,32 @@
     </div>
 
 
-
-
-
-
     <div class="container mt-3">
-                <h2 style="color: saddlebrown; text-align: left">Trending Challenges</h2>
-
+        <h2 style="color: saddlebrown; text-align: left; margin: 20px">Trending Stories</h2>
         <!-- Carousel of images with captions -->
         <div id="imageCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../../static/challenges_images/img1.jpg" class="d-block w-100" alt="July Week 1">
+                    <img src="{% static 'challenges_images/trend1.png' %}" class="d-block w-100" alt="July Week 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>July Week 1</h5>
-                        <p>Image caption for July Week 1.</p>
+                        <h5>If everybody cycled as much as the Dutch, global carbon emissions would drop by nearly 700 million tonnes per year</h5>
+                        <p>People who cycle to work have a 45 per cent lower risk of developing cancer, and a 46 per cent lower risk of cardiovascular disease.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../../static/challenges_images/img1.jpg" class="d-block w-100" alt="July Week 1">
+                    <img src="{% static 'challenges_images/trend3.png' %}" class="d-block w-100" alt="July Week 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>July Week 1</h5>
-                        <p>Another image caption for July Week 1.</p>
+                        <h5>How ATTITUDE is Pioneering Plastic-Free Beauty</h5>
+                        <p>The 18-year-old Canadian company that began with a few non-toxic household products now hopes to lead a plastic-free beauty revolution.</p>
                     </div>
                 </div>
-                <!-- Add more carousel items as needed -->
+                <div class="carousel-item">
+                    <img src="{% static 'challenges_images/trend2.jpg' %}" class="d-block w-100" alt="July Week 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>With frequent mentions from nearly all of our contributors, recycling was seen as one of the key trends in sustainability that we will see in 2024</h5>
+                        <p>The good news is that both brands and the consumer market appear to be shifting their priorities, and this change may become more rapid in the coming years.</p>
+                    </div>
+                </div>
             </div>
             <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -89,20 +85,33 @@
         </div>
     </div>
 
+ {% if user.is_authenticated %}
 
+    {% include 'green_book_challenges/challenges.html' %}
 
+{% else %}
+
+     {% include 'green_book_challenges/about.html' %}
+
+{%  endif %}
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // JavaScript to show modal on button click
     document.getElementById('openModal').addEventListener('click', function() {
         $('#postChallengeModal').modal('show');
     });
+
+
+    {% if show_alert %}
+        window.onload = function() {
+            alert('2000 points have been added to your account.');
+        };
+    {% endif %}
+
 </script>
-
-
-
-
 
 <style>
     .position-relative {
@@ -116,70 +125,47 @@
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
-        {#background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */#}
         padding: 30px;
         border-radius: 5px;
-        width: 80%; /* Adjust width as needed */
-        max-width: 1200px; /* Example maximum width */
+        width: 80%;
+        max-width: 1200px;
     }
 
     .overlay-text h2,
     .overlay-text p {
-        color: beige; /* Text color */
-        margin: 0; /* Remove default margin */
+        color: beige;
+        margin: 0;
         padding-bottom: 10px;
         font-size: 44px;
-
     }
 
-    /* Set height for the top-most image */
     .img-fluid {
-        height: 400px; /* Adjust height as needed */
+        height: 400px;
     }
 
-     /* Adjust carousel item dimensions */
-    .carousel-item img {
-        height: 300px; /* Adjust height as needed */
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+        padding: 20px; /* Padding around the text */
+        border-radius: 10px; /* Rounded corners */
     }
 
-/* Style for the form container */
-    #postChallengeForm {
-        max-width: 600px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+        .carousel-item img {
+            height: 600px;
+        }
 
-    /* Style for form inputs and buttons */
-    #postChallengeForm form {
-        margin-bottom: 0; /* Remove default margin */
-    }
+        @media (max-width: 768px) {
+            .overlay-text h2,
+            .overlay-text p {
+                font-size: 24px;
+            }
 
-    #postChallengeForm .btn-primary {
-        margin-top: 10px;
-    }
+            .img-fluid {
+                height: 500px;
+            }
+        }
+
+
+
+
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var postChallengeBtn = document.getElementById('postChallengeBtn');
-        var participateBtn = document.getElementById('participateBtn');
-        var postChallengeForm = document.getElementById('postChallengeForm');
-
-        if (postChallengeBtn) {
-            postChallengeBtn.addEventListener('click', function() {
-                postChallengeForm.style.display = 'block';
-                postChallengeBtn.style.display = 'none'; // Optionally hide the button after showing the form
-            });
-        }
-
-        if (participateBtn) {
-            participateBtn.addEventListener('click', function() {
-                // Add your participation logic here
-            });
-        }
-    });
-</script>
 {% endblock %}
