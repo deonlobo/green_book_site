@@ -84,7 +84,7 @@ def add_product_step_one(request):
             productStep1.save()
             messages.success(request, 'Your product has been added.')
             productStep1 = ProductStep1.objects.get(id=productStep1.id)
-            return redirect('marketplace:view_products', product_id=productStep1.id)
+            return redirect('marketplace:add_product_step_two', product_id=productStep1.id)
     else:
         form = ProductStep1Form()
     return render(request, 'add-product-step-one.html', {'form' : form})
