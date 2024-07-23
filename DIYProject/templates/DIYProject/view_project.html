@@ -7,7 +7,7 @@
 
     <div class="my-4">
         <div class="row my-4">
-            <div class="col-lg-6 my-auto">
+            <div class="col-lg-6 my-auto animate__animated animate__backInLeft">
 
                 <div id="carousel{{ project.pk }}" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 border border-top-0 border-right-1 border-left-1 border-bottom-4 rounded" >
+            <div class="col-lg-6 border border-top-0 border-right-1 border-left-1 border-bottom-4 rounded animate__animated animate__backInRight" >
                 <div class="my-3">
                     <h3>{{ project.title }}</h3>
                 </div>
@@ -77,39 +77,37 @@
                 </div>
             </div>
         </div>
-{% if thoughts %}
-        <h4 class="mx-3 my-3"><i>Thoughts on this project</i></h4>
+    {% if thoughts %}
+        <h4 class="mx-3 mt-3 animate__animated animate__bounce"><i>Thoughts on this project</i></h4>
 
-    {% for thought in thoughts  %}
+        <div class="row">
+        {% for thought in thoughts  %}
 
-{#        <div class="row">#}
+            <div class="col-sm-6 my-3 animate__animated animate__flash">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text" style="font-size: large">{{ thought.content | capfirst}}</p>
+                        <div class="row">
+                            <div class="col-6 px-0"><p class="text-left" style="font-size: smaller">  {{ thought.posted_on.date | timesince }} ago</p></div>
+                            <div class="col-6 px-0"><p class="text-right" style="font-size: smaller"> <b>By: </b>{{ thought.posted_by | capfirst }}</p></div>
+                        </div>
+                        <a href="{% url 'DIYProject:removethought' thought.pk %}" class="btn btn-danger">Remove</a>
+                    </div>
+                </div>
+            </div>
+
+
 {#            <div class="col-lg-12 mt-3">#}
 {#                    <div class="right-content mt-2">#}
 {#                        <p class="mt-2" style="font-size: large">{{thought.content | capfirst}}</p>#}
-{#                        <div class="container p-0">#}
-{#                            <div class="row">#}
-{#                                <div class="col-lg-6 p-0"><button class="btn btn-outline-danger p-1" style="font-size: small">Remove</button></div>#}
-{#                                <div class="col-lg-6"> <p class="text-right"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ thought.posted_by | capfirst }}</p></div>#}
-{#                            </div>#}
-{#                        </div>#}
 {#                        <p class="text-right"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ thought.posted_by | capfirst }}</p>#}
 {#                        <a class="btn btn-outline-dark p-1" style="font-size: small; float: right" href ="{% url 'DIYProject:removethought' thought.id %}">Remove</a>#}
 {#                    </div>#}
-{##}
 {#            </div>#}
-{#        </div>#}
-{#        <hr style="color: #3333">#}
-
-         <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card folded-corner">
-            <div class="corner"></div>
-            <div class="card-body">
-                <h5 class="card-title">Folded Corner Card</h5>
-                <p class="card-text">This is a card with a folded corner effect using Bootstrap.</p>
-            </div>
+        {% endfor %}
         </div>
-    </div>
-    {% endfor %}
+            <hr style="color: #3333">
+
     {% endif %}
 
     </div>

@@ -7,11 +7,12 @@ class NewProject(forms.ModelForm):
         fields = '__all__'
         exclude = ['posted_by', 'posted_at']
 
-        widgets = {'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'title'}),
-            'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'CATEGORY'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'description'}),
-            'image_1': forms.FileInput(attrs={'class': 'form-control', 'style': 'padding-top: 1em; padding-left: 1.5em;'}),
-            'image_2': forms.FileInput(attrs={'class': 'form-control', 'style': 'padding-top: 1em; padding-left: 1.5em;'}),
+        widgets = {'title': forms.TextInput(attrs={'class': 'form-control'}),
+                   'tools': forms.TextInput(attrs={'class': 'form-control'}),
+            'project_category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'CATEGORY'}),
+            'process': forms.Textarea(attrs={'class': 'form-control','rows':'3','cols':'100%','style': 'width: 100%; resize: none;' }),
+            'img_1': forms.FileInput(attrs={'class': 'form-control', 'style': 'padding-top: 0.2em; padding-left: 0.2em;'}),
+            'img_2': forms.FileInput(attrs={'class': 'form-control', 'style': 'padding-top: 0.2em; padding-left: 0.2em;'}),
         }
 
         def __init__(self, *args, **kwargs):
@@ -28,4 +29,4 @@ class ThoughtForm(forms.ModelForm):
 
 
 class SearchProject(forms.Form):
-    term  = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3', 'placeholder': 'Search Projects '}),)
+    term  = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3', 'placeholder': 'Search Projects ','style':'width:80%'}),)

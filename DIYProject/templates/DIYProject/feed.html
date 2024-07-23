@@ -6,15 +6,26 @@
 
     <div class="container">
 
-        <div class="row">
-            <div class="my-2">
+        <center><h2 class="my-2 animate__animated animate__flipInX">Reuse Something Creatively</h2></center>
 
-            <form class="form-inline my-2 mx-3" action="{% url 'DIYProject:search' %}">
-                {{SearchForm.term}}
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+        <div class="row">
+
+            <div class="col-6 p-0 my-2">
+                <form class="form-inline my-2 mx-3" action="{% url 'DIYProject:search' %}">
+                    {{SearchForm.term}}
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+
+            <div class="col-6 my-2 mx-0 px-0">
+                <a href="{% url 'DIYProject:sortascending' %}" class="btn btn-outline-success my-2 mx-2 float-right">Sort Projects: A-Z</a>
+                <a href="{% url 'DIYProject:sortdescending' %}" class="btn btn-outline-success my-2 mx-2 float-right">Sort Projects: Z-A</a>
+                <a href="{% url 'DIYProject:feed' %}" class="btn btn-outline-success my-2 mx-2 float-right">Sort Projects: Time</a>
+            </div>
+            <div class="col-3 p-0 my-2">
+
+            </div>
         </div>
-    </div>
 
      <div class="container">
         {% if messages %}
@@ -35,7 +46,7 @@
         {% for project in projects %}
             <a href="{% url 'DIYProject:viewproject' project.pk %}">
             <div class="row my-4">
-                <div class="col-lg-6">
+                <div class="col-lg-6 animate__animated animate__backInLeft">
 
                     <div id="carousel{{ project.pk }}" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
@@ -67,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 border border-top-0 border-right-1 border-left-1 border-bottom-4 rounded" >
+                <div class="col-lg-6 border border-top-0 border-right-1 border-left-1 border-bottom-4 rounded animate__animated animate__backInRight" >
                     <div class="my-3">
                         <h3>{{ project.title }}</h3>
                     </div>

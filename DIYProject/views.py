@@ -54,6 +54,18 @@ def feedView(request):
     projects = Project.objects.order_by('-posted_on')
     return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
 
+def sortAscendingView(request):
+    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    SearchForm = SearchProject()
+    projects = Project.objects.order_by('title')
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
+
+def sortDescendingView(request):
+    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    SearchForm = SearchProject()
+    projects = Project.objects.order_by('-title')
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
+
 def filterCategoryView(request, category_id):
     fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
