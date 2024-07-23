@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from accounts.models import UserProfile
 from .forms import ChallengeForm, CompletedTaskForm
-from .models import Challenge, AcceptedChallenge, CompletedTask, Points
+from .models import Challenge, AcceptedChallenge, CompletedTask, Points, LikedTask
 from django.contrib import messages
+
 
 def challenge1(request):
     form = ChallengeForm()
@@ -37,11 +38,9 @@ def challenge1(request):
             # Set flag to show alert
             show_alert = True
 
-
-
-
     challenges = Challenge.objects.all()
-    return render(request, 'green_book_challenges/home.html', {'form': form, 'challenges': challenges, 'show_alert': show_alert})
+    return render(request, 'green_book_challenges/home.html',
+                  {'form': form, 'challenges': challenges, 'show_alert': show_alert})
 
 
 def accept_challenge_view(request, pk):
@@ -80,6 +79,7 @@ def accepted_challenges_list_view(request):
     else:
         return redirect('login')
 
+
 def submit_completed_task_view(request):
     if request.method == 'POST':
         challenge_id = request.POST.get('challenge')
@@ -101,3 +101,55 @@ def submit_completed_task_view(request):
                 'accepted_challenges': AcceptedChallenge.objects.filter(user=request.user),
                 'completed_tasks': completed_tasks
             })
+
+
+@login_required
+def completed_tasks_list(request):
+    # Fetch all completed tasks for the current user
+    completed_tasks = CompletedTask.objects.exclude(likedtask__user=request.user)
+
+    # Render the template with the filtered tasks
+    return render(request, 'green_book_challenges/completed_tasks_list.html', {'completed_tasks': completed_tasks})
+
+
+def like_completed_task(request, task_id):
+    show_alert = False
+    if request.method == 'POST':
+        task = get_object_or_404(CompletedTask, id=task_id)
+        # Check if the user has already liked this task
+        liked_task = LikedTask.objects.filter(user=request.user, task=task).first()
+
+        if not liked_task:
+            # Add points to user
+            points_record, created = Points.objects.get_or_create(user=request.user)
+            points_record.total_points += 1000
+            points_record.save()
+
+            # Increment the likes count
+            task.likes += 1
+            task.save()
+
+            # Create a LikedTask record
+            LikedTask.objects.create(user=request.user, task=task)
+
+            # Set flag to show alert
+            show_alert = True
+
+    # Exclude tasks that the user has already liked
+    completed_tasks = CompletedTask.objects.exclude(likedtask__user=request.user)
+
+    return render(request, 'green_book_challenges/completed_tasks_list.html', {
+        'completed_tasks': completed_tasks,
+        'show_alert': show_alert
+    })
+
+
+
+@login_required
+def points_and_coupons_view(request):
+    user_points = Points.objects.get(user=request.user)
+    leaderboard = Points.objects.order_by('-total_points')[:3]  # Top 3 users
+    return render(request, 'green_book_challenges/points.html', {
+        'user_points': user_points,
+        'leaderboard': leaderboard
+    })

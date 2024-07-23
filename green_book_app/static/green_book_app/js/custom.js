@@ -11,9 +11,9 @@
     // NAVBAR
     $(".navbar").headroom();
 
-    $('.navbar-collapse a').click(function(){
-        $(".navbar-collapse").collapse('hide');
-    });
+    // $('.navbar-collapse a').click(function(){
+    //     $(".navbar-collapse").collapse('hide');
+    // });
 
     $('.slick-slideshow').slick({
       autoplay: true,

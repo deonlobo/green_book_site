@@ -25,13 +25,13 @@ def create_sample_challenges(sender, **kwargs):
     # Create sample challenges if they don't exist
     Challenge.objects.create(
         title="Kids' Tree Planting Challenge",
-        task="Help your child plant a tree! Follow these steps...",
+        task="Help your child plant a tree! Upload a picture of the activity.",
         image='challenges_images/plant.jpg'  # Update with correct image path
     )
 
     Challenge.objects.create(
         title="Reusable Bag Challenge",
-        task="Help keep our environment clean! Follow these steps...",
+        task="Help keep our environment clean! Buy a reusable bag and carry it around. Upload a picture of it.",
         image='challenges_images/reusable.jpeg'  # Update with correct image path
     )
 
@@ -50,6 +50,7 @@ class CompletedTask(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='completed_tasks/')
     caption = models.TextField()
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user} completed {self.challenge}'
@@ -61,3 +62,11 @@ class Points(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.total_points} points"
+
+
+class LikedTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(CompletedTask, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.task.title}"
