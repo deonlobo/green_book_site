@@ -1,0 +1,9 @@
+.card {
+    border-radius: 2em; /* Adjust the border radius as needed */
+    overflow: hidden; /* This ensures the image stays within the rounded corners */
+}
+
+.card-img-top {
+    height: 16em;
+    object-fit: cover;
+}

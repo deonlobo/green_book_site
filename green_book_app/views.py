@@ -62,3 +62,15 @@ def home(request):
         'top_visited_pages': top_visited_pages,
         "membership_duration": membership_duration
     })
+
+
+def contact_page(request):
+    team_members = [
+        {"name": "Deon Victor Lobo", "student_id": "110127749", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Jane Smith", "student_id": "234567", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Alice Johnson", "student_id": "345678", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Bob Brown", "student_id": "456789", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Charlie Davis", "student_id": "567890", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Eve Wilson", "student_id": "678901", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+    ]
+    return render(request, 'green_book_app/contact.html', {'team_members': team_members})

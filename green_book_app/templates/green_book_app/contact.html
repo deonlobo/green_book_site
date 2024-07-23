@@ -1,0 +1,26 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block css %}
+     {{ block.super }}
+    <link rel="stylesheet" href="{% static 'green_book_app/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Meet Our Talented Team</h1>
+    <div class="row">
+        {% for member in team_members %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static member.image_url %}" class="card-img-top" alt="{{ member.name }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ member.name }}</h5>
+                    <p class="card-text">Student ID: {{ member.student_id }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
