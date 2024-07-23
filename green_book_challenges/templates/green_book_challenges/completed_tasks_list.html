@@ -34,6 +34,11 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-center mb-4">Completed Tasks</h2>
+    {% if show_alert %}
+        <div class="alert alert-success">
+            1000 points added!
+        </div>
+    {% endif %}
     <div class="feed">
         {% for task in completed_tasks %}
             <div class="card">
@@ -48,6 +53,8 @@
                     <p class="mt-2">Likes: {{ task.likes }}</p>
                 </div>
             </div>
+                {% empty %}
+        <p style="align-self: center">No tasks to display.</p>
         {% endfor %}
     </div>
 </div>
@@ -108,4 +115,7 @@
         }
     }
 </style>
+{% endblock %}
+
+    {% block footer %}
 {% endblock %}

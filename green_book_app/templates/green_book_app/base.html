@@ -90,9 +90,14 @@
 
   <!-- messenger app block -->
   {% block messenger_html %} {% endblock %}
+{##}
+{#  <!-- footer -->#}
+{#  {% include 'green_book_app/footer.html' %}#}
 
   <!-- footer -->
-  {% include 'green_book_app/footer.html' %}
+{% block footer %}
+{% include 'green_book_app/footer.html' %}
+{% endblock %}
 
   <!-- scripts section so scripts are loaded after the html -->
   {% block messenger_js %} {% endblock %}
