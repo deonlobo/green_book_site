@@ -173,7 +173,10 @@ span.round-tab i{
     margin-top: 30px;
 }
 .next-step{
-	background-color: #0db02b;
+	background-color: #9e733f;
+    border-color: #9e733f;
+    color: white;
+    font-weight: 700;
 }
 .skip-btn{
 	background-color: #cec12d;

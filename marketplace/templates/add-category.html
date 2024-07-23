@@ -6,33 +6,53 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid category">
+
         <div class="col-md-12 mx-auto shadow p-0 bg-body rounded">
             <header class="header">
                 <h4>Category Registration</h4>
             </header>
             <section class="category-register mt-2">
+                   {% if messages %}
+                        {% for message in messages %}
+                            <br/>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 {#                <div class="container">#}
                     <div class="row">
                         <div class="col-sm-10">
-                            <form action="{% url 'marketplace:add_category' %}" method="post">
+                            <form id="category-form" method="post" novalidate>
                                 {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-4">
                                      <div class="form-group">
                                             <label>{{ form.category_name.label }}</label>
                                             {{ form.category_name }}
+                                            {% for error in form.category_name.errors %}
+                                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                            {% endfor %}
                                      </div>
                                 </div>
                                 <div class="col-sm-4">
                                      <div class="form-group">
                                             <label>{{ form.is_active.label }}</label>
                                             {{ form.is_active }}
+                                            {% for error in form.is_active.errors %}
+                                                <div class="invalid-feedback d-block">{{ error }}</div>
+                                            {% endfor %}
                                      </div>
                                 </div>
                                 <div class="col-sm-4">
                                      <ul class="list-inline">
-                                        <li><button type="submit" class="default-btn next-step">Finish</button></li>
-                                          <li><button type="button" class="default-btn prev-step">Back</button></li>
+                                        <li><button type="submit" class="default-btn next-step">
+                                            {% if editing %}Update Category{% else %}Add Category{% endif %}
+                                        </button></li>
+                                          <li><button type="button" id="clear" class="default-btn prev-step">Clear</button></li>
                                     </ul>
                                 </div>
                             </div>
@@ -64,9 +84,11 @@
             {% endif %}
         </td>
         <td class="text-center">
-            <a href="#"><i class="fas fa-edit"></i></a>
-            <a href="#"><i class="fas fa-check-circle"></i></a>
-            <a href="#"><i class="fas fa-times-circle"></i></a>
+            <a href="{% url 'marketplace:modify_category' category.pk %}"><i class="fas fa-edit"></i></a>
+            {% if not category.is_active  %}
+            <a href="{% url 'marketplace:activate_category' category.pk %}"><i class="fas fa-check-circle"></i></a>
+            {% endif %}
+            <a href="{% url 'marketplace:delete_category' category.pk %}"><i class="fas fa-times-circle"></i></a>
         </td>
         </tr>
     {% endfor %}
@@ -77,4 +99,13 @@
             </section>
         </div>
     </div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$(document).ready(function(){
+     $('#clear').click(function(){
+       $('#category-form')[0].reset()
+    });
+})
+</script>
 {% endblock %}
