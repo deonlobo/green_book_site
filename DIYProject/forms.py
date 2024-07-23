@@ -24,7 +24,7 @@ class ThoughtForm(forms.ModelForm):
         fields = ['content']
 
         widgets = {
-            'content': forms.Textarea(attrs={'class': 'form-control mb-1', 'placeholder': 'Express your thoughts', 'rows':'3','style': 'width: 100%; resize: none;'}),}
+            'content': forms.Textarea(attrs={'class': 'form-control mb-1', 'placeholder': 'Express your thoughts', 'rows':'3','cols':'100%', 'style': 'width: 100%; resize: none;'}),}
 
 
 class SearchProject(forms.Form):

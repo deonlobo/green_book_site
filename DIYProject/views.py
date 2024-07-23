@@ -99,6 +99,14 @@ def addToFavouriteView(request, project_id):
         messages.success(request,'Project saved')
         return redirect('DIYProject:bookmarks')
 
+@login_required(login_url='login')
+def removeFromFavouriteView(request, project_id):
+    MyBookmark = Favourite.objects.get(holder=request.user)
+    MyBookmark.fav_projects.remove(project_id)
+    MyBookmark.save()
+    return redirect('DIYProject:bookmarks')
+
+@login_required(login_url='login')
 def bookmarkView(request):
     SearchForm = SearchProject()
     fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
@@ -118,6 +126,13 @@ def deleteProjectView(request,project_id):
     temp_project = get_object_or_404(Project, pk=project_id)
     temp_project.delete()
     return redirect('DIYProject:myprojects')
+
+@login_required(login_url='login')
+def removeThoughtView(request,thought_id):
+    temp_thought = get_object_or_404(Thought, pk=thought_id)
+    temp_thought.delete()
+    temp_project = temp_thought.project
+    return redirect('DIYProject:viewproject',temp_project.id)
 
 def SearchProjectView(request):
     if request.method == 'GET':

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    {% url 'DIYProject:bookmarks' as bookmark_url %}
+
 
     <div class="container">
 
@@ -92,20 +92,20 @@
                             <div class="col-lg-6 text-right"><span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}</div>
                         </div>
                     </div>
-                    {% if  not request.path == bookmark_url %}
+
                     <hr style="color: #3333">
 
                     <div class="my-1">
                         <div class="row">
                             <div class="col-lg-6 text-left"></div>
                             {% if project in fav_projects %}
-                                <div class="col-lg-6 text-right"><a href="{% url 'DIYProject:addfavourite' project.pk %}" class="btn btn-danger">Remove from Favourites</a></div>
+                                <div class="col-lg-6 text-right"><a href="{% url 'DIYProject:removefavourite' project.pk %}" class="btn btn-danger">Remove from Favourites</a></div>
                             {% else %}
                                 <div class="col-lg-6 text-right"><a href="{% url 'DIYProject:addfavourite' project.pk %}" class="btn btn-success">Add to Favourites</a></div>
                             {% endif %}
                         </div>
                     </div>
-                {% endif %}
+
                 </div>
             </div>
         {% endfor %}
