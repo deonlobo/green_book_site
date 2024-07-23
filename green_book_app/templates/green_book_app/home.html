@@ -1,6 +1,22 @@
 {% extends 'green_book_app/base.html' %}
 {% load static %}
 
+{% block header %}
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <link href="{% static '/green_book_app/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '/green_book_app/css/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static '/green_book_app/css/slick.css' %}"/>
+
+    <link href="{% static '/green_book_app/css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div class="container">
         {% if messages %}
@@ -15,20 +31,18 @@
             {% endfor %}
         {% endif %}
     </div>
-    <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
-        {% if user.is_authenticated %}
-            <h1>Hello {{ user_profile.user.first_name }} {{ user_profile.user.last_name }}!</h1>
-            <p>Your account was created on: {{ user_profile.created_at }}</p>
-            <h1>Welcome to Green Book!</h1>
-            <p>As of {{ date }} {{ time }}</p>
-        {% else %}
-            <h1>Hello There!!</h1>
-            <h1>Welcome to Green Book!</h1>
-            <h2>Login to unlock all the features of Green Book</h2>
-            <p>As of {{ date }} {{ time }}</p>
-        {% endif %}
 
-        <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" class="img-fluid w-25 h-auto">
-    </div>
+    {% include 'green_book_app/index.html' %}
 
+{% endblock %}
+
+
+{% block js %}
+        <!-- JAVASCRIPT FILES -->
+        <script src="{% static '/green_book_app/js/jquery.min.js' %}"></script>
+        <script src="{% static '/green_book_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static '/green_book_app/js/Headroom.js' %}"></script>
+        <script src="{% static '/green_book_app/js/jQuery.headroom.js' %}"></script>
+        <script src="{% static '/green_book_app/js/slick.min.js' %}"></script>
+        <script src="{% static '/green_book_app/js/custom.js' %}"></script>
 {% endblock %}
