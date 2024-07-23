@@ -9,7 +9,7 @@
     <div class="container-fluid category">
         <div class="col-md-12 mx-auto shadow p-0 bg-body rounded">
             <header class="header">
-                <h4>Product Registration Step 1</h4>
+                <h4>Product Registration</h4>
             </header>
     <section class="signup-step-container">
 {#        <div class="container">#}
@@ -34,7 +34,7 @@
                             </ul>
                         </div>
 
-                        <form role="form"  method="post"  class="login-box" enctype="multipart/form-data">
+                        <form role="form"  method="post"  class="login-box" enctype="multipart/form-data" novalidate>
                             {% csrf_token %}
                             <div class="tab-content" id="main_form">
 {#                                <div class="tab-pane active" role="tabpanel" id="step1">#}
@@ -105,11 +105,26 @@
 {#                                </div>#}
                                 <div class="tab-pane active" role="tabpanel" id="step2">
 {#                                    <h4 class="text-center">Step 2</h4>#}
+                                 {% if messages %}
+                                    {% for message in messages %}
+                                        <br/>
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                                     <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{ form.image1.label}}</label>
                                             {{ form.image1 }}
+                                             {% for error in form.image1.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                             {% endfor %}
+
                                         </div>
                                     </div>
 
@@ -117,18 +132,27 @@
                                         <div class="form-group">
                                             <label>{{ form.image2.label}}</label>
                                             {{ form.image2 }}
+                                             {% for error in form.image2.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                             {% endfor %}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{ form.image3.label}}</label>
                                             {{ form.image3 }}
+                                             {% for error in form.image3.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                             {% endfor %}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{ form.image4.label}}</label>
                                             {{ form.image4 }}
+                                             {% for error in form.image4.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                             {% endfor %}
                                         </div>
                                     </div>
 
@@ -136,20 +160,19 @@
 
 
                                     <ul class="list-inline pull-right">
-                                        <li><button type="button" class="default-btn prev-step">Back</button></li>
-                                        <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li>
+                                        <li><button onclick="location.href='{% url 'marketplace:modify_add_product_step_one' product_id %}'" type="button" class="default-btn prev-step">Back</button></li>
                                         <li><button type="submit" class="default-btn next-step">Continue</button></li>
                                     </ul>
                                 </div>
 
-                                    <div id="carousel-example-1z" class="carousel slide carousel-fade mb-5" data-ride="carousel">
+                                    {% if images %}
+                                    <div id="carousel-example-1z" class="carousel slide carousel-fade mt-5 mb-5" data-ride="carousel">
                 <!--Indicators-->
                 <ol class="carousel-indicators">
 
-                    <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
-                    <li data-target="#carousel-example-1z" data-slide-to="3"></li>
+                    {% for image in images %}
+                        <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                    {% endfor %}
                 </ol>
                 <!--/.Indicators-->
                 <!--Slides-->
@@ -177,7 +200,7 @@
 {#        {{ images }}#}
             {% for image in images %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="data:image/png;base64,{{ image }}"  />
+                    <img src="data:image/png;base64,{{ image }}"  height="700px"  width="1200px"/>
 {#                    {{ image.image_upload1_tag }}#}
 
 {#                    {% if images.image_upload1 %}#}
@@ -186,8 +209,6 @@
 {#                        <p>No image available</p>#}
 {#                    {% endif %}#}
                 </div>
-            {% empty %}
-                <p>No images found.</p>
             {% endfor %}
         </div>
         <!-- Controls -->
@@ -212,6 +233,9 @@
                 </a>
                 <!--/.Controls-->
             </div>
+                                    {% endif %}
+
+
 {#                                <div class="tab-pane" role="tabpanel" id="step3">#}
 {#                                    <h4 class="text-center">Step 3</h4>#}
 {#                                     <div class="row">#}

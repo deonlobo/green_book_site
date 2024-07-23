@@ -1,5 +1,6 @@
 from django.forms import *
 from .models import *
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 
 class ProductForm(ModelForm):
@@ -46,7 +47,26 @@ class ProductStep1Form(ModelForm):
             'category': Select(attrs={'class': 'form-control'}),
             'discounted': Select(attrs={'class': 'form-control'}),
             'percent': NumberInput(attrs={'class': 'form-control'}),
-
+        }
+        error_messages = {
+            'name':{
+                'required':'Please enter a Product name'
+            },
+            'description':{
+                'required':'Please enter a Product description'
+            },
+            'quality':{
+                'required':'Please enter a Product quality'
+            },
+            'price':{
+                'required':'Please enter a Product price'
+            },
+            'stock':{
+                'required':'Please enter a Product stock'
+            },
+            'category':{
+                'required':'Please select a Product category'
+            }
         }
 
     def __init__(self, *args, **kwargs):
@@ -77,27 +97,38 @@ class ProductStep2Form(ModelForm):
     image1 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
-        label='Upload Image 1'
+        label='Primary Image'
     )
     image2 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
-        label='Upload Image 2'
+        label='Secondary Image 1'
     )
     image3 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
-        label='Upload Image 3'
+        label='Secondary Image 2'
     )
     image4 = ImageField(
         widget=ClearableFileInput(attrs={'class': 'form-control'}),
         required=False,
-        label='Upload Image 4'
+        label='Secondary Image 3'
     )
 
     class Meta:
         model = ProductStep2
         fields = ['image1', 'image2', 'image3', 'image4']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        images = ['image1', 'image2', 'image3', 'image4']
+        for image_field in images:
+            image = cleaned_data.get(image_field)
+            if not image:
+                self.add_error(image_field, forms.ValidationError('Please upload an image'))
+            elif not image.content_type.startswith('image/png'):
+                self.add_error(image_field, forms.ValidationError('Only PNG images are supported.'))
+        return cleaned_data
 
     def save(self, commit=True):
         productStep2 = super().save(commit=False)
@@ -112,12 +143,24 @@ class ProductStep2Form(ModelForm):
 
 
 class ProductStep3Form(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["textarea"].required = False
+
     class Meta:
         model = ProductStep3
         fields = ['textarea']
         widgets = {
-            'textarea': Textarea(attrs={'class': 'form-control'}),
+            'textarea': CKEditor5Widget(
+                attrs={'class': 'django_ckeditor_5'}, config_name='body_config',
+            )
         }
+        labels = {
+            'textarea': 'Product Description'
+        }
+
+
 
 class CategoryForm(ModelForm):
 

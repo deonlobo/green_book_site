@@ -13,7 +13,19 @@
             </header>
     <section class="signup-step-container">
 {#        <div class="container">#}
+             {% if messages %}
+                        {% for message in messages %}
+                            <br/>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
             <div class="row d-flex justify-content-center">
+
                 <div class="col-md-8">
                     <div class="wizard">
                         <div class="wizard-inner">
@@ -34,60 +46,94 @@
                             </ul>
                         </div>
 
-                        <form role="form"  method="post" class="login-box">
+                        <form role="form"  method="post" class="login-box" novalidate>
                             {% csrf_token %}
                             <div class="tab-content" id="main_form">
                                 <div class="tab-pane active" role="tabpanel" id="step1">
 {#                                    <h4 class="text-center">Step 1</h4>#}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <br/>
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>{{ form.name.label }}</label>
                                                 {{  form.name }}
+                                                {% for error in form.name.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                  <label>{{ form.quality.label }}</label>
                                                 {{ form.quality }}
+                                                {% for error in form.quality.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                  <label>{{ form.description.label }}</label>
                                                 {{ form.description }}
+                                                {% for error in form.description.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                  <label>{{ form.price.label }}</label>
                                                 {{ form.price }}
+                                                {% for error in form.price.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                  <label>{{ form.stock.label }}</label>
                                                 {{ form.stock }}
+                                                {% for error in form.stock.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     <div class="col-md-6">
                                             <div class="form-group">
                                                  <label>{{ form.discounted.label }}</label>
                                                 {{ form.discounted }}
+                                                {% for error in form.discounted.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                  <label>{{ form.percent.label }}</label>
                                                 {{ form.percent }}
+                                                {% for error in form.percent.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                             </div>
                                         </div>
 
                                          <div class="col-md-12">
                                              <div class="form-group">
                                                  <label>{{ form.category.label }}</label>
-{#                                                {{ form.stock }}#}
                                                   {{form.category}}
+                                                  {% for error in form.category.errors %}
+                                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                                {% endfor %}
                                              </div>
                                         </div>
 
