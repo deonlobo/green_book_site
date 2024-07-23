@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Challenges</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: beige;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: darkgoldenrod;
+            color: white;
+            padding: 50px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+        }
+        .header p {
+            font-size: 1.2em;
+        }
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .step-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 22%;
+            transition: transform 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-10px);
+        }
+        .step-icon img {
+            width: 80px;
+            height: 80px;
+        }
+        .step-card h3 {
+            color: #43a047;
+            margin-top: 20px;
+        }
+        .step-card p {
+            font-size: 1em;
+            color: #757575;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .btn-primary {
+            background-color: #7ca043;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Join Our Eco-Challenges and Earn Amazing Rewards!</h1>
+            <p>Post challenges, complete tasks, and earn points for exclusive coupons.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step-card">
+                <div class="step-icon">
+                    <img src="{% static 'challenges_images/post_challenge.jpeg' %}" alt="Post Challenge">
+                </div>
+                <h3>Post Challenges</h3>
+                <p>Share your eco-friendly ideas and motivate others to take action. Earn 2000 points for each challenge you post!</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <img src="{% static 'challenges_images/view_challenge.jpg' %}" alt="View Challenge">
+                </div>
+                <h3>View Challenges</h3>
+                <p>Explore and participate in various eco-friendly challenges posted by our community.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <img src="{% static 'challenges_images/earn_points.jpg' %}" alt="Earn Points">
+                </div>
+                <h3>Earn Points</h3>
+                <p>Complete tasks and earn 4000 points. The more you contribute, the more you earn!</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <img src="{% static 'challenges_images/redeem_coupons.jpg' %}" alt="Redeem Coupons">
+                </div>
+                <h3>Redeem Coupons</h3>
+                <p>Use your points to get amazing coupons. Enjoy exclusive discounts and offers!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Start Your Eco Journey Now!</a>
+    </div>
+<br /> <br />
+</body>
+</html>

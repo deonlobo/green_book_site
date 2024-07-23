@@ -1,5 +1,4 @@
 from django.contrib import admin
-from green_book_challenges.models import SubModel
 from .models import *
 from django.utils.html import mark_safe
 from .forms import ProductForm , ProductStep2Form
@@ -22,5 +21,5 @@ class ProductStep2Admin(admin.ModelAdmin):
     readonly_fields = ('image_upload1_tag','image_upload2_tag','image_upload3_tag','image_upload4_tag')
 
 
-admin.site.register(SubModel)
+
 
