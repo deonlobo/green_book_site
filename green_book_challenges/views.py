@@ -80,6 +80,27 @@ def accepted_challenges_list_view(request):
         return redirect('login')
 
 
+# def submit_completed_task_view(request):
+#     if request.method == 'POST':
+#         challenge_id = request.POST.get('challenge')
+#         form = CompletedTaskForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             completed_task = form.save(commit=False)
+#             completed_task.user = request.user
+#             completed_task.challenge = get_object_or_404(Challenge, id=challenge_id)
+#             completed_task.save()
+#
+#             # Remove the challenge from accepted challenges list
+#             AcceptedChallenge.objects.filter(user=request.user, challenge__id=challenge_id).delete()
+#
+#             # Fetch all completed tasks for the current user
+#             completed_tasks = CompletedTask.objects.filter(user=request.user)
+#
+#             # Render the template with updated context
+#             return render(request, 'green_book_challenges/accepted_challenges_list.html', {
+#                 'accepted_challenges': AcceptedChallenge.objects.filter(user=request.user),
+#                 'completed_tasks': completed_tasks
+#             })
 def submit_completed_task_view(request):
     if request.method == 'POST':
         challenge_id = request.POST.get('challenge')
@@ -93,15 +114,11 @@ def submit_completed_task_view(request):
             # Remove the challenge from accepted challenges list
             AcceptedChallenge.objects.filter(user=request.user, challenge__id=challenge_id).delete()
 
-            # Fetch all completed tasks for the current user
-            completed_tasks = CompletedTask.objects.filter(user=request.user)
+            # Return success response
+            return JsonResponse({'success': True})
 
-            # Render the template with updated context
-            return render(request, 'green_book_challenges/accepted_challenges_list.html', {
-                'accepted_challenges': AcceptedChallenge.objects.filter(user=request.user),
-                'completed_tasks': completed_tasks
-            })
-
+    # Return error response if form is not valid
+    return JsonResponse({'success': False, 'errors': 'Form is invalid or other error.'})
 
 @login_required
 def completed_tasks_list(request):

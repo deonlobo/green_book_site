@@ -111,6 +111,78 @@
 </div>
     </div>
 
+{##}
+{##}
+{#<!-- Pop-up Form Modal -->#}
+{#<div class="modal fade" id="postFormModal" tabindex="-1" role="dialog" aria-labelledby="postFormModalLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog" role="document">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="postFormModalLabel">Submit Completed Task</h5>#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <!-- Django Form -->#}
+{#                <!-- Inside your modal body -->#}
+{#                <form id="completedTaskForm" method="post" action="{% url 'submit_completed_task' %}" enctype="multipart/form-data">#}
+{#                    {% csrf_token %}#}
+{#                    <div class="form-group">#}
+{#                        <label for="id_challenge">Select Challenge</label>#}
+{#                        <select class="form-control" id="id_challenge" name="challenge">#}
+{#                            {% for accepted_challenge in accepted_challenges %}#}
+{#                                <option value="{{ accepted_challenge.challenge.id }}">{{ accepted_challenge.challenge.title }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+{#                    </div>#}
+{#                    {{ completed_task_form.as_p }}  <!-- Renders all other fields as paragraphs -->#}
+{#                    <button type="submit" class="btn btn-primary">Submit</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<script>#}
+{#    $('#postFormModal').on('show.bs.modal', function(event) {#}
+{#        var button = $(event.relatedTarget); // Button that triggered the modal#}
+{#        var challengeId = button.data('challenge-id'); // Extract challenge ID from data-* attributes#}
+{#        var modal = $(this);#}
+{#        modal.find('#id_challenge').val(challengeId); // Set the challenge ID in the dropdown#}
+{#    });#}
+{##}
+{#    document.getElementById('completedTaskForm').addEventListener('submit', function(event) {#}
+{#        event.preventDefault();#}
+{#        var formData = new FormData(this);#}
+{##}
+{#        fetch("{% url 'submit_completed_task' %}", {#}
+{#            method: 'POST',#}
+{#            body: formData,#}
+{#            headers: {#}
+{#                'X-CSRFToken': '{{ csrf_token }}'#}
+{#            },#}
+{#        })#}
+{#        .then(response => response.json())#}
+{#        .then(data => {#}
+{#            if (data.success) {#}
+{#                $('#postFormModal').modal('hide');#}
+{#                alert('Completed task submitted successfully!');#}
+{#                location.reload();#}
+{#            } else {#}
+{#                console.log(data.errors);#}
+{#                alert('Failed to submit completed task. Please try again.');#}
+{#            }#}
+{#        })#}
+{#        .catch(error => console.error('Error:', error));#}
+{#    });#}
+{#</script>#}
+
+
+
+
+
+
 
 
 <!-- Pop-up Form Modal -->
@@ -177,9 +249,7 @@
         .catch(error => console.error('Error:', error));
     });
 </script>
+{% endblock %}
 
-
-
-
-
+    {% block footer %}
 {% endblock %}
