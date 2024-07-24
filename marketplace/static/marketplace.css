@@ -66,6 +66,7 @@
     font-size: 0.75em;
     margin: 5px 0 20px 0;
     text-align: justify;
+        height: 5rem;
 }
 
 .product .price {

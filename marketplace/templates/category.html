@@ -10,17 +10,17 @@
                 <h4>{{ category }} Products</h4>
             </header>
             <div class="product-list">
-               {% for i in "abcdabcdabcdabcdabcdabcdabcdabcd" %}
-{#                   {{ i }}#}
-                    <div class="product">
-                    <img src="https://via.placeholder.com/200" alt="Product 1">
+                {% for product in products %}
+                        <div class="product">
+{#                    <img src="https://via.placeholder.com/200" alt="Product 1">#}
+                            {{ product.product_step2.last.image_upload1_tag | safe }}
                     <div class="badge badge-new">New</div>
                     <div class="product-info">
                         <div class="title-price">
-                             <span class="title">Product 1</span>
-                             <span class="price old-price">$15.00</span>
+                             <span class="title">{{ product.name}}</span>
+                             <span class="price old-price">${{ product.price }}</span>
                         </div>
-                        <span class="description">This is a great product that offers high quality material at an affordable price. Durable and long-lasting.</span>
+                        <span class="description">{{ product.description }}</span>
                         <div class="quality-bar">
                             <div class="quality-fill" style="width: 90%;"></div>
                             <div class="quality-labels">
@@ -44,8 +44,43 @@
 {#                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>#}
                         </div>
                     </div>
-
-               {% endfor %}
+                {% endfor %}
+{#               {% for i in "abcdabcdabcdabcdabcdabcdabcdabcd" %}#}
+{#                   {{ i }}#}
+{#                    <div class="product">#}
+{#                    <img src="https://via.placeholder.com/200" alt="Product 1">#}
+{#                    <div class="badge badge-new">New</div>#}
+{#                    <div class="product-info">#}
+{#                        <div class="title-price">#}
+{#                             <span class="title">Product 1</span>#}
+{#                             <span class="price old-price">$15.00</span>#}
+{#                        </div>#}
+{#                        <span class="description">This is a great product that offers high quality material at an affordable price. Durable and long-lasting.</span>#}
+{#                        <div class="quality-bar">#}
+{#                            <div class="quality-fill" style="width: 90%;"></div>#}
+{#                            <div class="quality-labels">#}
+{#                                <span>Low</span>#}
+{#                                <span>Medium</span>#}
+{#                                <span>High</span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                       <div class="icons">#}
+{#                            <i class="fas fa-user"></i>#}
+{#                            <i class="fas fa-comment"></i>#}
+{#                       </div>#}
+{#                        <div class="rating">#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star"></i>#}
+{#                            <i class="fas fa-star-half-alt"></i>#}
+{#                            <span>(100 reviews)</span>#}
+{#                        </div>#}
+{#                        <button><i class="fas fa-cart-plus"></i> Add to Cart</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#               {% endfor %}#}
            </div>
         </div>
     </div>

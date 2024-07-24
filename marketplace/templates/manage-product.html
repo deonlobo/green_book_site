@@ -12,9 +12,20 @@
             </header>
             <section class="category-register mt-2">
 {#                <div class="container">#}
+                     {% if messages %}
+                        {% for message in messages %}
+                            <br/>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <div class="row">
                         <div class="col-sm-10">
-                            <form action="{% url 'marketplace:admin_manage_products' %}" method="post" novalidate>
+                            <form action="{% url 'marketplace:manage_products' %}" method="post" novalidate>
                                 {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-3">
@@ -89,16 +100,13 @@
         <td>{{ product.updated_at }}</td>
         <td>
 
-            {% if product.get_is_active_display %}
-                Active
-            {% else %}
-                Inactive
-            {% endif %}
+            {{ product.get_status_display }}
+
         </td>
         <td class="text-center">
-            <a href="#"><i class="fas fa-edit"></i></a>
-            <a href="#"><i class="fas fa-check-circle"></i></a>
-            <a href="#"><i class="fas fa-times-circle"></i></a>
+            <a href="{% url 'marketplace:modify_add_product_step_one' product.pk %}"><i class="fas fa-edit"></i></a>
+{#            <a href="#"><i class="fas fa-check-circle"></i></a>#}
+{#            <a href="#"><i class="fas fa-times-circle"></i></a>#}
         </td>
         </tr>
     {% endfor %}

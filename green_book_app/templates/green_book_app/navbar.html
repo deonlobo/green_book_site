@@ -32,11 +32,15 @@
             Marketplace
         </a>
         <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+{#         <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
+
             {% for category in categories %}
           <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>
             {% endfor %}
         </div>
+
       </li>
+
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'messenger_list' %}">Messenger</a>
       </li>
@@ -45,11 +49,13 @@
           Eco-Challenges
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <a class="dropdown-item" href="{% url 'challenge1' %}">Challenge 1</a>
-
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+                   <a class="dropdown-item" href="{% url 'challenge1' %}">Challenges</a>
+            {% if user.is_authenticated %}
+                <a class="dropdown-item" href="/challenges/points-and-coupons/">Rewards</a>
+                <a class="dropdown-item" href="/challenges/challenges/accepted/">Accepted Challenges</a>
+                <a class="dropdown-item" href="/challenges/challenges/accepted/">Posts</a>
+                <a class="dropdown-item" href="/challenges/completed-tasks/">Feed</a>
+            {% endif %}
         </div>
       </li>
       <li class="nav-item active">
@@ -60,8 +66,18 @@
 {#      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
 {#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
 {#    </form>#}
-    <ul class="navbar-nav ml-3 mr-3">
+
+    <ul class="navbar-nav mr-3">
         {% if user.is_authenticated %}
+             <li class="nav-item active dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Manage
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
+                    <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Manage Products</a>
+                </div>
+              </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'logout' %}">Log out</a>
             </li>
@@ -73,7 +89,6 @@
                 <a class="nav-link" href="{% url 'register_user' %}">Sign Up</a>
             </li>
         {% endif %}
-
     </ul>
   </div>
 </nav>
