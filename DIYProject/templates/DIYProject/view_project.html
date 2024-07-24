@@ -49,11 +49,13 @@
                 </div>
                 <div class="my-2">
                     <h6><i>How to make it ?</i></h6>
+                <div class="container">
                     <ul>
                         {% for step in project.getSteps %}
                             <li>{{ step | capfirst }}</li>
                         {% endfor %}
                     </ul>
+                </div>
                 </div>
 
                 <hr style="color: #3333">

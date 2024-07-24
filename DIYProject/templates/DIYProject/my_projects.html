@@ -5,6 +5,18 @@
 
     <div class="container my-4">
 
+            {% if messages %}
+                {% for message in messages %}
+                    <br/>
+                    <div class="alert alert-warning alert-dismissible fade show mx-0" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
     <div class="row">
 
     {% for project in projects %}
