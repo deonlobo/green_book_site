@@ -19,10 +19,13 @@ def get_messenger_list_template(request):
 @login_required
 def get_conversation_template(request, param_conversation_uuid):
     messages = None
+    conversation = None
+    
     if param_conversation_uuid is not None:
         messages = Message.objects.filter(
             conversation__conversation_uuid=param_conversation_uuid
         ).order_by("-timestamp")
+        conversation = Conversation.objects.filter(conversation_uuid=param_conversation_uuid)
 
     return render(
         request,
@@ -30,50 +33,23 @@ def get_conversation_template(request, param_conversation_uuid):
         {
             "selected_conversation_uuid": param_conversation_uuid,
             "messages": messages,
-            "user_id": request.user.id
-        },
-    )
-
-
-@login_required
-def messenger_home(request, param_conversation_uuid=None):
-    conversations_list = Conversation.objects.filter(participants=request.user)
-    pinned_conversations_list = conversations_list.filter(pinned=True)
-    private_conversations_list = conversations_list.filter(
-        conversation_type="private", pinned=False
-    )
-    public_group_conversations_list = conversations_list.filter(
-        conversation_type="public_group"
-    )
-    messages = None
-    if param_conversation_uuid is not None:
-        messages = Message.objects.filter(
-            conversation__conversation_uuid=param_conversation_uuid
-        ).order_by("-timestamp")
-    return render(
-        request,
-        "green_book_messenger/messenger_list.html",
-        {
-            "conversations_list": conversations_list,
-            "private_conversations_list": private_conversations_list,
-            "public_group_conversations_list": public_group_conversations_list,
-            "pinned_conversations_list": pinned_conversations_list,
-            "selected_conversation_uuid": param_conversation_uuid,
-            "messages": messages,
             "user_id": request.user.id,
+            "conversation": conversation[0],
+            "conversation_name": conversation[0].conversation_name
         },
     )
 
 
 @login_required
 def get_messages_by_conversation_id(request):
-    conversation__uuid = request.GET.get("conversation__uuid", None)
-    data = {
-        "messages": Message.objects.filter(
+    conversation__uuid = request.GET.get("conversation_id", None)
+    messages = Message.objects.filter(
             conversation__conversation_uuid=conversation__uuid
         ).order_by("timestamp")
-    }
-    return JsonResponse(data)
+
+    serialized_list = serializers.serialize("json", messages)
+    jsonData = {"messages": serialized_list}
+    return JsonResponse(jsonData)
 
 
 @login_required
@@ -172,7 +148,6 @@ def get_pinned_conversations(request):
 @login_required
 def get_private_conversations(request):
     filter = request.GET.get("filter", None)
-    print("$$$$$$$$$$$$$$$", filter)
     private_conversations_list = Conversation.objects.filter(
         conversation_type="private", conversation_name__icontains=filter, pinned=False
     )

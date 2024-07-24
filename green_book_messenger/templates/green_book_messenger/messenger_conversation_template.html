@@ -4,87 +4,101 @@
 
 <!-- https://colorhunt.co/palette/45526Cf4ce14127C56F8F5F1 -->
 {% block messenger_css %}
+<link rel="stylesheet" href="{% static 'green_book_messenger/css/messenger_list.css' %}" />
+
 <link rel="stylesheet" href="{% static 'green_book_messenger/css/messenger_conversation.css' %}" />
+
 {% endblock %}
 
 {% block messenger_js %}
-<script data-selected_conversation_uuid="{{selected_conversation_uuid}}" type="text/javascript" src="{% static 'green_book_messenger/js/messenger_conversation.js' %}"></script>
+<script data-selected_conversation_uuid="{{selected_conversation_uuid}}" data-user_id="{{user_id}}" data-conversation="{{ conversation }}" data-conversation_name="{{ conversation_name }}" data-messages_by_conversation_url="{% url 'get_messages' %}" data-messenger_list_url="{% url 'messenger_list' %}"
+  type="text/javascript" src="{% static 'green_book_messenger/js/messenger_conversation.js' %}"></script>
 {% endblock %}
 
 {% block messenger_html %}
 <div id="messenger--container" class="messenger container-fluid position-relative overflow-hidden d-flex flex-column">
-  <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
-    <div class="messenger__conversation col-9 d-flex flex-column p-1 mx-auto">
-      <div class="messenger__conversation__div p-4 flex-grow-1 d-flex flex-column justify-content-between">
-        <div id="messenger__conversation__container"
-          class="messenger__conversation__container d-flex flex-column-reverse flex-grow-1 pb-4">
-          {% if messages|length == 0 and selected_conversation_uuid|safe != "None"%}
-          <h1 id="start_conversation_message" class="text-center my-auto">Start Conversation</h1>
-          {% endif %}
-
-          {% for message in messages %}
-
-          {% if message.sender.id == user_id %}
-          <div class="d-flex flex-column mb-4 mr-3">
-            <span class="messenger_conversation__bubble bubble__right p-3">{{ message.content }}</span>
-            <span class="messenger_conversation__timestamp badge rounded-pill align-self-end">{{message.timestamp}}
-            </span>
+  <div class="row h-100">
+    <div class="col-9 mx-auto h-100">
+      <div class="row h-100">
+        <div class="col-11 d-flex flex-column h-100">
+          <div class="row gx-2 messenger__header__container">
+            <div class="messenger__header__left col p-1 mx-auto">
+              <div class="messenger__header__left__container d-flex align-items-center p-4">
+                <span class="rounded-circle overflow-hidden align-self-middle">
+                  <img width="40" height="40"
+                    src="https://api.dicebear.com/9.x/initials/svg?seed={{ conversation.conversation_name }}" alt="" />
+                </span>
+                <span class="ml-3 flex-grow-1">
+                  <h3 class="mb-0"><b>{{ conversation.conversation_name }}</b></h3>
+                </span>
+                <span class=""><button onclick="redirectToMessengerHome()" id="private_converstation_add_button"
+                    class="btn back__btn rounded-circle p-2">
+                    <svg class="rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="27" height="25">
+                      <path style="fill:#f8f5f1"
+                        d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
+                        data-name="Right" />
+                    </svg>
+                  </button></span>
+              </div>
+            </div>
           </div>
-          {% else %}
-          <div class="d-flex flex-column mb-4 ml-3">
-            <span class="rounded-circle overflow-hidden align-self-start mb-1">
-              <img width="30" height="30"
-                src="https://api.dicebear.com/9.x/initials/svg?seed={{ selected_conversation_uuid }}" alt="" />
-            </span>
-            <span class="messenger_conversation__bubble bubble__left br-0 p-3">{{ message.content }}</span>
-            <span
-              class="messenger_conversation__timestamp badge rounded-pill align-self-start">{{message.timestamp}}</span>
+          <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
+            <div class="messenger__conversation col d-flex flex-column p-1 mx-auto h-100">
+              <div class="messenger__conversation__div p-4 flex-grow-1 d-flex flex-column justify-content-between h-100">
+                <div id="messenger__conversation__container"
+                  class="messenger__conversation__container d-flex flex-column-reverse flex-grow-1 pb-4">
+
+                </div>
+                <div class="messenger__input d-flex flex-row align-items-center mt-2">
+                  <div class="messenger__input__text flex-grow-1 pr-4">
+                    <input id="messenger__chat__input" type="text" class="form-control rounded-pill" id="message_input"
+                      placeholder="Write messages......." />
+                  </div>
+                  <div class="messenger__input__button">
+                    <button id="messenger__chat__submit" type="button" class="btn">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                        width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
+                        <defs></defs>
+                        <g style="
+                                    stroke: none;
+                                    stroke-width: 0;
+                                    stroke-dasharray: none;
+                                    stroke-linecap: butt;
+                                    stroke-linejoin: miter;
+                                    stroke-miterlimit: 10;
+                                    fill: none;
+                                    fill-rule: nonzero;
+                                    opacity: 1;
+                                  " transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                          <path
+                            d="M 89.999 3.075 C 90 3.02 90 2.967 89.999 2.912 c -0.004 -0.134 -0.017 -0.266 -0.038 -0.398 c -0.007 -0.041 -0.009 -0.081 -0.018 -0.122 c -0.034 -0.165 -0.082 -0.327 -0.144 -0.484 c -0.018 -0.046 -0.041 -0.089 -0.061 -0.134 c -0.053 -0.119 -0.113 -0.234 -0.182 -0.346 C 89.528 1.382 89.5 1.336 89.469 1.29 c -0.102 -0.147 -0.212 -0.288 -0.341 -0.417 c -0.13 -0.13 -0.273 -0.241 -0.421 -0.344 c -0.042 -0.029 -0.085 -0.056 -0.129 -0.082 c -0.118 -0.073 -0.239 -0.136 -0.364 -0.191 c -0.039 -0.017 -0.076 -0.037 -0.116 -0.053 c -0.161 -0.063 -0.327 -0.113 -0.497 -0.147 c -0.031 -0.006 -0.063 -0.008 -0.094 -0.014 c -0.142 -0.024 -0.285 -0.038 -0.429 -0.041 C 87.03 0 86.983 0 86.936 0.001 c -0.141 0.003 -0.282 0.017 -0.423 0.041 c -0.035 0.006 -0.069 0.008 -0.104 0.015 c -0.154 0.031 -0.306 0.073 -0.456 0.129 L 1.946 31.709 c -1.124 0.422 -1.888 1.473 -1.943 2.673 c -0.054 1.199 0.612 2.316 1.693 2.838 l 34.455 16.628 l 16.627 34.455 C 53.281 89.344 54.334 90 55.481 90 c 0.046 0 0.091 -0.001 0.137 -0.003 c 1.199 -0.055 2.251 -0.819 2.673 -1.943 L 89.815 4.048 c 0.056 -0.149 0.097 -0.3 0.128 -0.453 c 0.008 -0.041 0.011 -0.081 0.017 -0.122 C 89.982 3.341 89.995 3.208 89.999 3.075 z M 75.086 10.672 L 37.785 47.973 L 10.619 34.864 L 75.086 10.672 z M 55.136 79.381 L 42.027 52.216 l 37.302 -37.302 L 55.136 79.381 z"
+                            style="
+                                      stroke: none;
+                                      stroke-width: 1;
+                                      stroke-dasharray: none;
+                                      stroke-linecap: butt;
+                                      stroke-linejoin: miter;
+                                      stroke-miterlimit: 10;
+                                      fill: #f8f5f1;
+                                      fill-rule: nonzero;
+                                      opacity: 1;
+                                    " transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                        </g>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          {% endif %}
-
-          {%endfor %}
-
         </div>
-        <div class="messenger__input d-flex flex-row align-items-center mt-2">
-          <div class="messenger__input__text flex-grow-1 pr-4">
-            <input id="messenger__chat__input" type="text" class="form-control rounded-pill" id="message_input"
-              placeholder="Write messages......." />
-          </div>
-          <div class="messenger__input__button">
-            <button id="messenger__chat__submit" type="button" class="btn">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">
-                <defs></defs>
-                <g style="
-                          stroke: none;
-                          stroke-width: 0;
-                          stroke-dasharray: none;
-                          stroke-linecap: butt;
-                          stroke-linejoin: miter;
-                          stroke-miterlimit: 10;
-                          fill: none;
-                          fill-rule: nonzero;
-                          opacity: 1;
-                        " transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                  <path
-                    d="M 89.999 3.075 C 90 3.02 90 2.967 89.999 2.912 c -0.004 -0.134 -0.017 -0.266 -0.038 -0.398 c -0.007 -0.041 -0.009 -0.081 -0.018 -0.122 c -0.034 -0.165 -0.082 -0.327 -0.144 -0.484 c -0.018 -0.046 -0.041 -0.089 -0.061 -0.134 c -0.053 -0.119 -0.113 -0.234 -0.182 -0.346 C 89.528 1.382 89.5 1.336 89.469 1.29 c -0.102 -0.147 -0.212 -0.288 -0.341 -0.417 c -0.13 -0.13 -0.273 -0.241 -0.421 -0.344 c -0.042 -0.029 -0.085 -0.056 -0.129 -0.082 c -0.118 -0.073 -0.239 -0.136 -0.364 -0.191 c -0.039 -0.017 -0.076 -0.037 -0.116 -0.053 c -0.161 -0.063 -0.327 -0.113 -0.497 -0.147 c -0.031 -0.006 -0.063 -0.008 -0.094 -0.014 c -0.142 -0.024 -0.285 -0.038 -0.429 -0.041 C 87.03 0 86.983 0 86.936 0.001 c -0.141 0.003 -0.282 0.017 -0.423 0.041 c -0.035 0.006 -0.069 0.008 -0.104 0.015 c -0.154 0.031 -0.306 0.073 -0.456 0.129 L 1.946 31.709 c -1.124 0.422 -1.888 1.473 -1.943 2.673 c -0.054 1.199 0.612 2.316 1.693 2.838 l 34.455 16.628 l 16.627 34.455 C 53.281 89.344 54.334 90 55.481 90 c 0.046 0 0.091 -0.001 0.137 -0.003 c 1.199 -0.055 2.251 -0.819 2.673 -1.943 L 89.815 4.048 c 0.056 -0.149 0.097 -0.3 0.128 -0.453 c 0.008 -0.041 0.011 -0.081 0.017 -0.122 C 89.982 3.341 89.995 3.208 89.999 3.075 z M 75.086 10.672 L 37.785 47.973 L 10.619 34.864 L 75.086 10.672 z M 55.136 79.381 L 42.027 52.216 l 37.302 -37.302 L 55.136 79.381 z"
-                    style="
-                            stroke: none;
-                            stroke-width: 1;
-                            stroke-dasharray: none;
-                            stroke-linecap: butt;
-                            stroke-linejoin: miter;
-                            stroke-miterlimit: 10;
-                            fill: #f8f5f1;
-                            fill-rule: nonzero;
-                            opacity: 1;
-                          " transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                </g>
-              </svg>
-            </button>
+        <div class="col-1 h-100 py-1">
+          <div id="emoji__container" class="emoji__container row h-100 py-4 d-flex flex-row justify-content-center">
+
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>

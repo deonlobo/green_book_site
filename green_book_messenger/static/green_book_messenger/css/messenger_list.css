@@ -37,6 +37,47 @@
     }
   }
 
+  .messenger_group_conversation_model {
+    background-color: #FCF8F3;
+    top: 100%;
+    z-index: 1000;
+
+    .group_converstation_close_button {
+      background: #45526c;
+      color: #f8f5f1;
+      cursor: pointer;
+    }
+
+    .name__badge {
+      background: #41b06e;
+      color: #f8f5f1;
+    }
+
+    .user_name_button {
+      button {
+        background-color: #41b06e;
+        color: #45526c;
+      }
+    }
+
+    .search__result__container {
+      .search__list__item {
+        &:hover {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+        }
+
+      }
+
+      .search__list__item--selected {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+      }
+    }
+  }
+
   .messenger__header__container {
     .add__button__modal {
       justify-content: space-evenly;

@@ -1,4 +1,23 @@
 const messenger_template_data = document.currentScript.dataset
+const conversation_name = messenger_template_data["selected_conversation_uuid"]
+const conversation_message_container = $("#messenger__conversation__container")
+const emojiContainer = $("#emoji__container")
+
+const emojis = [
+  "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇",
+  "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚",
+  "😋", "😛", "😜", "🤪", "😝", "🤑", "🤗", "🤭", "🤫", "🤔",
+  "🤐", "🤨", "😐", "😑", "😶", "😏", "😒", "🙄", "😬", "🤥",
+  "😌", "😔", "😪", "🤤", "😴", "😷", "🤒", "🤕", "🤢", "🤮",
+  "🤧", "😵", "🤯", "🤠", "🥳", "😎", "🤓", "🧐", "😕", "😟",
+  "🙁", "☹️", "😮", "😯", "😲", "😳", "🥺", "😦", "😧", "😨",
+  "😰", "😥", "😢", "😭", "😱", "😖", "😣", "😞", "😓", "😩",
+  "😫", "😤", "😡", "😠", "🤬", "😈", "👿", "💀", "☠️", "💩",
+  "🤡", "👹", "👺", "👻", "👽", "👾", "🤖", "😺", "😸", "😹",
+  "😻", "😼", "😽", "🙀", "😿", "😾",
+]
+
+
 
 function adjust_message_container_height() {
   // Select the navbar and the target div
@@ -18,9 +37,61 @@ function adjust_message_container_height() {
   messenger_container.style.height = `${targetHeight}px`;
 }
 
-adjust_message_container_height();
 
-const conversation_name = messenger_template_data["selected_conversation_uuid"]
+function formatDate(date) {
+  // Format the date
+  const formattedDate = date.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  // Format the time part with a.m./p.m.
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "p.m." : "a.m.";
+  const formattedTime = `${hours % 12 || 12}:${minutes
+        .toString()
+        .padStart(2, "0")} ${ampm}`;
+
+  // Combine formatted date and time
+  const formattedTimestamp = `${formattedDate}, ${formattedTime}`;
+
+  return formattedTimestamp
+}
+
+
+function generate_message_blob(message, timestamp, isLoggedInUser, peerName) {
+  let docElement = "";
+  if (isLoggedInUser) {
+    docElement = `<div class="d-flex flex-column mb-4 mr-3">
+                    <span class="messenger_conversation__bubble bubble__right p-3 ml-3">${message}</span>
+                    <span
+                      class="messenger_conversation__timestamp badge rounded-pill align-self-end">${timestamp}</span>
+                  </div>`
+  } else {
+    docElement = `<div class="d-flex flex-column mb-4 ml-3">
+                    <span class="rounded-circle overflow-hidden align-self-start mb-1">
+                      <img width="30" height="30"
+                        src = "https://api.dicebear.com/9.x/initials/svg?seed=${peerName}"
+                        alt = "" / >
+                    </span>
+                    <span class="messenger_conversation__bubble bubble__left br-0 p-3">${message}</span>
+                    <span
+                      class="messenger_conversation__timestamp badge rounded-pill align-self-start">${timestamp}</span>
+                  </div>`
+  }
+
+  return docElement;
+
+}
+
+function redirectToMessengerHome() {
+  window.location.href = messenger_template_data["messenger_list_url"];
+}
+
+
+
 if (conversation_name != "None") {
   const chatSocket = new WebSocket(
     "ws://" +
@@ -32,88 +103,51 @@ if (conversation_name != "None") {
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    const conversation_list_elements = document.getElementById(
-      "messenger__conversation__container"
-    );
-
-    let docElement = "";
-
     // Parse the timestamp to a Date object
     const date = new Date(data.timestamp);
 
-    // Format the date
-    const formattedDate = date.toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-
-    // Format the time part with a.m./p.m.
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? "p.m." : "a.m.";
-    const formattedTime = `${hours % 12 || 12}:${minutes
-        .toString()
-        .padStart(2, "0")} ${ampm}`;
-
-    // Combine formatted date and time
-    formattedTimestamp = `${formattedDate}, ${formattedTime}`;
-
-    if (messenger_data['user_id'] == data.user_id) {
-      docElement = `<div class="d-flex flex-column mb-4 mr-3">
-            <span class="messenger_conversation__bubble bubble__right p-3">${data.message}</span>
-            <span
-              class="messenger_conversation__timestamp badge rounded-pill align-self-end">${formattedTimestamp}
-            </span>
-          </div>`;
-    } else {
-      docElement = `<div class="d-flex flex-column mb-4 ml-3">
-            <span class="rounded-circle overflow-hidden align-self-start mb-1">
-              <img width="30" height="30" src="https://api.dicebear.com/9.x/pixel-art-neutral/svg" alt="" />
-            </span>
-            <span class="messenger_conversation__bubble bubble__left br-0 p-3">${data.message}</span>
-            <span
-              class="messenger_conversation__timestamp badge rounded-pill align-self-start">${formattedTimestamp}</span>
-          </div>
-      `;
-    }
+    const docElement = generate_message_blob(data.message, formatDate(date),
+      messenger_template_data['user_id'] == data.user_id,
+      messenger_template_data["conversation_name"]);
 
     const newMessageElement = document.createElement("div");
     newMessageElement.innerHTML = docElement;
-    conversation_list_elements.insertBefore(
-      newMessageElement,
-      conversation_list_elements.firstChild
-    );
-
-
+    if ($('#messenger__conversation__container #start_conversation_message').length > 0) {
+      $('#messenger__conversation__container #start_conversation_message').remove();
+    }
+    conversation_message_container.prepend(newMessageElement);
   };
 
   chatSocket.onclose = function (e) {
     console.error("Chat socket closed unexpectedly");
   };
 
-  document.querySelector("#messenger__chat__input").focus();
-  document.querySelector("#messenger__chat__input").onkeyup = function (e) {
+  $("#messenger__chat__input").focus();
+  $('#messenger__chat__input').keyup(function (e) {
     if (e.keyCode === 13) {
       // enter, return
-      document.querySelector("#messenger__chat__submit").click();
+      $("#messenger__chat__submit").click();
     }
-  };
+  });
 
-  document.querySelector("#messenger__chat__submit").onclick = function (e) {
-    const messageInputDom = document.querySelector("#messenger__chat__input");
-    const message = messageInputDom.value;
+  $("#messenger__chat__submit").click(function (e) {
+    const messageInputDom = $("#messenger__chat__input");
+    const message = messageInputDom.val();
+    if (message == "" || message == undefined || message.trim().length == 0) return;
+
     const timestamp = new Date().toISOString();
+
     chatSocket.send(
       JSON.stringify({
         message_content: message,
         timestamp: timestamp,
-        user_id: messenger_data['user_id'],
+        user_id: messenger_template_data['user_id'],
       })
     );
-    messageInputDom.value = "";
-  };
+    messageInputDom.val('');
+  })
 }
+
 
 // Select the node that will be observed for mutations
 let targetNode = document.getElementById(
@@ -127,17 +161,23 @@ let config = {
 
 // Callback function to execute when mutations are observed
 let callback = function (mutationsList, observer) {
-  console.log("Here");
   // Use traditional 'for loops' for IE 11
+  console.log("mutation");
+  let lastChildListMutation = null
   for (let mutation of mutationsList) {
     if (mutation.type === "childList") {
-      $("#messenger__conversation__container").animate({
-          scrollTop: $("#messenger__conversation__container")[0].scrollHeight,
-        },
-        500
-      );
+      lastChildListMutation = mutation
     }
   }
+
+  if (lastChildListMutation != null) {
+    $("#messenger__conversation__container").animate({
+        scrollTop: $("#messenger__conversation__container")[0].scrollHeight,
+      },
+      500
+    );
+  }
+
 };
 
 // Create an observer instance linked to the callback function
@@ -145,3 +185,53 @@ let observer = new MutationObserver(callback);
 
 // Start observing the target node for configured mutations
 observer.observe(targetNode, config);
+
+function get_messages_by_conversation(conversation_id) {
+  $.ajax({
+    type: 'GET',
+    url: messenger_template_data["messages_by_conversation_url"],
+    data: {
+      "filter": "",
+      "conversation_id": conversation_id
+    },
+    success: function (response) {
+      const messages = JSON.parse(response["messages"])
+      // conversation_message_container.empty();
+      if (messages.length == 0) {
+        const empty_message_node = ` <h1 id="start_conversation_message" class="text-center my-auto">Start Conversation</h1>`
+        conversation_message_container.append(empty_message_node)
+
+      } else {
+        messages.forEach(conversation => {
+          const data = conversation["fields"]
+          const date = new Date(data.timestamp);
+          const message_node = generate_message_blob(data.content, formatDate(date),
+            messenger_template_data['user_id'] == data.sender,
+            messenger_template_data["conversation_name"]);
+          const newMessageElement = document.createElement("div");
+          newMessageElement.innerHTML = message_node;
+          conversation_message_container.prepend(newMessageElement)
+        });
+      }
+
+    },
+    error: function () {
+
+    }
+  });
+}
+
+function set_emoji(emoji) {
+  const messageInputDom = $("#messenger__chat__input");
+  const message = messageInputDom.val() + emoji;
+
+  messageInputDom.val(message)
+
+}
+
+emojis.forEach(emoji => {
+  emojiContainer.append(`<h3 onclick='set_emoji("${emoji}")' class="emoji__item">${emoji}</h3>`)
+})
+
+adjust_message_container_height();
+get_messages_by_conversation(conversation_name);

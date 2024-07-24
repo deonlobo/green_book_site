@@ -9,8 +9,11 @@ const private_node = $("#private__list")
 const group_node = $("#group__list")
 const filter_conversations_debounce = debounce(() => get_conversations_by_filter());
 const get_users_debounce = debounce(() => get_users());
+const get_users_for_group_debounce = debounce(() => get_users_for_group())
 let add_button_toggle_state = false;
 let toggle_private_conv_modal_state = false;
+let toggle_group_conv_modal_state = false;
+let group_member_list = []
 
 
 function adjust_message_container_height() {
@@ -75,10 +78,6 @@ function get_pinned_conversations(input_filter) {
 
     }
   });
-
-
-
-
 }
 
 
@@ -243,6 +242,21 @@ function open_private_conversation_modal() {
   }
 }
 
+function open_group_conversation_modal() {
+  add_button_toggle()
+  console.log($("#messenger_group_conversation_model"));
+  toggle_group_conv_modal_state = !toggle_group_conv_modal_state
+  if (toggle_group_conv_modal_state) {
+    $("#messenger_group_conversation_model").animate({
+      top: "0%"
+    }, 200);
+  } else {
+    $("#messenger_group_conversation_model").animate({
+      top: "100%"
+    }, 200);
+  }
+}
+
 function close_private_conversation_modal() {
   toggle_private_conv_modal_state = !toggle_private_conv_modal_state
   $("#messenger_private_conversation_model").animate({
@@ -251,6 +265,17 @@ function close_private_conversation_modal() {
   $(".name__badge").html(".........")
   $("#user__name__input").val('');
   $('#search__result__container').empty();
+}
+
+function close_group_conversation_modal() {
+  toggle_group_conv_modal_state = !toggle_group_conv_modal_state
+  $("#messenger_group_conversation_model").animate({
+    top: "100%"
+  }, 200);
+  group_member_list = []
+  $("#badge__pill__container").empty()
+  $("#user__name__group__input").val('');
+  $('#search__result__group__container').empty();
 }
 
 function get_users() {
@@ -265,7 +290,7 @@ function get_users() {
     success: function (response) {
       $('#search__result__container').empty();
       response.forEach(element => {
-        console.log(element);
+        console.log("hereeeee", element);
         let listItem = `
                                 <div 
                                 data-id=${element.id} 
@@ -290,7 +315,86 @@ function get_users() {
     $('.name__badge').html(this.dataset.fname + " " + this.dataset.lname);
     $('#user__name__input').val(this.dataset.uname);
   });
+}
 
+function get_users_for_group() {
+  let username = $('#user__name__group__input').val();
+  $('#search__result__group__container').off('click', '.search__list__item');
+  $.ajax({
+    type: 'GET',
+    url: messenger_template_data["get_users_url"],
+    data: {
+      user_name: username
+    },
+    success: function (response) {
+      $('#search__result__group__container').empty();
+      response.forEach(element => {
+        const isInList = group_member_list.filter(member => member.uname == element.username).length > 0
+        const selectedClass = isInList ? "search__list__item--selected" : ""
+        console.log("hereeeee", $('#search__result__group__container'));
+        let listItem = `
+                                <div 
+                                data-id=${element.id} 
+                                data-fName=${element.firstName} 
+                                data-lName=${element.lastName}
+                                data-uname=${element.username}
+                                id=${element.username}
+                                class="search__list__item d-flex p-2 border-bottom ${selectedClass}" >
+                                    <div class="mr-2">
+                                      <h3>${element.firstName}</h3>
+                                    </div>
+                                    <div class="">
+                                      <h3>${element.lastName}</h3>
+                                    </div>
+                                </div>`
+        $('#search__result__group__container').append(listItem);
+      });
+    },
+    error: function () {}
+  });
+
+  $('#search__result__group__container').on('click', '.search__list__item', function (e) {
+    let user_already_selected = false
+    let selected_uname = null
+    console.log(this.dataset);
+    for (let index in group_member_list) {
+      const member = group_member_list[index]
+      console.log(member);
+
+      if (this.dataset.uname == member.uname) {
+        user_already_selected = true
+        selected_uname = this.dataset.uname
+        break;
+      }
+    }
+
+    if (user_already_selected) {
+      const selected_item = $(`#${selected_uname}`)
+      selected_item.removeClass("search__list__item--selected");
+      group_member_list = group_member_list.filter(member => member.uname != this.dataset.uname)
+    } else {
+      const selected_item = $(`#${this.dataset.uname}`)
+      console.log("si", selected_item);
+      selected_item.addClass("search__list__item--selected");
+      group_member_list.push({
+        'uname': this.dataset.uname,
+        'fName': this.dataset.fname,
+        'lName': this.dataset.lname
+      })
+    }
+    console.log(group_member_list);
+    const badge_pill_container = $("#badge__pill__container")
+    badge_pill_container.empty()
+
+    for (let index in group_member_list) {
+      const member = group_member_list[index]
+
+      console.log(member);
+      badge_pill_container.append(`<h1><span class="badge rounded-pill mt-n2 name__badge" id="name__group__badge">${member.fName + " " + member.lName}</span></h1>`)
+    }
+    // $('#name__group__badge').html(group_member_list.map(member => member.fName + " " + member.lName).join(", "));
+    $('#user__name__group__input').val("");
+  });
 }
 
 $('#add_private_conversation_form').on('submit', function (event) {
