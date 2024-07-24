@@ -151,14 +151,46 @@ def SearchProjectView(request):
         form = SearchProject(request.GET)
         if form.is_valid():
             query = form.cleaned_data['term']
+
+            visit_history = request.session.get('visit_history', [])
+
+            if query not in visit_history:
+                visit_history.append(query)
+                request.session['visit_history'] = visit_history
+
             projects = Project.objects.filter(Q(title__icontains=query) | Q(tools__icontains=query) | Q(project_category__name__icontains=query)).order_by('-posted_on')
             if len(projects) == 0:
                 messages.error(request,'No matching projects found')
-                return redirect('DIYProject:feed')
-            messages.success(request, 'Search completed successfully!')
+                projects = Project.objects.order_by('-posted_on')
+            else:
+                messages.success(request, 'Search completed successfully!')
             fav_projects  = Favourite.objects.get(holder=request.user).fav_projects.all()
-            return render(request, "DIYProject/feed.html", {'projects': projects, 'SearchForm': form, 'fav_projects':fav_projects})
         else:
             messages.error(request, 'Invalid search term')
-            return redirect('DIYProject:feed')
+            projects = Project.objects.order_by('-posted_on')
+        fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    suggestions = [search for search in visit_history if search.lower().startswith(query.lower())]
+    return render(request, "DIYProject/feed.html",
+                  {'projects': projects, 'SearchForm': form, 'fav_projects': fav_projects,'suggestions': suggestions})
+
+
+
+# def SearchProjectView(request):
+#     if request.method == 'GET':
+#         form = SearchProject(request.GET)
+#         if form.is_valid():
+#             query = form.cleaned_data['term']
+#
+#             projects = Project.objects.filter(Q(title__icontains=query) | Q(tools__icontains=query) | Q(
+#                 project_category__name__icontains=query)).order_by('-posted_on')
+#             if len(projects) == 0:
+#                 messages.error(request, 'No matching projects found')
+#                 return redirect('DIYProject:feed')
+#             messages.success(request, 'Search completed successfully!')
+#             fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+#             return render(request, "DIYProject/feed.html",
+#                           {'projects': projects, 'SearchForm': form, 'fav_projects': fav_projects})
+#         else:
+#             messages.error(request, 'Invalid search term')
+#             return redirect('DIYProject:feed')
 

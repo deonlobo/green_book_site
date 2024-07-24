@@ -1,0 +1,201 @@
+.messenger {
+  background-color: var(--color-background);
+  color: var(--color-onBackground);
+  transition: all linear 0.5s;
+
+  .messenger_private_conversation_model {
+    background-color: #FCF8F3;
+    top: 100%;
+    z-index: 1000;
+
+    .private_converstation_close_button {
+      background: #45526c;
+      color: #f8f5f1;
+      cursor: pointer;
+    }
+
+    .name__badge {
+      background: #41b06e;
+      color: #f8f5f1;
+    }
+
+    .user_name_button {
+      button {
+        background-color: #41b06e;
+        color: #45526c;
+      }
+    }
+
+    .search__result__container {
+      .search__list__item {
+        &:hover {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .messenger_group_conversation_model {
+    background-color: #FCF8F3;
+    top: 100%;
+    z-index: 1000;
+
+    .group_converstation_close_button {
+      background: #45526c;
+      color: #f8f5f1;
+      cursor: pointer;
+    }
+
+    .name__badge {
+      background: #41b06e;
+      color: #f8f5f1;
+    }
+
+    .user_name_button {
+      button {
+        background-color: #41b06e;
+        color: #45526c;
+      }
+    }
+
+    .search__result__container {
+      .search__list__item {
+        &:hover {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+        }
+
+      }
+
+      .search__list__item--selected {
+          background: #41b06e;
+          color: #f8f5f1;
+          cursor: pointer;
+      }
+    }
+  }
+
+  .messenger__header__container {
+    .add__button__modal {
+      justify-content: space-evenly;
+      height: 0;
+
+      button {
+        background-color: #41b06e;
+        color: #f8f5f1;
+      }
+    }
+
+    .messenger__header__left {
+      .messenger__header__left__container {
+        background-color: #FCF8F3;
+        border-radius: 1rem;
+
+        .messenger__search__input {
+          input {
+            background-color: #f8f5f1;
+            color: #45526c;
+          }
+        }
+
+        .messenger__header__add__button {
+
+          button {
+            background-color: #41b06e;
+            color: #45526c;
+          }
+        }
+      }
+    }
+
+    .messenger__header__right {
+      .messenger__header__right__container {
+        background-color: #FCF8F3;
+        border-radius: 1rem;
+      }
+    }
+  }
+
+  .messenger__converstaion__container {
+    max-height: 33.34rem;
+
+    .messenger__conversation__list {
+      max-height: 100%;
+
+      .messenger__list__container {
+        background-color: #FCF8F3;
+        border-radius: 1rem;
+        overflow-y: auto;
+
+        .loader {
+          z-index: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #f8f5f18b;
+          overflow: hidden;
+          border-radius: 2rem;
+          height: 95%;
+
+          .loading-container {
+            position: relative;
+            height: 5rem;
+            width: 5rem;
+
+            .loading-progress {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              border-radius: 50%;
+              border: 5px solid #ACCAFF36;
+              border-radius: 50%;
+
+
+
+              &::before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                border-radius: 50%;
+                border: 5px solid transparent;
+                border-top-color: #ACCAFF;
+                animation: spin 1s linear infinite;
+              }
+            }
+          }
+        }
+
+        .messenger__list__element {
+          .conversation__pin {
+            display: none;
+            left: 90%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #41b06e;
+          }
+
+          &:hover {
+            background: #41b06e;
+            color: #f8f5f1;
+            cursor: pointer;
+
+            .conversation__pin {
+              display: block;
+            }
+          }
+
+
+        }
+
+        .messenger__list__element--selected {
+          background: #41b06e;
+          color: #f8f5f1;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2em;
+    color: #4c4c4c;
+}
+
+.user-detail {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-image {
+    width: 7em;
+}
+
+.user-info {
+    margin-left: 1em;
+}
+
+.user-info h4 {
+    margin-bottom: 0.2em;
+    color: dimgrey;
+}
+
+.membership-details {
+    display: flex;
+    color: dimgrey;
+}
+
+.membership-details svg {
+    fill: dimgrey;
+}
+
+.user-tables {
+    display: flex;
+    flex-direction: row;
+    margin: 2em;
+}
+
+.question-table {
+    flex: 1;
+    margin: 2em 1em 2em 3em;
+}
+
+.answer-table {
+    flex: 1;
+    margin: 2em 3em 2em 1em;
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensures the border radius is applied to table cells */
+    border: 1px solid lightgrey;
+
+}
+
+.table th, .table td {
+    padding: 0.5em;
+    border-top: 1px solid lightgrey; /* Border for table cells */
+}
+
+.table tr:first-child td {
+    border-top: none; /* No border on top of the first row */
+}
+
+.table td:first-child {
+    width: 5em; /* Auto width for the first column */
+    padding: 0.5em 0.5em 0.5em 1em;
+}
+
+.vote-cell {
+    background-color: #007300;
+    text-align: center;
+    color: white;
+    border-radius: 0.5em;
+    padding: 0.2em 0.8em;
+}
+
+.table td:last-child {
+    padding-left: 1em; /* Adds padding to the left of the title for spacing */
+}
+
+.table a {
+    text-decoration: none; /* Removes underline from links */
+    color: #1B75D0FF; /* Link color */
+}
+
+.truncate-text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 26em; /* Set as needed */
+}
+
+
+.table a:hover {
+    color: #155CA2FF;
+}
+
+.table td {
+    max-width: 26em; /* Adjust as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

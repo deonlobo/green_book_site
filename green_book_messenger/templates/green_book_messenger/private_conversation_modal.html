@@ -1,0 +1,48 @@
+<div id="messenger_private_conversation_model"
+  class="messenger_private_conversation_model position-absolute w-100 h-100 ml-n4 zindex-modal">
+  <div class="container mx-auto mt-4">
+    <div class="row">
+      <div class="col d-flex justify-content-start">
+        <button onclick="close_private_conversation_modal()" type="button" id="private_converstation_close_button"
+          class="btn private_converstation_close_button rounded-circle p-2">
+          <svg width="27" height="25" viewbox="0 0 40 40">
+            <path d="M 10,10 L 30,30 M 30,10 L 10,30" stroke="#f8f5f1" stroke-width="4" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <form id="add_private_conversation_form" method="post" action="{% url 'add_private_conversation' %}">
+          <div class="d-flex align-items-center justify-content-between">
+            <h1 class="m-0 p-2"><b>Start private conversation with </b> <span
+                class="badge rounded-pill mt-n2 name__badge" id="name__badge">.........</span>
+            </h1>
+            <div class="user_name_button ml-2">
+              <button type="submit" id="private_converstation_add_button" class="btn rounded-circle p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="27" height="25">
+                  <path style="fill:#f8f5f1"
+                    d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
+                    data-name="Right" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row align-items-center">
+            <div class="user_name_input input-group flex-grow-1">
+              <input onkeyup="get_users_debounce()" placeholder="Search Users........" type="text"
+                class="form-control rounded-pill m-0" type="text" name="user_name" id="user__name__input">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div id="search__result__container" class="search__result__container container p-0 pt-4 ">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
