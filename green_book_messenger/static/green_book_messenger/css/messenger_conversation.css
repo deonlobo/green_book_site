@@ -1,8 +1,29 @@
 .messenger {
+  .back__btn {
+    background-color: #41b06e;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .emoji__container{
+    overflow-y: auto;
+    background-color: #FCF8F3;
+    border-radius: 1rem;
+
+    .emoji__item {
+      cursor: pointer;
+    }
+  }
+
   .messenger__converstaion__container {
-    /* max-height: 33.34rem; */
+    max-height: 84%;
 
     .messenger__conversation {
+      .back__btn {
+        background-color: #41b06e;
+      }
 
       .messenger__conversation__div {
         background-color: #FCF8F3;
@@ -26,7 +47,7 @@
 
         .messenger__conversation__container {
           overflow-y: auto;
-          max-height: 30rem;
+          /* max-height: 25rem; */
 
           .messenger_conversation__bubble {
             --r: 1em;

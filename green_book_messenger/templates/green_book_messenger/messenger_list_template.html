@@ -19,8 +19,9 @@
 {% block messenger_html %}
 <div id="messenger--container" class="messenger container-fluid position-relative overflow-hidden d-flex flex-column">
   {% include './private_conversation_modal.html' %}
+  {% include './group_conversation_modal.html' %}
   <div class="row gx-2 messenger__header__container">
-    <div class="messenger__header__left col-8 p-1 mx-auto">
+    <div class="messenger__header__left col-9 p-1 mx-auto">
       <div class="messenger__header__left__container d-flex justify-content-between align-items-center p-4">
         <span class="m-0 flex-grow-1 mr-2">
           <input id="messenger__search__input" onkeyup="filter_conversations_debounce()" type="text"
@@ -59,7 +60,7 @@
               </g>
             </svg>
           </span>Private Conversation</button>
-        <button class="btn btn-primary rounded-pill b-0">
+        <button class="btn btn-primary rounded-pill b-0" onclick="open_group_conversation_modal()">
           <span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="9" cy="9" r="3" fill="#f8f5f1" stroke-width="2" stroke-linecap="round" />
@@ -82,7 +83,7 @@
     </div>
   </div>
   <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
-    <div class="messenger__conversation__list col-8 p-1 position-relative mx-auto">
+    <div class="messenger__conversation__list col-9 p-1 position-relative mx-auto">
       <div id="messenger__list__container" class="messenger__list__container h-100 py-4 position-relative">
         <div id="list__loader" class="loader position-absolute w-100">
           <div class="loading-container">
