@@ -67,10 +67,10 @@ def home(request):
 def contact_page(request):
     team_members = [
         {"name": "Deon Victor Lobo", "student_id": "110127749", "image_url": "green_book_app/assets/deon_lobo.jpg"},
-        {"name": "Jane Smith", "student_id": "234567", "image_url": "green_book_app/assets/deon_lobo.jpg"},
-        {"name": "Alice Johnson", "student_id": "345678", "image_url": "green_book_app/assets/deon_lobo.jpg"},
-        {"name": "Bob Brown", "student_id": "456789", "image_url": "green_book_app/assets/deon_lobo.jpg"},
-        {"name": "Charlie Davis", "student_id": "567890", "image_url": "green_book_app/assets/deon_lobo.jpg"},
-        {"name": "Eve Wilson", "student_id": "678901", "image_url": "green_book_app/assets/deon_lobo.jpg"},
+        {"name": "Zeel Thakkar", "student_id": "110125679", "image_url": "green_book_app/assets/zeel.jpg"},
+        {"name": "Dekshitha Ravikumar", "student_id": "110126006", "image_url": "green_book_app/assets/dekshitha.png"},
+        {"name": "Gagandeep Singh", "student_id": "110123330", "image_url": "green_book_app/assets/gagan.jpg"},
+        {"name": "Kashyap Prajapati", "student_id": "110126934", "image_url": "green_book_app/assets/gagan.jpg"},
+        {"name": "Sachreet Kaur", "student_id": "110122441", "image_url": "green_book_app/assets/gagan.jpg"},
     ]
     return render(request, 'green_book_app/contact.html', {'team_members': team_members})
