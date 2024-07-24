@@ -6,6 +6,7 @@ from .forms import *
 import base64
 from base64 import b64encode
 from django.contrib import messages
+from green_book_messenger.models import *
 
 # Create your views here.
 
@@ -328,6 +329,17 @@ def manage_products(request):
         # messages.success(request, 'Product updated successfully!')
         products = ProductStep1.objects.all()
         return render(request,"manage-product.html", {'form':form,'products':products})
+
+def create_chat(request, product_step1_id):
+    product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
+    conversation = Conversation.objects.create(
+        conversation_type = "private",
+        conversation_name = product_step1.user.user.first_name + " " + product_step1.user.user.last_name,
+    )
+    conversation.participants.add(request.user, product_step1.user.user)
+    conversation.save()
+    conversation_id = conversation.conversation_uuid
+    return redirect("/messenger/{}".format(conversation_id))
 
 # def dumy(request):
 #     if request.method == 'POST':
