@@ -1,0 +1,335 @@
+{% extends 'green_book_app/base.html'  %}
+
+{% load static %}
+{% block header %}
+    {{ form.media }}
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'marketplace.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'add-product.css' %}" >
+{% endblock %}
+{% block content %}
+    <div class="container-fluid category">
+        <div class="col-md-12 mx-auto shadow p-0 bg-body rounded">
+            <header class="header">
+                <h4>Product Registration Step 1</h4>
+            </header>
+    <section class="signup-step-container">
+{#        <div class="container">#}
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8">
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="disabled">
+                                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" aria-expanded="true"><span class="round-tab">1 </span> </a>
+                                </li>
+                                <li role="presentation" class="disabled">
+                                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" aria-expanded="false"><span class="round-tab">2</span> </a>
+                                </li>
+                                <li role="presentation" class="active">
+                                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span class="round-tab">3</span></a>
+                                </li>
+                                <li role="presentation" class="disabled">
+                                    <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span class="round-tab">4</span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <form role="form"  method="post" action="{% url 'marketplace:add_product_step_three' product_id %}" class="login-box">
+                            {% csrf_token %}
+                            <div class="tab-content" id="main_form">
+{#                                <div class="tab-pane active" role="tabpanel" id="step1">#}
+{#                                    <h4 class="text-center">Step 1</h4>#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                <label>{{ form.name.label }}</label>#}
+{#                                                {{  form.name }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.quality.label }}</label>#}
+{#                                                {{ form.quality }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-12">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.description.label }}</label>#}
+{#                                                {{ form.description }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.price.label }}</label>#}
+{#                                                {{ form.price }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.stock.label }}</label>#}
+{#                                                {{ form.stock }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.discounted.label }}</label>#}
+{#                                                {{ form.discounted }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group">#}
+{#                                                 <label>{{ form.percent.label }}</label>#}
+{#                                                {{ form.percent }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{##}
+{#                                         <div class="col-md-12">#}
+{#                                             <div class="form-group">#}
+{#                                                 <label>{{ form.category.label }}</label>#}
+{#                                                {{ form.stock }}#}
+{#                                                  {{form.category}}#}
+{#                                             </div>#}
+{#                                        </div>#}
+{##}
+{##}
+{#                                    </div>#}
+{#                                    <ul class="list-inline pull-right">#}
+{#                                        <li><button type="submit" class="default-btn next-step">Continue to next step</button></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                                <div class="tab-pane" role="tabpanel" id="step2">#}
+{#                                    <h4 class="text-center">Step 2</h4>#}
+{#                                    <div class="row">#}
+{#                                    <div class="col-md-6">#}
+{#                                        <div class="form-group">#}
+{#                                            <label>Address 1 *</label>#}
+{#                                            <input class="form-control" type="text" name="name" placeholder="">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="col-md-6">#}
+{#                                        <div class="form-group">#}
+{#                                            <label>City / Town *</label>#}
+{#                                            <input class="form-control" type="text" name="name" placeholder="">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-md-6">#}
+{#                                        <div class="form-group">#}
+{#                                            <label>Country *</label>#}
+{#                                            <select name="country" class="form-control" id="country">#}
+{#                                                <option value="NG" selected="selected">Nigeria</option>#}
+{#                                                <option value="NU">Niue</option>#}
+{#                                                <option value="NF">Norfolk Island</option>#}
+{#                                                <option value="KP">North Korea</option>#}
+{#                                                <option value="MP">Northern Mariana Islands</option>#}
+{#                                                <option value="NO">Norway</option>#}
+{#                                            </select>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{##}
+{##}
+{#                                    <div class="col-md-6">#}
+{#                                        <div class="form-group">#}
+{#                                            <label>Registration No.</label>#}
+{#                                            <input class="form-control" type="text" name="name" placeholder="">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                   </div>#}
+{##}
+{##}
+{#                                    <ul class="list-inline pull-right">#}
+{#                                        <li><button type="button" class="default-btn prev-step">Back</button></li>#}
+{#                                        <li><button type="button" class="default-btn next-step skip-btn">Skip</button></li>#}
+{#                                        <li><button type="button" class="default-btn next-step">Continue</button></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+                                <div class="tab-pane active" role="tabpanel" id="step3">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <br/>
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="ck-editor-container">
+                                            <div class="form-group">
+                                                <label>{{ form.textarea.label }}</label>
+                                                {{ form.textarea }}
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <ul class="list-inline pull-right">
+                                        <li><button onclick="location.href='{% url 'marketplace:modify_add_product_step_two' product_id %}'" type="button" class="default-btn prev-step">Back</button></li>
+                                        <li><button type="submit" class="default-btn next-step">Continue to next step</button></li>
+                                    </ul>
+
+                                </div>
+{#                                <div class="tab-pane" role="tabpanel" id="step4">#}
+{#                                    <h4 class="text-center">Step 4</h4>#}
+{#                                    <div class="all-info-container">#}
+{#                                        <div class="list-content">#}
+{#                                            <a href="#listone" data-toggle="collapse" aria-expanded="false" aria-controls="listone">Collapse 1 <i class="fa fa-chevron-down"></i></a>#}
+{#                                            <div class="collapse" id="listone">#}
+{#                                                <div class="list-box">#}
+{#                                                    <div class="row">#}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>First and Last Name *</label>#}
+{#                                                                <input class="form-control" type="text"  name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Phone Number *</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="list-content">#}
+{#                                            <a href="#listtwo" data-toggle="collapse" aria-expanded="false" aria-controls="listtwo">Collapse 2 <i class="fa fa-chevron-down"></i></a>#}
+{#                                            <div class="collapse" id="listtwo">#}
+{#                                                <div class="list-box">#}
+{#                                                    <div class="row">#}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Address 1 *</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>City / Town *</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Country *</label>#}
+{#                                                                <select name="country2" class="form-control" id="country2" disabled="disabled">#}
+{#                                                                    <option value="NG" selected="selected">Nigeria</option>#}
+{#                                                                    <option value="NU">Niue</option>#}
+{#                                                                    <option value="NF">Norfolk Island</option>#}
+{#                                                                    <option value="KP">North Korea</option>#}
+{#                                                                    <option value="MP">Northern Mariana Islands</option>#}
+{#                                                                    <option value="NO">Norway</option>#}
+{#                                                                </select>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{##}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Legal Form</label>#}
+{#                                                                <select name="legalform2" class="form-control" id="legalform2" disabled="disabled">#}
+{#                                                                    <option value="" selected="selected">-Select an Answer-</option>#}
+{#                                                                    <option value="AG">Limited liability company</option>#}
+{#                                                                    <option value="GmbH">Public Company</option>#}
+{#                                                                    <option value="GbR">No minimum capital, unlimited liability of partners, non-busines</option>#}
+{#                                                                </select>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Business Registration No.</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Registered</label>#}
+{#                                                                <select name="vat2" class="form-control" id="vat2" disabled="disabled">#}
+{#                                                                    <option value="" selected="selected">-Select an Answer-</option>#}
+{#                                                                    <option value="yes">Yes</option>#}
+{#                                                                    <option value="no">No</option>#}
+{#                                                                </select>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Seller</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                        <div class="col-md-12">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Company Name *</label>#}
+{#                                                                <input class="form-control" type="password" name="name" placeholder="" disabled="disabled">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="list-content">#}
+{#                                            <a href="#listthree" data-toggle="collapse" aria-expanded="false" aria-controls="listthree">Collapse 3 <i class="fa fa-chevron-down"></i></a>#}
+{#                                            <div class="collapse" id="listthree">#}
+{#                                                <div class="list-box">#}
+{#                                                    <div class="row">#}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Name *</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{##}
+{#                                                        <div class="col-md-6">#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label>Number *</label>#}
+{#                                                                <input class="form-control" type="text" name="name" placeholder="">#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{##}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{#                                    <ul class="list-inline pull-right">#}
+{#                                        <li><button type="button" class="default-btn prev-step">Back</button></li>#}
+{#                                        <li><button type="button" class="default-btn next-step">Finish</button></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+{#        </div>#}
+    </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        CKEDITOR.replace('id_textarea')
+    </script>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'add-product-step-one.js' %}"></script>
+{% endblock %}

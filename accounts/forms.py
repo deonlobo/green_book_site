@@ -9,7 +9,7 @@ class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
     first_name = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
     last_name = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
-    address = forms.CharField(max_length=255, required=True, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Address'}))
+    address = forms.CharField(max_length=255, required=True, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Address', 'style':'height:4em'}))
 
     class Meta:
         model = User

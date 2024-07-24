@@ -1,0 +1,83 @@
+.tag-main-body {
+    margin: 2em;
+    color: #2e2929;
+}
+
+.tag-main-body p {
+    width: 50%;
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.search-input {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#tag-search {
+    flex: 1;
+    border: none;
+    outline: none;
+    min-width: 150px; /* Ensure a minimum width for the input field */
+    font-size: small;
+}
+
+.search-input img {
+    height: 1.5em;
+}
+
+
+.question-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.tag-item {
+    display: inline-block;
+    background-color: #efefef;
+    border-radius: 7px;
+    padding: 6px 5px;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #333;
+    margin-right: auto;
+}
+
+.tag-item:hover {
+    background-color: #c8c6c6;
+}
+
+.card {
+    width: 14em;
+    min-height: 7em;
+    padding: 1.2em;
+}
+
+.card-body-custom {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure the card body takes the full height of the card */
+}
+
+.tag-info {
+    margin-top: auto; /* Pushes the .tag-info to the bottom */
+    text-align: left; /* Ensures tags are aligned to the left */
+    color: grey;
+    font-size: small;
+    font-style: italic;
+}

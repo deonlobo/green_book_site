@@ -1,0 +1,246 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .points-container, .leaderboard-container, .coupon-container {
+        background: #fff;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .points-container {
+        text-align: center;
+        background: linear-gradient(135deg, #39c88f, #c7ed83);
+        color: white;
+    }
+
+    .points-container:hover {
+        transform: translateY(-10px);
+    }
+
+    .points-container h2 {
+        margin-bottom: 15px;
+        font-size: 2rem;
+    }
+
+    .points-container p {
+        font-size: 1.5rem;
+        margin: 10px 0;
+    }
+
+    .progress {
+        background-color: #e0e0e0;
+        border-radius: 13px;
+        overflow: hidden;
+        margin: 20px 0;
+        height: 30px;
+        box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #eac820;
+        width: 0;
+        transition: width 0.5s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .leaderboard-container:hover, .coupon-container:hover {
+        transform: translateY(-10px);
+    }
+
+    .leaderboard-header {
+        background: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .leaderboard-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .leaderboard-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background 0.3s ease;
+    }
+
+    .leaderboard-list li:nth-child(odd) {
+        background: #f0f0f0;
+    }
+
+    .leaderboard-list li:hover {
+        background: #f1f1f1;
+    }
+
+    .coupon-container {
+        text-align: center;
+        background: #FFF5E1;
+    }
+
+    .coupon {
+        width: 100%;
+        padding: 30px;
+        background: #FFD700;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        transition: filter 0.3s, transform 0.3s;
+        margin-top: 20px;
+    }
+
+    .coupon.blurred {
+        filter: blur(10px);
+    }
+
+    .coupon-description {
+        font-size: 1.2rem;
+        margin: 20px 0;
+    }
+
+    .next-milestone {
+        font-size: 1.2rem;
+        margin: 20px 0;
+        color: #4CAF50;
+    }
+
+    .coupon:hover {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .points-container, .coupon-container, .leaderboard-container {
+            width: 100%;
+        }
+    }
+    .position-relative {
+        position: relative;
+        width: 100%;
+    }
+
+    .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        padding: 30px;
+        border-radius: 5px;
+        width: 80%;
+        max-width: 1200px;
+    }
+
+    .overlay-text h2,
+    .overlay-text p {
+        color: beige;
+        margin: 0;
+        padding-bottom: 10px;
+        font-size: 44px;
+    }
+
+    .img-fluid {
+        height: 900px;
+    }
+</style>
+
+    <div class="container-fluid p-0">
+    <!-- Image with text overlay -->
+    <div class="position-relative">
+        <img src="{% static 'challenges_images/rewards.jpg' %}" class="img-fluid w-100" style="height: 500px;" alt="Eco-friendly lifestyle">
+        <!-- overlay text -->
+
+            <div class="overlay-text text-center text-white">
+                <h2>Keep Up the Good Work!</h2>
+                <p>Commit to an eco-friendly lifestyle.</p>
+                <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Rewards</p>
+                <a href="{% url 'completed_tasks_list' %}" class="btn" style="background-color: #b18a35; color: white;">My Feed</a>
+            </div>
+
+    </div>
+    </div>
+
+<div class="container">
+    <div class="points-container">
+        <h2>Your Points</h2>
+        <p id="points">{{ user_points.total_points }}</p>
+
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="leaderboard-container">
+        <div class="leaderboard-header">
+            <h3>Leaderboard</h3>
+        </div>
+        <ul class="leaderboard-list">
+            {% for entry in leaderboard %}
+            <li>
+                <span>{{ entry.user.username }}</span>
+                <span>{{ entry.total_points }} points</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="coupon-container">
+        <div id="coupon" class="coupon blurred">
+            Hidden Coupon
+        </div>
+        <div class="coupon-description">
+            Unlock a 20% off coupon for your favorite pizza once you reach 8000 points!
+        </div>
+        <div class="next-milestone">
+            Next milestone: 16000 points
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var points = {{ user_points.total_points }};
+        var progressBar = document.getElementById('progress-bar');
+        var coupon = document.getElementById('coupon');
+
+        // Set the width of the progress bar
+        var progressPercentage = (points / 8000) * 100;
+        progressBar.style.width = progressPercentage + '%';
+        progressBar.textContent = points + ' / 8000';
+
+        if (points >= 8000) {
+            coupon.classList.remove('blurred');
+            coupon.textContent = "Your Coupon Code: PIZZA20";
+        }
+    });
+</script>
+{% endblock %}
+
+    {% block footer %}
+{% endblock %}

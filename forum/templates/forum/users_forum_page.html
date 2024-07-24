@@ -1,0 +1,116 @@
+{% extends 'forum/base_forum.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'forum/css/users.css' %}">
+{% endblock %}
+
+{% block forum_base %}
+    <div class="user-main-body">
+        <h3>Tags</h3>
+        <div class="search-wrapper">
+            <div class="search-input">
+                <img src="{% static 'forum/images/search.png' %}">
+                <input type="text" id="user-search" placeholder="Search ..." />
+            </div>
+        </div>
+
+        <div class="all-users" id="all-users">
+            {% for user in users %}
+                <div class="card-custom" >
+                    <div class="card-image">
+                        <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{ user.username }}" alt="user img" />                    </div>
+                    <div class="card-body-custom">
+                        <a href="{% url 'forum:user_details' user.id %}">
+                            <div class="user-item">
+                                {{ user.username }}
+                            </div>
+                        </a>
+                        <div class="user-info">
+                            <div>{{ user.questions_asked.count }} questions</div>
+                            <div>{{ user.answered_by.count }} answers</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const searchUrl = "{% url 'forum:search_users' %}";  // Use namespacing here
+        const searchRedirectUrl = "/forum/user-details/";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('user-search');
+            const searchResults = document.getElementById('all-users');
+            let debounceTimeout;
+
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value.trim();
+
+                if (debounceTimeout) {
+                    clearTimeout(debounceTimeout);
+                }
+
+                debounceTimeout = setTimeout(() => {
+                    if (query.length > 0) {
+                        fetch(`${searchUrl}?q=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                displaySearchResults(data.users);
+                            });
+                    } else {
+                        fetch(`${searchUrl}?q=`)
+                            .then(response => response.json())
+                            .then(data => {
+                                displaySearchResults(data.users);
+                            });
+                    }
+                }, 300); // Adjust the delay as needed (300ms in this case)
+            });
+
+            function displaySearchResults(users) {
+                clearSearchResults();
+
+                if (users.length > 0) {
+                    users.forEach(user => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'card-custom';
+                        resultItem.innerHTML = `
+                            <div class="card-image">
+                                <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed=${user.username}" alt="user img" />
+                            </div>
+                            <div class="card-body-custom">
+                                <a href="${searchRedirectUrl}${user.id}">
+                                    <div class="user-item">
+                                        ${user.username}
+                                    </div>
+                                </a>
+                                <div class="user-info">
+                                    <div>${user.question_count} questions</div>
+                                    <div>${user.answer_count} answers</div>
+                                </div>
+                            </div>
+                        `;
+                        searchResults.appendChild(resultItem);
+                    });
+                } else {
+                    const noResultsItem = document.createElement('div');
+                    noResultsItem.className = 'no-results';
+                    noResultsItem.textContent = 'No users found';
+                    noResultsItem.style.marginLeft = '1em';  // Adding left margin
+                    noResultsItem.style.marginTop = '1.em';
+                    noResultsItem.style.color = 'grey';      // Setting color to grey
+                    searchResults.appendChild(noResultsItem);
+                }
+            }
+
+            function clearSearchResults() {
+                searchResults.innerHTML = '';
+            }
+
+        });
+    </script>
+
+{% endblock %}
