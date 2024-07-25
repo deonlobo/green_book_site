@@ -344,6 +344,12 @@ def manage_products(request):
 @login_required()
 def create_chat(request, product_step1_id):
     product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
+    existing_conversation = Conversation.objects.filter(
+        conversation_type="private",
+        participants__in=[product_step1.user.user, request.user],
+    )
+    if len(existing_conversation) >0:
+        return redirect("/messenger/{}".format(existing_conversation[0].conversation_uuid))
     conversation = Conversation.objects.create(
         conversation_type = "private",
         conversation_name = product_step1.user.user.first_name + " " + product_step1.user.user.last_name,
