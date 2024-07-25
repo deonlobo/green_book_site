@@ -1,0 +1,31 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container my-2">
+
+    <center><h2 class="my-2 animate__animated animate__flipInX">Categories of DIY Projects</h2></center>
+
+     <div class="row">
+
+    {% for i in categories %}
+        <div class="col-lg-2 text-dark my-2 animate__animated animate__bounceIn">
+                <center>
+                    <img src="{{i.image.url}}" height="100vw" width = "100vh" style="border-radius: 50%;"></img>
+                    <br>
+                    <a href="{% url 'DIYProject:filtercategory' i.pk %}" class="text-dark">
+                        <button class=" col-lg-12 btn btn-success my-2 text-light">{{i.name}}</button>
+                    </a>
+                </center>
+        </div>
+
+
+    {% endfor %}
+
+    </div>
+
+
+    </div>
+
+{% endblock %}

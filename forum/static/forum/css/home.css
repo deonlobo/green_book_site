@@ -275,5 +275,12 @@
     color: gray;
 }
 
+#custom-color-a {
+    text-decoration: none;
+    color: #1B75D0FF;
+}
 
+#custom-color-a:hover {
+    color: #155CA2FF;
+}
 

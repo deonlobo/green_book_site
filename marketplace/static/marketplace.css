@@ -174,3 +174,25 @@
     color: #cc8400;
     margin: 0 2px
 }
+
+.carousel-control-prev, .carousel-control-next {
+    background-color: #9e733f;
+    width: 3rem;
+}
+
+.category .header {
+     background-color:transparent;
+    color: gray;
+    margin: auto 14rem;
+    padding: 10px 0;
+    text-align: left;
+    border-bottom: 4px solid #ceb99f;
+    box-shadow: none;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    /* border: 2px solid #9e733f; */
+    background-color: #9e733f;
+    color: white;
+}

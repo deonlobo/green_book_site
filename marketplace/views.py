@@ -3,9 +3,12 @@ from django.http import HttpResponse
 from django.db.models import Q, Exists, OuterRef
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 import base64
 from base64 import b64encode
 from django.contrib import messages
+
+from green_book_messenger.models import *
 
 # Create your views here.
 
@@ -41,11 +44,13 @@ def save(request):
         response.write(category)
     return response
 
+# @login_required(login_url='login')
 def category(request, category_id ):
     category = Category.objects.get(category_id=category_id)
     active_step2_subquery = ProductStep2.objects.filter(product_step1=OuterRef('pk'), is_active=True)
     products = (ProductStep1.objects.filter(
-        status=1
+        status=1,
+        category=category
     )
     .exclude(user=get_object_or_404(UserProfile, user=request.user))
     .filter(
@@ -55,9 +60,17 @@ def category(request, category_id ):
     return render(request, 'category.html', {'category': category,'products':products})
 
 def view_products(request, category_id, product_id):
-    product = Product.objects.get(id=product_id)
+    product = ProductStep1.objects.get(id=product_id)
+    product_description = ProductStep3.objects.get(product_step1=product, is_active=True).textarea;
+    images = ProductStep2.objects.all().filter(product_step1__id=product_id).filter(is_active=True)
+    imageList = []
+    for image in images:
+        imageList.append(base64.b64encode(image.image_upload1).decode('utf-8'))
+        imageList.append(base64.b64encode(image.image_upload2).decode('utf-8'))
+        imageList.append(base64.b64encode(image.image_upload3).decode('utf-8'))
+        imageList.append(base64.b64encode(image.image_upload4).decode('utf-8'))
     category = Category.objects.get(category_id=category_id)
-    return render(request, 'view-product.html', {'product':product,'category':category})
+    return render(request, 'view-product.html', {'product':product,'category':category,'images':imageList,'product_description':product_description})
 
 def add_product(request):
     if request.method == 'POST':
@@ -80,7 +93,7 @@ def add_product_step_one(request):
         form = ProductStep1Form(request.POST)
         if form.is_valid():
             productStep1 = form.save(commit=False)
-            productStep1.user =  get_object_or_404(UserProfile, user=request.user)
+            productStep1.user = get_object_or_404(UserProfile, user=request.user)
             productStep1.save()
             messages.success(request, 'Your product has been added.')
             productStep1 = ProductStep1.objects.get(id=productStep1.id)
@@ -328,6 +341,23 @@ def manage_products(request):
         # messages.success(request, 'Product updated successfully!')
         products = ProductStep1.objects.all()
         return render(request,"manage-product.html", {'form':form,'products':products})
+@login_required()
+def create_chat(request, product_step1_id):
+    product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
+    existing_conversation = Conversation.objects.filter(
+        conversation_type="private",
+        participants__in=[product_step1.user.user, request.user],
+    )
+    if len(existing_conversation) >0:
+        return redirect("/messenger/{}".format(existing_conversation[0].conversation_uuid))
+    conversation = Conversation.objects.create(
+        conversation_type = "private",
+        conversation_name = product_step1.user.user.first_name + " " + product_step1.user.user.last_name,
+    )
+    conversation.participants.add(request.user, product_step1.user.user)
+    conversation.save()
+    conversation_id = conversation.conversation_uuid
+    return redirect("/messenger/{}".format(conversation_id))
 
 # def dumy(request):
 #     if request.method == 'POST':

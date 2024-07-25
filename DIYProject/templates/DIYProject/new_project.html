@@ -1,0 +1,49 @@
+{% extends 'green_book_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <div class="container animate__animated animate__fadeInDownBig">
+    <form action="{% url 'DIYProject:newproject' %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+        <center><h2 class="my-2">Create a New DIY Project</h2></center>
+
+        <div class="form-group">
+            <label>{{ form.title.label }}</label>
+            {{form.title}}
+        </div>
+
+        <div class="form-group">
+            <label for="id_tools">{{ form.tools.label }}</label>
+            {{form.tools}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.project_category.label}}</label>
+            {{form.project_category}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.process.label }}</label>
+            {{form.process}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.img_1.label }}</label>
+            {{form.img_1}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.img_2.label }}</label>
+            {{form.img_2}}
+        </div>
+
+        <center><button type="submit" class="btn btn-success col-3">Upload</button></center>
+    </form>
+
+
+    </div>
+
+{% endblock %}

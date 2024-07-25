@@ -67,7 +67,7 @@
                                     </ul>
                                 </div>
                                 <div class="user-info">
-                                    {{ question.asked_by.username }} asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
+                                    <a id="custom-color-a" href="{% url 'forum:user_details' question.asked_by.id %}">{{ question.asked_by.username }}</a> asked on {{ question.created_ts|convert_to_timezone:user_time_zone }}
                                 </div>
                             </div>
 
