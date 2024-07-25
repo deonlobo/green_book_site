@@ -99,9 +99,9 @@ span.round-tab i{
     color:#555555;
 }
 .wizard li.active span.round-tab {
-        background: #0db02b;
+        background: #ceb99f;
     color: #fff;
-    border-color: #0db02b;
+    border-color: #ceb99f;
 }
 .wizard li.active span.round-tab i{
     color: #5bc0de;
