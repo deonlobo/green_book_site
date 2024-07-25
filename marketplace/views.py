@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 import base64
 from base64 import b64encode
 from django.contrib import messages
+from datetime import datetime, time
 
 from green_book_messenger.models import *
 
@@ -322,14 +323,38 @@ def manage_products(request):
     if request.method == "POST":
         searchProduct = SearchProductForm(request.POST)
         if searchProduct.is_valid():
-            products = (ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),name__icontains=searchProduct.cleaned_data['search_text']) |
+            search_text = searchProduct.cleaned_data['search_text']
+            from_date = searchProduct.cleaned_data['from_date']
+            to_date = searchProduct.cleaned_data['to_date']
+            if search_text and from_date and to_date:
+                from_date = datetime.combine(from_date, time.min)
+                to_date = datetime.combine(to_date, time.max)
+
+                products = (ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),name__icontains=searchProduct.cleaned_data['search_text'] , created_at__gte=from_date,created_at__lte=to_date) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),description__icontains=searchProduct.cleaned_data['search_text'] , created_at__gte=from_date,created_at__lte=to_date) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),category__category_name__icontains=searchProduct.cleaned_data['search_text'], created_at__gte=from_date,created_at__lte=to_date) |
+                        # ProductStep1.objects.filter(status__icontains=searchProduct.cleaned_data['search_text']) |
+                        # ProductStep1.objects.filter(quality__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),price__icontains=searchProduct.cleaned_data['search_text'],created_at__gte=from_date,created_at__lte=to_date) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),stock__icontains=searchProduct.cleaned_data['search_text'],created_at__gte=from_date,created_at__lte=to_date)
+
+                        )
+            elif from_date and to_date:
+                from_date = datetime.combine(from_date, time.min)
+                to_date = datetime.combine(to_date, time.max)
+                products = (ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),
+                                                        created_at__gte=from_date, created_at__lte=to_date))
+
+            else:
+
+                products = (ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),name__icontains=searchProduct.cleaned_data['search_text']) |
                         ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),description__icontains=searchProduct.cleaned_data['search_text']) |
                         ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),category__category_name__icontains=searchProduct.cleaned_data['search_text']) |
                         # ProductStep1.objects.filter(status__icontains=searchProduct.cleaned_data['search_text']) |
                         # ProductStep1.objects.filter(quality__icontains=searchProduct.cleaned_data['search_text']) |
                         ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),price__icontains=searchProduct.cleaned_data['search_text']) |
-                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),stock__icontains=searchProduct.cleaned_data['search_text'])
-                        )
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),stock__icontains=searchProduct.cleaned_data['search_text']))
+            print(products)
             return render(request, "manage-product.html", {'form': searchProduct, 'products': products})
         else:
             return render(request,"manage-product.html",{'form': searchProduct, 'products' : ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user))})
