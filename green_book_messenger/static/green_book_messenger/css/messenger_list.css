@@ -129,6 +129,7 @@
         background-color: #FCF8F3;
         border-radius: 1rem;
         overflow-y: auto;
+        height: 95% !important;
 
         .loader {
           z-index: 1;

@@ -1,7 +1,7 @@
 # chat/views.py
 from django.shortcuts import render
 from .models import Conversation, Message, User
-from .forms import PrivateConversationForm
+from .forms import PrivateConversationForm, GroupConversationForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core import serializers
@@ -20,12 +20,14 @@ def get_messenger_list_template(request):
 def get_conversation_template(request, param_conversation_uuid):
     messages = None
     conversation = None
-    
+
     if param_conversation_uuid is not None:
         messages = Message.objects.filter(
             conversation__conversation_uuid=param_conversation_uuid
         ).order_by("-timestamp")
-        conversation = Conversation.objects.filter(conversation_uuid=param_conversation_uuid)
+        conversation = Conversation.objects.filter(
+            conversation_uuid=param_conversation_uuid
+        )
 
     return render(
         request,
@@ -35,7 +37,7 @@ def get_conversation_template(request, param_conversation_uuid):
             "messages": messages,
             "user_id": request.user.id,
             "conversation": conversation[0],
-            "conversation_name": conversation[0].conversation_name
+            "conversation_name": conversation[0].conversation_name,
         },
     )
 
@@ -44,8 +46,8 @@ def get_conversation_template(request, param_conversation_uuid):
 def get_messages_by_conversation_id(request):
     conversation__uuid = request.GET.get("conversation_id", None)
     messages = Message.objects.filter(
-            conversation__conversation_uuid=conversation__uuid
-        ).order_by("timestamp")
+        conversation__conversation_uuid=conversation__uuid
+    ).order_by("timestamp")
 
     serialized_list = serializers.serialize("json", messages)
     jsonData = {"messages": serialized_list}
@@ -112,10 +114,35 @@ def add_private_conversation(request):
 
 @login_required
 def add_group_conversation(request):
+    print("call came")
     if request.method == "POST":
-        form = PrivateConversationForm(request.POST)
+        form = GroupConversationForm(request.POST)
         print("here")
         print(form)
+    if form.is_valid():
+        print("there")
+
+        group_name = form.cleaned_data["group_name"]
+        participant_ids = form.cleaned_data["participant_ids"]
+        participant_ids = participant_ids.split(",")
+
+        try:
+            participant_list = User.objects.filter(username__in=participant_ids)
+            conversation = Conversation.objects.create(
+                conversation_type="private_group",
+                conversation_name=group_name,
+            )
+            conversation.participants.add(*participant_list)
+            conversation.participants.add(request.user)
+            conversation.save()
+
+            return JsonResponse(
+                {"status": "success", "conversation_id": conversation.conversation_uuid}
+            )
+        except User.DoesNotExist:
+            form.add_error("participant_username", "User not found.")
+
+    return JsonResponse({"status": "success", "conversation_id": None})
 
 
 @login_required
@@ -153,4 +180,15 @@ def get_private_conversations(request):
     )
     serialized_list = serializers.serialize("json", private_conversations_list)
     jsonData = {"private_conversations": serialized_list}
+    return JsonResponse(jsonData)
+
+
+@login_required
+def get_group_conversations(request):
+    filter = request.GET.get("filter", None)
+    group_conversation_list = Conversation.objects.filter(
+        conversation_type="private_group", conversation_name__icontains=filter, pinned=False
+    )
+    serialized_list = serializers.serialize("json", group_conversation_list)
+    jsonData = {"group_conversations": serialized_list}
     return JsonResponse(jsonData)

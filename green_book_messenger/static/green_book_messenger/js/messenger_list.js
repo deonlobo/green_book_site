@@ -109,6 +109,59 @@ function get_private_conversations(input_filter) {
           toggle_pin(conversation['fields'].conversation_uuid)
         });
 
+        const private_element = private_node.children().last();
+        console.log(private_element);
+        private_element.on("click", function (clickEvent) {
+          console.log(clickEvent);
+          const conversation_uuid =
+            this.dataset["conversation_uuid"];
+          window.location.pathname = "/messenger/" + conversation_uuid + "/";
+        })
+      });
+    },
+    error: function () {
+
+    }
+  });
+}
+
+function get_group_conversations(input_filter) {
+  $.ajax({
+    type: 'GET',
+    url: messenger_template_data["group_conversations_url"],
+    data: {
+      "filter": input_filter
+    },
+    success: function (response) {
+      group_conversations = JSON.parse(response["group_conversations"])
+      console.log(group_conversations);
+      group_node.off('click', '.btn__pin');
+      group_node.empty();
+      if (group_conversations.length > 0) {
+        const title_node = `<p class="text-muted px-4 m-0"><b>Group</b></p>`
+        group_node.append(title_node)
+
+      }
+      group_conversations.forEach(conversation => {
+        console.log("here");
+        const list_node = generate_conversation_list_item(conversation['fields'].conversation_uuid,
+          conversation['fields'].conversation_name, false)
+        // list_node.click(toggle_pin)
+        group_node.append(list_node)
+        $(`#pin-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+          event.stopPropagation()
+          toggle_pin(conversation['fields'].conversation_uuid)
+        });
+
+        const group_element = group_node.children().last();
+        console.log(group_element);
+        group_element.on("click", function (clickEvent) {
+          console.log(clickEvent);
+          const conversation_uuid =
+            this.dataset["conversation_uuid"];
+          window.location.pathname = "/messenger/" + conversation_uuid + "/";
+        })
+
       });
     },
     error: function () {
@@ -182,6 +235,7 @@ function get_conversations_by_filter() {
   toggle_loader(true)
   get_pinned_conversations(input_filter)
   get_private_conversations(input_filter)
+  get_group_conversations(input_filter)
   toggle_loader(false)
 
 }
@@ -416,8 +470,32 @@ $('#add_private_conversation_form').on('submit', function (event) {
   });
 });
 
+$('#add_group_conversation_form').on('submit', function (event) {
+  event.preventDefault();
+  const group_name = $("#group_name_input").val()
+  console.log(group_name);
+  console.log($(this).serialize());
+  let formData = `group_name=${group_name}&participant_ids=${group_member_list.map(e=>e.uname).join(",")}`;
+  $.ajax({
+    type: 'POST',
+    url: messenger_template_data['add_group_conversation_url'],
+    data: formData,
+    beforeSend: function (xhr, settings) {
+      xhr.setRequestHeader("X-CSRFToken", messenger_template_data['csrf_token']);
+    },
+    success: function (response) {
+      console.log(response.status);
+      if (response.status === 'success') {
+        window.location.pathname = "/messenger/" + response.conversation_id + "/";
+      }
+    },
+    error: function () {}
+  });
+});
+
 adjust_message_container_height();
 toggle_loader(true)
 get_pinned_conversations("")
 get_private_conversations("")
+get_group_conversations("")
 toggle_loader(false)

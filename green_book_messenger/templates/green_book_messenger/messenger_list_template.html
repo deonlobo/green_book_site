@@ -10,9 +10,11 @@
 {% block messenger_js %}
 <script data-pinned_conversations_url="{% url 'get_pinned_conversations' %}"
   data-private_conversations_url="{% url 'get_private_conversations' %}"
+  data-group_conversations_url="{% url 'get_group_conversations' %}"
   data-toggle_conversation_pin_url="{% url 'toggle_conversation_pin' %}" data-get_users_url="{% url 'get_users' %}"
   data-csrf_token="{{ csrf_token }}" type="text/javascript"
   data-add_private_conversation_url='{% url "add_private_conversation" %}'
+  data-add_group_conversation_url='{% url "add_group_conversation" %}'
   src="{% static 'green_book_messenger/js/messenger_list.js' %}"></script>
 {% endblock %}
 
@@ -92,7 +94,7 @@
         </div>
         <div id="pinned__list" class="pinned__list"></div>
         <div id="private__list" class="private__list mt-4"></div>
-        <div id="group__list" class="group__list"></div>
+        <div id="group__list" class="group__list mt-4"></div>
       </div>
     </div>
   </div>
