@@ -176,7 +176,7 @@
 }
 
 .carousel-control-prev, .carousel-control-next {
-    background-color: #9e733f;
+    background-color: #B4E197;
     width: 3rem;
 }
 
@@ -184,15 +184,53 @@
      background-color:transparent;
     color: gray;
     margin: auto 14rem;
-    padding: 10px 0;
+    padding: 7px 0;
     text-align: left;
-    border-bottom: 4px solid #ceb99f;
+    border-bottom: 4px solid #42855b;
     box-shadow: none;
 }
 
+.view-product{
+    font-weight: 600;
+}
+
+/* Style related to tables  */
 .table thead th {
     vertical-align: bottom;
-    /* border: 2px solid #9e733f; */
-    background-color: #9e733f;
+    border: 2px solid #42855B;
+    background-color: #42855B;
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #DEF9C4;
+}
+a:hover {
+    color: #42855b;
+    text-decoration: underline;
+}
+
+a {
+    color: #483838;
+    text-decoration: none;
+    background-color: transparent;
+}
+.table td{
+        font-weight: 500;
+}
+.form-control {
+    border: 2px solid #9FD0B1;
+    font-weight: 500;
+}
+.form-control:focus {
+    border-color: #42855B;
+}
+label {
+    margin-bottom: .1rem;
+    font-weight: 500;
+}
+
+option:hover{
+    background-color: #42855B;
     color: white;
 }

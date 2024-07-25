@@ -322,24 +322,22 @@ def manage_products(request):
     if request.method == "POST":
         searchProduct = SearchProductForm(request.POST)
         if searchProduct.is_valid():
-            products = (ProductStep1.objects.filter(name__icontains=searchProduct.cleaned_data['search_text']) |
-                        ProductStep1.objects.filter(description__icontains=searchProduct.cleaned_data['search_text']) |
-                        ProductStep1.objects.filter(category__category_name__icontains=searchProduct.cleaned_data['search_text']) |
+            products = (ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),name__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),description__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),category__category_name__icontains=searchProduct.cleaned_data['search_text']) |
                         # ProductStep1.objects.filter(status__icontains=searchProduct.cleaned_data['search_text']) |
                         # ProductStep1.objects.filter(quality__icontains=searchProduct.cleaned_data['search_text']) |
-                        ProductStep1.objects.filter(price__icontains=searchProduct.cleaned_data['search_text']) |
-                        ProductStep1.objects.filter(stock__icontains=searchProduct.cleaned_data['search_text'])
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),price__icontains=searchProduct.cleaned_data['search_text']) |
+                        ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user),stock__icontains=searchProduct.cleaned_data['search_text'])
                         )
-
-            products = products.objects.filter(user=get_object_or_404(UserProfile, user=request.user))
             return render(request, "manage-product.html", {'form': searchProduct, 'products': products})
         else:
-            return render(request,"manage-product.html",{'form': searchProduct, 'products' : ProductStep1.objects.all()})
+            return render(request,"manage-product.html",{'form': searchProduct, 'products' : ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user))})
 
     else:
         form = SearchProductForm()
         # messages.success(request, 'Product updated successfully!')
-        products = ProductStep1.objects.all()
+        products = ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user))
         return render(request,"manage-product.html", {'form':form,'products':products})
 @login_required()
 def create_chat(request, product_step1_id):
