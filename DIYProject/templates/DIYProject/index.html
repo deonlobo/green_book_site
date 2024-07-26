@@ -78,16 +78,19 @@
 
                     <hr style="color: #3333">
 
-                    <div class="my-1">
-                        <div class="row">
-                            <div class="col-lg-6 text-left"><span
-                                    style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}
+                     <div class="my-1">
+                                <div class="row">
+                                    <div class="col-lg-3 text-left">
+                                        <span style="font-size: 14px; font-weight: bold; color: #333333"> {{ project.upvotesCounts }} </span>Upvote{{ project.upvotesCounts|pluralize }}
+                                    </div>
+                                    <div class="col-lg-6 justify-content-center">
+                                        <span style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}
+                                    </div>
+                                    <div class="col-lg-3 text-right">
+                                        <span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-6 text-right"><span
-                                    style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}
-                            </div>
-                        </div>
-                    </div>
 
 
                 </div>

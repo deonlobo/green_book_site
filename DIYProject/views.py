@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from marketplace.models import Category
 from django.db.models.signals import post_delete
+from django.db.models import Count
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -13,7 +14,7 @@ from django.contrib import messages
 
 
 def indexView(request):
-    projects = Project.objects.order_by('-posted_on')
+    projects = Project.objects.annotate(upvotes_count=Count('upvotes')).order_by('-upvotes_count')
     categories = ProjectCategory.objects.all()
     return render(request,'DIYProject/index.html',{'projects':projects[:4], 'categories': categories})
 
@@ -59,32 +60,52 @@ def categoriesView(request):
     return render(request,'DIYProject/categories.html',{'categories':categories})
 
 def feedView(request):
-    try:
-        fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
-    except:
-        fav_projects = None
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    fav_projects = MyBookmark.fav_projects.all() or None
     visit_history = request.session.get('visit_history', [])
     SearchForm = SearchProject()
-    projects = Project.objects.order_by('-posted_on')
+    projects = Project.objects.annotate(upvotes_count=Count('upvotes')).order_by('-upvotes_count')
 
     return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects, 'suggestions': visit_history[-5:]})
 
+
+def upvotesView(request, project_id):
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    fav_projects = MyBookmark.fav_projects.all() or None
+    visit_history = request.session.get('visit_history', [])
+    SearchForm = SearchProject()
+    temp_project = get_object_or_404(Project,pk=project_id)
+
+    if temp_project.upvotes.filter(id=request.user.pk).exists():
+        temp_project.upvotes.remove(request.user)
+    else:
+        temp_project.upvotes.add(request.user)
+
+    projects = Project.objects.annotate(upvotes_count=Count('upvotes')).order_by('-upvotes_count')
+
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects, 'suggestions': visit_history[-5:]})
+
+
+
 def sortAscendingView(request):
-    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    fav_projects = MyBookmark.fav_projects.all() or None
     SearchForm = SearchProject()
     projects = Project.objects.order_by('title')
     visit_history = request.session.get('visit_history', [])
     return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects, 'suggestions': visit_history[-5:]})
 
 def sortDescendingView(request):
-    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    fav_projects = MyBookmark.fav_projects.all() or None
     SearchForm = SearchProject()
     projects = Project.objects.order_by('-title')
     visit_history = request.session.get('visit_history', [])
     return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects,'suggestions':visit_history[-5:]})
 
 def filterCategoryView(request, category_id):
-    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    fav_projects = MyBookmark.fav_projects.all() or None
     SearchForm = SearchProject()
     category_name=ProjectCategory.objects.get(pk=category_id)
     projects = Project.objects.filter(project_category=category_name).order_by('-posted_on')
@@ -117,12 +138,7 @@ def projectView(request,id):
 
 @login_required(login_url='login')
 def addToFavouriteView(request, project_id):
-    try:
-        MyBookmark = Favourite.objects.get(holder=request.user)
-    except:
-        MyBookmark = Favourite()
-        MyBookmark.holder = request.user
-        MyBookmark.save()
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
     TempProject = Project.objects.get(pk=project_id)
     if TempProject in MyBookmark.fav_projects.all():
         messages.error(request,'Project already saved')
@@ -135,26 +151,25 @@ def addToFavouriteView(request, project_id):
 
 @login_required(login_url='login')
 def removeFromFavouriteView(request, project_id):
-    MyBookmark = Favourite.objects.get(holder=request.user)
-    MyBookmark.fav_projects.remove(project_id)
-    MyBookmark.save()
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    if MyBookmark.fav_projects.filter(id=project_id).exists():
+        MyBookmark.fav_projects.remove(project_id)
+        MyBookmark.save()
+        messages.success(request, "Project removed from Bookmarks")
+    else:
+        messages.error(request,"This project was never saved !")
     return redirect('DIYProject:bookmarks')
 
 @login_required(login_url='login')
 def bookmarkView(request):
     SearchForm = SearchProject()
-    fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
-    try:
-        MyBookmark = Favourite.objects.get(holder=request.user)
-    except:
-        MyBookmark = Favourite(holder=request.user)
-        MyBookmark.save()
-    AllProjects = MyBookmark.fav_projects.all()
-    if not AllProjects:
+    MyBookmark, created = Favourite.objects.get_or_create(holder=request.user)
+    AllProjects = MyBookmark.fav_projects.all() or None
+    if AllProjects is None:
         messages.error(request,'No Projects saved yet')
         return redirect('DIYProject:feed')
     visit_history = request.session.get('visit_history', [])
-    return render(request, 'DIYProject/feed.html', {'projects': AllProjects, 'SearchForm': SearchForm, 'fav_projects':fav_projects,'suggestions':visit_history[-5:]})
+    return render(request, 'DIYProject/feed.html', {'projects': AllProjects, 'SearchForm': SearchForm, 'fav_projects':AllProjects,'suggestions':visit_history[-5:]})
 
 @login_required(login_url='login')
 def deleteProjectView(request,project_id):
@@ -207,4 +222,6 @@ def SearchProjectView(request):
             return redirect('DIYProject:feed')
     else:
         return redirect('DIYProject:feed')
+
+
 

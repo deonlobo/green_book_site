@@ -130,10 +130,13 @@
                             <hr style="color: #3333">
                             <div class="my-1">
                                 <div class="row">
-                                    <div class="col-lg-6 text-left">
+                                    <div class="col-lg-3 text-left">
+                                        <span style="font-size: 14px; font-weight: bold; color: #333333"> {{ project.upvotesCounts }} </span>Upvote{{ project.upvotesCounts|pluralize }}
+                                    </div>
+                                    <div class="col-lg-6 justify-content-center">
                                         <span style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}
                                     </div>
-                                    <div class="col-lg-6 text-right">
+                                    <div class="col-lg-3 text-right">
                                         <span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}
                                     </div>
                                 </div>
@@ -143,23 +146,38 @@
                                 <hr style="color: #3333">
                                 <div class="my-1">
                                     <div class="row">
-                                        <div class="col-lg-6 text-left"></div>
-                                        {% if project in fav_projects %}
-                                            <div class="col-lg-6 text-right">
-                                                <a href="{% url 'DIYProject:removefavourite' project.pk %}"
-                                                   class="btn btn-danger">Remove from Favourites</a>
+
+
+                                        {% if request.user in project.upvotes.all %}
+                                            <div class="col-lg-6 text-center">
+                                                <a href="{% url 'DIYProject:upvote' project.pk %}"
+                                                   class="btn btn-danger mt-2">Downvote Project</a>
                                             </div>
                                         {% else %}
-                                            <div class="col-lg-6 text-right">
-                                                <a href="{% url 'DIYProject:addfavourite' project.pk %}"
-                                                   class="btn btn-success">Add to Favourites</a>
+                                            <div class="col-lg-6 text-center">
+                                                <a href="{% url 'DIYProject:upvote' project.pk %}"
+                                                   class="btn btn-success mt-2">Upvote Project</a>
                                             </div>
                                         {% endif %}
-                                    </div>
+
+
+
+                                    {% if project in fav_projects %}
+                                        <div class="col-lg-6 text-center">
+                                            <a href="{% url 'DIYProject:removefavourite' project.pk %}"
+                                               class="btn btn-danger mt-2">Remove from Favourites</a>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-lg-6 text-center">
+                                            <a href="{% url 'DIYProject:addfavourite' project.pk %}"
+                                               class="btn btn-success mt-2">Add to Favourites</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
                                 </div>
                             {% endif %}
-                        </div>
                     </div>
+                </div>
                 </a>
 
                 {% if request.path == feed_url %}
@@ -210,7 +228,7 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        </div>
+    </div>
     </div>
 {% endblock %}
 

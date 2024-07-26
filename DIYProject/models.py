@@ -19,12 +19,16 @@ class Project(models.Model):
     img_2 = models.ImageField(upload_to='images/DIYProjects/ProjectImages', blank=True, null=True)
     posted_on = models.DateTimeField(auto_now_add=True)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    upvotes = models.ManyToManyField(User, related_name='diyproject_upvotes', blank=True)
 
     def __str__(self):
         return self.title
 
     def getSteps(self):
         return self.process.splitlines()
+
+    def upvotesCounts(self):
+        return self.upvotes.count()
 
 class Thought(models.Model):
     content = models.TextField()
