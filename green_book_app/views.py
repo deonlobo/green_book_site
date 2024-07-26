@@ -1,3 +1,8 @@
+import os
+import random
+import uuid
+
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render
 from django.utils import timezone
@@ -5,6 +10,7 @@ from django.utils.timezone import now
 
 from accounts.models import UserProfile, User
 from green_book_messenger.models import Message
+from green_book_site.settings import MEDIA_ROOT
 from marketplace.models import Category
 
 
@@ -108,3 +114,22 @@ def contact_page(request):
     return render(
         request, "green_book_app/contact.html", {"team_members": team_members}
     )
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        file = request.FILES['upload']  # Assuming the file is named 'upload' in the request
+
+        # File validation (optional)
+        # You can add checks for file size, format, etc. here
+
+        # Save the file to a desired location
+        file_path = os.path.join(MEDIA_ROOT, str(uuid.uuid4()) + os.path.extsep + file.name)
+        with open(file_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+        # Return a JSON response with the uploaded file's URL
+        return JsonResponse({'uploaded': 1, 'url': f'/media/{file_path}'})
+
+    return JsonResponse({'uploaded': 0})
