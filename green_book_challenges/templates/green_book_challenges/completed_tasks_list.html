@@ -33,7 +33,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Completed Tasks</h2>
+    <h2 class="text-center mb-4" style="color: #42855B">Completed Tasks</h2>
     {% if show_alert %}
         <div class="alert alert-success">
             1000 points added!
@@ -48,7 +48,7 @@
                     <p class="card-text">{{ task.caption }}</p>
                     <form method="post" action="{% url 'like_completed_task' task.id %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Like</button>
+                        <button type="submit" class="btn btn-primary" style="background: #B4E197; color: black">Like</button>
                     </form>
                     <p class="mt-2">Likes: {{ task.likes }}</p>
                 </div>
