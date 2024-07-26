@@ -55,44 +55,51 @@
     justify-content: space-between;
 }
 
-.product .title-price .title {
-    color: rgba(158, 115, 63, 0.71);
+.product .title-price .title  {
+    color:rgb(66 133 91 / 75%);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.product .quantity{
+    color:rgb(66 133 91 / 75%);
     font-size: 0.8em;
     font-weight: bold;
 }
 
 .product .description {
-    color: #555;
-    font-size: 0.75em;
+    color: rgb(66 133 91 / 75%);
+    font-size: 0.75rem;
     margin: 5px 0 20px 0;
     text-align: justify;
-        height: 5rem;
+        /*height: 5rem;*/
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .product .price {
     font-size: 0.8em;
     font-weight: bold;
-    color: #9e733f;
+    color: rgb(66 133 91);
 }
 
 .quality-bar {
     background-color: #ddd;
     border-radius: 5px;
-    margin: 5px 0;
-    height: 10px;
+   margin: 1.2rem 0 0.5rem 0;
+    height: 5px;
     width: 100%;
     position: relative;
 }
 
 .quality-fill {
-    background-color: #9e733f;
+    background-color: #42855b;
     height: 100%;
     border-radius: 5px;
 }
 
 .quality-labels {
     position: absolute;
-    top: -20px;
+    top: -15px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -165,9 +172,27 @@
 }
 
 .product .icons{
-    display: flex;
-    justify-content: flex-end;
-    margin: 5px 1px
+       display: flex;
+    justify-content: space-between;
+    margin: 5px 1px;
+
+    text-align: center;
+}
+.product .icons .icon-link{
+    width: 100%;
+    border: 1px solid #42855B;
+    margin: 1px;
+    color: white;
+    background-color: #42855B;
+        padding: 0.2rem;
+
+}
+.product .icons .icon-link .fa-comment:before {
+    color: white;
+}
+
+.product .icons .icon-link .fa-eye:before {
+    color: white;
 }
 
 .product .fas{
@@ -233,4 +258,60 @@ label {
 option:hover{
     background-color: #42855B;
     color: white;
+}
+.seller {
+     display: block;
+    border-top: 2px dotted rgb(66 133 91 / 75%);
+}
+
+.seller-label{
+    color: rgb(66 133 91);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.seller-name{
+    color: rgb(66 133 91 / 75%);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.product .product-description .description-label{
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: rgb(66 133 91);
+}
+.product .product-description{
+    color: rgb(66 133 91);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.product .seller-address{
+     font-size: 0.8rem;
+    font-weight: bold;
+    color: rgb(66 133 91);
+}
+.product .seller-address .address{
+        overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+     color: rgb(66 133 91 / 75%);
+    font-size: 0.75rem;
+}
+
+.product  .seller-detail{
+    color:rgb(66 133 91);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.product .quality-label{
+     color:rgb(66 133 91);
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.product .quality-labels span{
+        font-size: 10px;
+    padding: 0;
+    margin: 0;
+    color: #42855b;
+    font-weight: 700;
 }
