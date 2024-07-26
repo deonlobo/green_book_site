@@ -57,6 +57,7 @@
     outline: none;
     min-width: 150px; /* Ensure a minimum width for the input field */
     font-size: small;
+    background-color: #f8f8f8;
 }
 
 .search-input img {
@@ -134,14 +135,15 @@
 }
 
 .advertise-area .card-header {
-    background-color: hsl(43,85%,88%);
+    background-color: #c1eda2;
     height: 3em;
     font-weight: bold;
 }
 
 .advertise-area .card-body {
-    background-color: hsl(43,85%,95%);
+    background-color: #EAFADC;
 }
+
 
 .advertise-area .card-body ul {
     list-style-type: none;

@@ -1,97 +1,99 @@
 {% load static %}
 
-<nav id="greenbook--navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="greenbook--navbar" class="navbar navbar-expand-lg mx-3 my-2">
   <a class="navbar-brand" href="{% url 'home' %}">
-      <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
+    <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  <button style="background-color: #231B1B;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span style="color: #F6FBF4;" class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'home' %}">Home</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
+        <a style="color: #231B1B;" class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
       </li>
       <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           DIY Projects
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
-            <a class="dropdown-item" href='{% url 'DIYProject:categories' %}'>Categories</a>
-          <a class="dropdown-item" href='{% url 'DIYProject:newproject' %}'>Upload Project</a>
-          <a class="dropdown-item" href="{% url 'DIYProject:myprojects' %}">My Projects</a>
+          <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
+          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:categories' %}">Categories</a>
+          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:newproject' %}">Upload Project</a>
+          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:myprojects' %}">My Projects</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'DIYProject:bookmarks' %}">Bookmarks</a>
+          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:bookmarks' %}">Bookmarks</a>
         </div>
       </li>
       <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Marketplace
+        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Marketplace
         </a>
         <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
-{#         <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
+          {# <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
 
-            {% for category in categories %}
+          {% for category in categories %}
           <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>
-            {% endfor %}
+          {% endfor %}
         </div>
 
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'messenger_list' %}">Messenger</a>
+        <a style="color: #231B1B;" class="nav-link" href="{% url 'messenger_list' %}">Messenger</a>
       </li>
       <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Eco-Challenges
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <a class="dropdown-item" href="{% url 'challenge1' %}">Challenges</a>
-            {% if user.is_authenticated %}
-                <a class="dropdown-item" href="/challenges/points-and-coupons/">Rewards</a>
-                <a class="dropdown-item" href="/challenges/challenges/accepted/">Accepted Challenges</a>
-                <a class="dropdown-item" href="/challenges/challenges/accepted/">Posts</a>
-                <a class="dropdown-item" href="/challenges/completed-tasks/">Feed</a>
-            {% endif %}
+          <a class="dropdown-item" href="{% url 'challenge1' %}">Challenges</a>
+          {% if user.is_authenticated %}
+          <a class="dropdown-item" href="/challenges/points-and-coupons/">Rewards</a>
+          <a class="dropdown-item" href="/challenges/challenges/accepted/">Accepted Challenges</a>
+          <a class="dropdown-item" href="/challenges/challenges/accepted/">Posts</a>
+          <a class="dropdown-item" href="/challenges/completed-tasks/">Feed</a>
+          {% endif %}
         </div>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'contact_page' %}">Contact</a>
+        <a style="color: #231B1B;" class="nav-link" href="{% url 'contact_page' %}">Contact</a>
       </li>
     </ul>
-{#    <form class="form-inline my-2 my-lg-0">#}
-{#      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
-{#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
-{#    </form>#}
+    {# <form class="form-inline my-2 my-lg-0">#}
+      {# <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+      {# <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+      {# </form>#}
 
     <ul class="navbar-nav mr-3">
-        {% if user.is_authenticated %}
-             <li class="nav-item active dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Manage
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
-                    <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Manage Products</a>
-                </div>
-              </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-            </li>
-        {% else %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'login' %}">Log in</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'register_user' %}">Sign Up</a>
-            </li>
-        {% endif %}
+      {% if user.is_authenticated %}
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Manage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
+          <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Add Products</a>
+          <a class="dropdown-item" href="{% url 'marketplace:manage_products' %}">Manage Products</a>
+        </div>
+      </li>
+      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active">
+        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'logout' %}">Log out</a>
+      </li>
+      {% else %}
+      <li style="padding: 0.3rem 0.5rem; background: #42855B; color: #F6FBF4;" class="btn nav-item active mr-2">
+        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active">
+        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'register_user' %}">Join Us</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

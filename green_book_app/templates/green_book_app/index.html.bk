@@ -1,0 +1,342 @@
+{% load custom_filters %}
+{% load static %}
+
+
+        <section class="preloader">
+            <div class="spinner">
+                <span class="sk-inner-circle"></span>
+            </div>
+        </section>
+    
+        <main>
+
+            <section class="slick-slideshow">   
+                <div class="slick-custom">
+                    <img src="{% static 'green_book_app/assets/images/slideshow/back1.webp' %}" class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-10">
+                                    <h3 class="slick-title">Welcome to Green Book</h3>
+
+                                        {% if user.is_authenticated %}
+                                            <div class="membership-details lead text-white mt-lg-3 fw-bold">
+                                                <svg aria-hidden="true" class="svg-icon iconPeople" width="18" height="18" viewBox="0 0 18 18"><path d="M17 14c0 .44-.45 1-1 1H9a1 1 0 0 1-1-1H2c-.54 0-1-.56-1-1 0-2.63 3-4 3-4s.23-.4 0-1c-.84-.62-1.06-.59-1-3s1.37-3 2.5-3 2.44.58 2.5 3-.16 2.38-1 3c-.23.59 0 1 0 1s1.55.71 2.42 2.09c.78-.72 1.58-1.1 1.58-1.1s.23-.4 0-1c-.84-.61-1.06-.58-1-3s1.37-3 2.5-3 2.44.59 2.5 3c.05 2.42-.16 2.39-1 3-.23.6 0 1 0 1s3 1.38 3 4"></path></svg>
+                                                Hello {{ user_profile.user.first_name }} {{ user_profile.user.last_name }}!
+                                            </div>
+                                            <div class="membership-details lead text-white mt-lg-3 mb-lg-5 fw-bold">
+                                                <svg aria-hidden="true" class="svg-icon iconCake" width="18" height="18" viewBox="0 0 18 18"><path d="M9 4.5a1.5 1.5 0 0 0 1.28-2.27L9 0 7.72 2.23c-.14.22-.22.48-.22.77 0 .83.68 1.5 1.5 1.5Zm3.45 7.5-.8-.81-.81.8c-.98.98-2.69.98-3.67 0l-.8-.8-.82.8c-.49.49-1.14.76-1.83.76-.55 0-1.3-.17-1.72-.46V15c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2v-2.7c-.42.28-1.17.45-1.72.45-.69 0-1.34-.27-1.83-.76Zm1.3-5H10V5H8v2H4.25C3 7 2 8 2 9.25v.9c0 .81.91 1.47 1.72 1.47.39 0 .77-.14 1.03-.42l1.61-1.6 1.6 1.6a1.5 1.5 0 0 0 2.08 0l1.6-1.6 1.6 1.6c.28.28.64.43 1.03.43.81 0 1.73-.67 1.73-1.48v-.9C16 8.01 15 7 13.75 7Z"></path></svg>
+                                                Member for: {{ membership_duration }}
+                                            </div>
+                                        {% else %}
+                                            <p class="lead text-white mt-lg-3 mb-lg-5">Hello There!!<br/>
+                                            Login to unlock all the features of Green Book<br/></p>
+                                        {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slick-custom">
+                    <img src="{% static 'green_book_app/assets/images/slideshow/back2.jpg' %}" class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-9 col-10">
+                                    {% if user.is_authenticated %}
+                                        <h3 class="slick-title">Below is your top 5 most visited pages</h3>
+                                        {% for page, count in top_visited_pages %}
+                                            <a href="{{ page }}" class="btn custom-btn mt-lg-2 mb-lg-2">{{ page|trim_text:15 }} ({{ count }} visits)</a>
+                                        {% endfor %}
+
+                                    {% else %}
+                                       <h3 class="slick-title">It's your turn to make an impact</h3>
+                                        <p class="lead text-white mt-lg-3 mb-lg-5">
+                                            Join The Green Book community and take meaningful steps towards a sustainable future.
+                                            Share your ideas, learn from experts, and participate in eco-friendly initiatives.
+                                        </p>
+
+                                    {% endif %}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slick-custom">
+                    <img src="{% static 'green_book_app/assets/images/slideshow/two-business-partners-working-together-office-computer.jpeg'%} " class="img-fluid" alt="">
+
+                    <div class="slick-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-10">
+                                    <h1 class="slick-title">View our talented team</h1>
+
+                                    <p class="lead text-white mt-lg-3 mb-lg-5">Green Book is made by a team of talented developers towards promoting green technology</p>
+
+                                    <a href="#" class="btn custom-btn">Meet Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="about section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 text-center">
+                            <h2 class="mb-5">Get started with <span>Green</span> Book</h2>
+                        </div>
+
+                        <div class="col-lg-2 col-12 mt-auto mb-auto">
+                            <ul class="nav navinx navinx-pills mb-5 mx-auto justify-content-center align-items-center" id="pills-tab" role="tablist">
+                                <li class="nav-item navinx-item" role="presentation">
+                                    <button class="navinx-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Introduction</button>
+                                </li>
+
+                                <li class="nav-item navinx-item" role="presentation">
+                                    <button class="navinx-link" id="pills-youtube-tab" data-bs-toggle="pill" data-bs-target="#pills-youtube" type="button" role="tab" aria-controls="pills-youtube" aria-selected="true">How we work?</button>
+                                </li>
+
+                                <li class="nav-item navinx-item" role="presentation">
+                                    <button class="navinx-link" id="pills-skill-tab" data-bs-toggle="pill" data-bs-target="#pills-skill" type="button" role="tab" aria-controls="pills-skill" aria-selected="false">Capabilites</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-10 col-12">
+                            <div class="tab-content mt-2" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                                    <div class="row">
+                                        <div class="col-lg-7 col-12">
+                                            <img src="{% static 'green_book_app/assets/images/pim-chu-z6NZ76_UTDI-unsplash.jpeg'%}" class="img-fluid" alt="">
+                                        </div>
+
+                                        <div class="col-lg-5 col-12">
+                                            <div class="d-flex flex-column h-100 ms-lg-4 mt-lg-0 mt-5">
+                                                <h4 class="mb-3">The <span>Green Book</span> <br>Empowering <span>Sustainable</span> Choices</h4>
+
+                                                <p>The Green Book is an innovative platform designed to connect and inspire individuals passionate about green technology and environmental conservation. </p>
+                                                <p>Through its diverse features, the platform educates and empowers its community to make impactful, sustainable choices.</p>
+
+                                                <div class="mt-2 mt-lg-auto">
+                                                    <a href="#" class="custom-link mb-2">
+                                                        Learn more about us
+                                                        <i class="bi-arrow-right ms-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-youtube" role="tabpanel" aria-labelledby="pills-youtube-tab">
+
+                                    <div class="row">
+                                        <div class="col-lg-7 col-12">
+                                            <img src="{% static 'green_book_app/assets/images/cody-lannom-G95AReIh_Ko-unsplash.jpeg'%}" class="img-fluid" alt="">
+                                        </div>
+
+                                        <div class="col-lg-5 col-12">
+                                            <div class="d-flex flex-column h-100 ms-lg-4 mt-lg-0 mt-5">
+                                                <h4 class="mb-3">Our Goals</h4>
+
+                                                <p>Our goals, reflects our commitment to providing the tools and resources necessary for individuals to make a positive impact on the environment. </p>
+
+                                                <p>We believe that through education, collaboration, and innovation, we can drive meaningful change and foster a sustainable future.n</p>
+
+                                                <div class="mt-2 mt-lg-auto">
+                                                    <a href="{% url 'contact_page' %}" class="custom-link mb-2">
+                                                        Work with us
+                                                        <i class="bi-arrow-right ms-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-skill" role="tabpanel" aria-labelledby="pills-skill-tab">
+                                    <div class="row">
+                                        <div class="col-lg-7 col-12">
+                                            <img src="{% static 'green_book_app/assets/images/cody-lannom-G95AReIh_Ko-unsplash.jpeg'%}" class="img-fluid" alt="">
+                                        </div>
+
+                                        <div class="col-lg-5 col-12">
+                                            <div class="d-flex flex-column h-100 ms-lg-4 mt-lg-0 mt-5">
+                                                <h4 class="mb-3">Green Book Feature Highlights</h4>
+
+                                                <p>Discover the core features of The Green Book platform that empower individuals to make sustainable choices and drive environmental change.</p>
+
+                                                <div class="skill-thumb mt-3">
+
+                                                    <strong>Community Engagement</strong>
+                                                        <span class="float-end">90%</span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
+                                                            </div>
+
+                                                    <strong>Educational Resources</strong>
+                                                        <span class="float-end">70%</span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
+                                                            </div>
+
+                                                    <strong>Eco-Friendly Marketplace</strong>
+                                                        <span class="float-end">80%</span>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+                                                            </div>
+
+                                                </div>
+                                                
+                                                <div class="mt-2 mt-lg-auto">
+                                                    <a href="#" class="custom-link mb-2">
+                                                        Explore products
+                                                        <i class="bi-arrow-right ms-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="front-product">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-6 col-12">
+                            <img src="{% static 'green_book_app/assets/images/retail-shop-owner-mask-social-distancing-shopping.jpg'%}" class="img-fluid" alt="">
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="px-5 py-5 py-lg-0">
+
+                            <h2 class="mb-4"><span>Doubt</span> Have a question ?</h2>
+
+                            <p class="lead mb-4">Join our community to ask questions, share knowledge, and engage with experts in green technology and sustainability.</p>
+
+                            <a href="{% url 'forum:home_forum' %}" class="custom-link">
+                                Explore Forum
+                                <i class="bi-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+           {% comment %} <section class="featured-product section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 text-center">
+                            <h2 class="mb-5">Featured Products</h2>
+                        </div>
+
+                        <div class="col-lg-4 col-12 mb-3">
+                            <div class="product-thumb">
+                                <a href="product-detail.html">
+                                    <img src="{% static 'green_book_app/assets/images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg'%}" class="img-fluid product-image" alt="">
+                                </a>
+
+                                <div class="product-top d-flex">
+                                    <span class="product-alert me-auto">New Arrival</span>
+
+                                    <a href="#" class="bi-heart-fill product-icon"></a>
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="product-detail.html" class="product-title-link">Tree pot</a>
+                                        </h5>
+
+                                        <p class="product-p">Original package design from house</p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5">$25</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12 mb-3">
+                            <div class="product-thumb">
+                                <a href="product-detail.html">
+                                    <img src="{% static 'green_book_app/assets/images/product/jordan-nix-CkCUvwMXAac-unsplash.jpeg'%}" class="img-fluid product-image" alt="">
+                                </a>
+
+                                <div class="product-top d-flex">
+                                    <span class="product-alert">Low Price</span>
+
+                                    <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="product-detail.html" class="product-title-link">Fashion Set</a>
+                                        </h5>
+
+                                        <p class="product-p">Costume Package</p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5">$35</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12">
+                            <div class="product-thumb">
+                                <a href="product-detail.html">
+                                    <img src="{% static 'green_book_app/assets/images/product/nature-zen-3Dn1BZZv3m8-unsplash.jpeg'%}" class="img-fluid product-image" alt="">
+                                </a>
+
+                                <div class="product-top d-flex">
+                                    <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
+                                </div>
+
+                                <div class="product-info d-flex">
+                                    <div>
+                                        <h5 class="product-title mb-0">
+                                            <a href="product-detail.html" class="product-title-link">Juice Drinks</a>
+                                        </h5>
+
+                                        <p class="product-p">Nature made another world</p>
+                                    </div>
+
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5">$45</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <a href="products.html" class="view-all">View All Products</a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>{% endcomment %}
+
+        </main>
+
+
+
