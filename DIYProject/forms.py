@@ -29,4 +29,4 @@ class ThoughtForm(forms.ModelForm):
 
 
 class SearchProject(forms.Form):
-    term  = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3', 'placeholder': 'Search Projects ','style':'width:80%'}),)
+    term  = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3','id':'search-input', 'placeholder': 'Search Projects ','style':'width:80%'}),)

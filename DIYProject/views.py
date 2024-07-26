@@ -12,6 +12,11 @@ from django.db.models import Q
 from django.contrib import messages
 
 
+def indexView(request):
+    projects = Project.objects.order_by('-posted_on')
+    categories = ProjectCategory.objects.all()
+    return render(request,'DIYProject/index.html',{'projects':projects[:4], 'categories': categories})
+
 @login_required(login_url='login')
 def newProjectView(request):
     if request.method == 'POST':
@@ -68,20 +73,23 @@ def sortAscendingView(request):
     fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
     projects = Project.objects.order_by('title')
-    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
+    visit_history = request.session.get('visit_history', [])
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects, 'suggestions': visit_history[-5:]})
 
 def sortDescendingView(request):
     fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
     projects = Project.objects.order_by('-title')
-    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
+    visit_history = request.session.get('visit_history', [])
+    return render(request,'DIYProject/feed.html',{'projects':projects,'SearchForm':SearchForm, 'fav_projects':fav_projects,'suggestions':visit_history[-5:]})
 
 def filterCategoryView(request, category_id):
     fav_projects = Favourite.objects.get(holder=request.user).fav_projects.all()
     SearchForm = SearchProject()
     category_name=ProjectCategory.objects.get(pk=category_id)
     projects = Project.objects.filter(project_category=category_name).order_by('-posted_on')
-    return render(request, 'DIYProject/feed.html', {'projects': projects,'SearchForm':SearchForm, 'fav_projects':fav_projects})
+    visit_history = request.session.get('visit_history', [])
+    return render(request, 'DIYProject/feed.html', {'projects': projects,'SearchForm':SearchForm, 'fav_projects':fav_projects, 'suggestions': visit_history[-5:]})
 
 @login_required(login_url='login')
 def myProjectView(request):
@@ -99,6 +107,10 @@ def projectView(request,id):
             instance.project = project
             instance.posted_by = request.user
             instance.save()
+            points_record, created = Points.objects.get_or_create(user=request.user)
+            points_record.total_points += 100
+            points_record.save()
+            messages.success(request, "100 points have been added to your account")
             return redirect('DIYProject:viewproject',project.id)
 
     return render(request,'DIYProject/view_project.html',{'project': project,'thoughts':thoughts,'ThoughtForm':tf})
@@ -139,9 +151,10 @@ def bookmarkView(request):
         MyBookmark.save()
     AllProjects = MyBookmark.fav_projects.all()
     if not AllProjects:
-        messages.error('No Projects saved yet')
+        messages.error(request,'No Projects saved yet')
         return redirect('DIYProject:feed')
-    return render(request, 'DIYProject/feed.html', {'projects': AllProjects, 'SearchForm': SearchForm, 'fav_projects':fav_projects})
+    visit_history = request.session.get('visit_history', [])
+    return render(request, 'DIYProject/feed.html', {'projects': AllProjects, 'SearchForm': SearchForm, 'fav_projects':fav_projects,'suggestions':visit_history[-5:]})
 
 @login_required(login_url='login')
 def deleteProjectView(request,project_id):
@@ -154,6 +167,11 @@ def removeThoughtView(request,thought_id):
     temp_thought = get_object_or_404(Thought, pk=thought_id)
     temp_thought.delete()
     temp_project = temp_thought.project
+    points_record, created = Points.objects.get_or_create(user=request.user)
+    if points_record.total_points >= 100:
+        points_record.total_points -=100
+        points_record.save()
+        messages.success(request, "100 points have been removed from your account")
     return redirect('DIYProject:viewproject',temp_project.id)
 
 def SearchProjectView(request):

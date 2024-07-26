@@ -1,29 +1,24 @@
 {% extends 'green_book_app/base.html' %}
 {% load static %}
+
 {% block messenger_css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'DIYProject/css/view_project_css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DIYProject/css/diyproject_css.css ' %}">
 {% endblock %}
+
 {% block content %}
+    <div class="background-image-container px-5 animate__animated animate__fadeInLeftBig">
+        <h4 class="overlay-text px-5">26,970,000 tons of plastic ended up in Landfill in the year 2018.</h4>
+        <h4 class="overlay-text px-5">Over time, Recycling rate increased from just 6% to 35% in 2017</h4>
+        <h4 class="overlay-text px-5">In 2020, Paper and Organic materials accounted for 67% of total waste</h4>
+    </div>
 
     <div class="container">
-            {% if messages %}
-                {% for message in messages %}
-                    <br/>
-                    <div class="alert alert-warning alert-dismissible fade show mx-0" role="alert">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+        <center><h1 class="mt-3"> Latest Additions</h1></center>
 
-    <div class="container">
-
-        <div class="my-4">
+        {% for project in projects %}
+            <a href="{% url 'DIYProject:viewproject' project.pk %}">
             <div class="row my-4">
-                <div class="col-lg-6 my-auto animate__animated animate__backInLeft">
+                <div class="col-lg-6 animate__animated animate__backInLeft">
 
                     <div id="carousel{{ project.pk }}" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
@@ -60,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 border border-top-0 border-right-1 border-left-1 border-bottom-4 rounded animate__animated animate__backInRight">
+                <div class="col-lg-6 py-auto border rounded animate__animated animate__backInRight">
                     <div class="my-3">
                         <h3>{{ project.title }}</h3>
                     </div>
@@ -93,59 +88,62 @@
                             </div>
                         </div>
                     </div>
-                    <hr style="color: #3333">
 
-                    <div class="my-1">
-                        <div class="container">
-                            <div class="row text-right">
-                                <form method="post" action="{% url 'DIYProject:viewproject' project.pk %}">
-                                    {% csrf_token %}
-                                    {{ ThoughtForm.content }}
-                                    <button type="submit" class="btn btn-success px-5 my-2">Post</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
-            {% if thoughts %}
-                <h4 class="mx-3 mt-3 mb-4 animate__animated animate__bounce"><i>Thoughts on this project</i></h4>
-
-                <div class="row">
-                    {% for thought in thoughts %}
-
-
-                        <div class="col-sm-6 mt-1 {% if forloop.counter|divisibleby:2 %}animate__animated animate__backInRight{% else %}animate__animated animate__backInLeft{% endif %}">
-                            <div class="card speech-bubble">
-                                <div class="person-name">
-                                    By: {{ thought.posted_by | capfirst }}
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text" style="font-size: large">{{ thought.content | capfirst }}</p>
-                                    <div class="row mx-1">
-                                        <div class="col-12 px-0"><p class="text-left"
-                                                                    style="font-size: smaller">  {{ thought.posted_on.date | timesince }}
-                                            ago</p></div>
-                                    </div>
-                                    <a href="{% url 'DIYProject:removethought' thought.pk %}" class="btn btn-danger">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-                    {% endfor %}
-                </div>
-
-            {% endif %}
-
-        </div>
-
+        {% endfor %}
+        </a>
     </div>
 
+    <div class="container">
+
+
+        <h1 style="border-left: 15px solid; border-bottom:15px solid; border-image: linear-gradient(to left, #42855b, #b4e197) 1; text-align: center; font-family: Courier New, Courier, monospace;"
+            class="my-5 p-3">
+            Recycling Turns The Things <br>Into Other Things Which Is <br><span class="double-write justify-text">M A G I C !</span>
+        </h1>
+
+        <center><h1 class="mt-3"> Various Categories</h1></center>
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-lg-3 my-2">
+                    <a href="{% url 'DIYProject:filtercategory' category.pk %}" class="col-lg-12 btn btn-outline-success w-100"
+                       style="font-size: medium">{{ category.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        <hr style="color: #3333">
+
+        <div style="border: 1px solid #42855b; padding: 20px; margin: 10px;">
+            <div style="text-align: center; background: linear-gradient(to left, #42855b, #b4e197); color: white; padding: 20px; margin: 0;">
+                <h1>JOIN THE CREATIVE ARMY TODAY</h1>
+                <br>
+                <a href="{% url 'register_user' %}" class="btn btn-outline-light">Register Now</a>
+            </div>
+        </div>
+
+    <center><h1 class="mt-3"> Photo Gallery</h1></center>
+
+        <div class="section px-2 my-3">
+            {% for category in categories %}
+                <img src="{{ category.image.url }}" class="mx-2 animate__animated animate__fadeInDownBig">
+            {% endfor %}
+
+            {% for project in projects %}
+
+                <img src="{{ project.img_1.url }}" class="mx-2 animate__animated animate__fadeInDownBig">
+                {% if  project.img_2 %}
+                <img src="{{ project.img_2.url }}" class="mx-2 animate__animated animate__fadeInDownBig">
+                {% endif %}
+            {% endfor %}
+        </div>
+    <div class="row">
+
+            <a href="{% url 'DIYProject:feed' %}" class="btn btn-success col-12 mb-3"> View All Projects</a>
+    </div>
+
+    </div>
 
 
 

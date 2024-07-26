@@ -21,7 +21,7 @@
 
     {% for project in projects %}
 
-        <div class="col-lg-4 animate__animated animate__fadeInDownBig">
+        <div class="col-lg-4 animate__animated animate__fadeInDownBig mb-3">
             <div class="card" >
                 <a href="{% url 'DIYProject:viewproject' project.pk %}">
                     <img class="card-img-top" src="{{ project.img_1.url }}" alt="Card image cap" style="width: 100%;height: 20rem;">
