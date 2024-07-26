@@ -7,6 +7,9 @@ let group_conversations = [];
 const pinned_node = $("#pinned__list")
 const private_node = $("#private__list")
 const group_node = $("#group__list")
+let pinned_users_count = 0;
+let private_users_count = 0;
+let group_count = 0;
 const filter_conversations_debounce = debounce(() => get_conversations_by_filter());
 const get_users_debounce = debounce(() => get_users());
 const get_users_for_group_debounce = debounce(() => get_users_for_group())
@@ -34,7 +37,7 @@ function adjust_message_container_height() {
   messenger_container.style.height = `${targetHeight}px`;
 }
 
-function get_pinned_conversations(input_filter) {
+function set_pinned_conversations(input_filter) {
   $.ajax({
     type: 'GET',
     url: messenger_template_data["pinned_conversations_url"],
@@ -42,15 +45,21 @@ function get_pinned_conversations(input_filter) {
       "filter": input_filter
     },
     success: function (response) {
-      pinned_conversations = JSON.parse(response["pinned_conversations"])
+
+      const pinned_conversations = JSON.parse(response["pinned_conversations"])
       console.log(pinned_conversations);
       pinned_node.off('click', '.btn__pin');
       pinned_node.off("click", ".messenger__list__element")
       pinned_node.empty();
-      if (pinned_conversations.length > 0) {
+      pinned_users_count = pinned_conversations.length;
+      const title_node = `<p class="text-muted px-4 m-0"><b>Pinned</b></p>`
+      pinned_node.append(title_node)
+      if (pinned_conversations.length == 0) {
+        pinned_node.append("<div id='no_user_list' class='w-100' style='text-align:center'>No Pinned Conversations Found<div/>")
+      } else {
+        pinned_node.empty();
         const title_node = `<p class="text-muted px-4 m-0"><b>Pinned</b></p>`
         pinned_node.append(title_node)
-
       }
       pinned_conversations.forEach(conversation => {
         const list_node = generate_conversation_list_item(conversation['fields'].conversation_uuid,
@@ -80,8 +89,7 @@ function get_pinned_conversations(input_filter) {
   });
 }
 
-
-function get_private_conversations(input_filter) {
+function set_private_conversations(input_filter) {
   $.ajax({
     type: 'GET',
     url: messenger_template_data["private_conversations_url"],
@@ -93,10 +101,15 @@ function get_private_conversations(input_filter) {
       console.log(private_conversations);
       private_node.off('click', '.btn__pin');
       private_node.empty();
-      if (private_conversations.length > 0) {
+      private_users_count = private_conversations.length;
+      const title_node = `<p class="text-muted px-4 m-0"><b>Private</b></p>`
+      private_node.append(title_node)
+      if (private_conversations.length == 0) {
+        private_node.append("<div id='no_user_list' class='w-100' style='text-align:center'>No Private Conversations Found<div/>")
+      } else {
+        private_node.empty();
         const title_node = `<p class="text-muted px-4 m-0"><b>Private</b></p>`
         private_node.append(title_node)
-
       }
       private_conversations.forEach(conversation => {
         console.log("here");
@@ -125,7 +138,7 @@ function get_private_conversations(input_filter) {
   });
 }
 
-function get_group_conversations(input_filter) {
+function set_group_conversations(input_filter) {
   $.ajax({
     type: 'GET',
     url: messenger_template_data["group_conversations_url"],
@@ -137,10 +150,15 @@ function get_group_conversations(input_filter) {
       console.log(group_conversations);
       group_node.off('click', '.btn__pin');
       group_node.empty();
-      if (group_conversations.length > 0) {
+      group_count = group_conversations.length
+      const title_node = `<p class="text-muted px-4 m-0"><b>Group</b></p>`
+      group_node.append(title_node)
+      if (group_conversations.length == 0) {
+        group_node.append("<div id='no_user_list' class='w-100' style='text-align:center'>No Group Conversations Found<div/>")
+      } else {
+        group_node.empty();
         const title_node = `<p class="text-muted px-4 m-0"><b>Group</b></p>`
         group_node.append(title_node)
-
       }
       group_conversations.forEach(conversation => {
         console.log("here");
@@ -233,9 +251,10 @@ function debounce(func, timeout = 500) {
 function get_conversations_by_filter() {
   const input_filter = $("#messenger__search__input").val()
   toggle_loader(true)
-  get_pinned_conversations(input_filter)
-  get_private_conversations(input_filter)
-  get_group_conversations(input_filter)
+  set_pinned_conversations(input_filter)
+  set_private_conversations(input_filter)
+  set_group_conversations(input_filter)
+  console.log();
   toggle_loader(false)
 
 }
@@ -353,10 +372,7 @@ function get_users() {
                                 data-uname=${element.username}
                                 class = "search__list__item d-flex p-2 border-bottom" >
                                     <div class="mr-2">
-                                      <h3>${element.firstName}</h3>
-                                    </div>
-                                    <div class="">
-                                      <h3>${element.lastName}</h3>
+                                      <h3>${element.firstName} ${element.lastName}</h3>
                                     </div>
                                 </div>`
         $('#search__result__container').append(listItem);
@@ -395,10 +411,7 @@ function get_users_for_group() {
                                 id=${element.username}
                                 class="search__list__item d-flex p-2 border-bottom ${selectedClass}" >
                                     <div class="mr-2">
-                                      <h3>${element.firstName}</h3>
-                                    </div>
-                                    <div class="">
-                                      <h3>${element.lastName}</h3>
+                                      <h3>${element.firstName} ${element.lastName}</h3>
                                     </div>
                                 </div>`
         $('#search__result__group__container').append(listItem);
@@ -493,9 +506,16 @@ $('#add_group_conversation_form').on('submit', function (event) {
   });
 });
 
+function inject_no_user_node() {
+  $("#messenger__list__container").append("<div id='no_user_list' class='w-100' style='text-align:center'>No Conversations<div/>")
+}
+
+function remove_no_user_node() {
+  $("#no_user_list").remove()
+}
 adjust_message_container_height();
 toggle_loader(true)
-get_pinned_conversations("")
-get_private_conversations("")
-get_group_conversations("")
+set_pinned_conversations("")
+set_private_conversations("")
+set_group_conversations("")
 toggle_loader(false)
