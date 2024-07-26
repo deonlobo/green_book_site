@@ -20,7 +20,12 @@
         {% if form.errors %}
             <br/>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                There was an error with your form...
+                There was an error with your form...<br/>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                       {{ field }}: {{ error }}<br/>
+                    {% endfor %}
+                {% endfor %}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

@@ -47,3 +47,12 @@
 .custom-answer-ckeditor-css .ck.ck-content.ck-editor__editable {
   min-height: 12em !important;
 }
+
+
+.custom-ckeditor-css .ck-word-count__words{
+    display: none;
+}
+
+.custom-ckeditor-css .ck-word-count__characters{
+    display: none;
+}
