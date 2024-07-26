@@ -69,6 +69,10 @@
           background: #42855B;
           color: #f8f5f1 !important;
           cursor: pointer;
+
+          h3 {
+            color: #f8f5f1 !important;
+          }
         }
 
       }
@@ -77,6 +81,10 @@
         background: #42855B;
         color: #f8f5f1 !important;
         cursor: pointer;
+
+        h3 {
+          color: #f8f5f1 !important;
+        }
       }
     }
   }
@@ -202,6 +210,10 @@
         .messenger__list__element--selected {
           background: #42855B;
           color: #f8f5f1 !important;
+
+          h3 {
+            color: #f8f5f1 !important;
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
-# chat/views.py
 from django.shortcuts import render, redirect
+from django.db.models import Count
 from .models import Conversation, Message, User
 from .forms import PrivateConversationForm, GroupConversationForm
 from django.contrib.auth.decorators import login_required
@@ -61,8 +61,8 @@ def get_messages_by_conversation_id(request):
     messages = Message.objects.filter(
         conversation__conversation_uuid=conversation__uuid
     ).order_by("timestamp")
-
     serialized_list = serializers.serialize("json", messages)
+    print(serialized_list)
     jsonData = {"messages": serialized_list}
     return JsonResponse(jsonData)
 
@@ -70,6 +70,8 @@ def get_messages_by_conversation_id(request):
 @login_required
 def get_users(request):
     user_name = request.GET.get("user_name", None)
+    if user_name == "" or user_name is None:
+        return JsonResponse({"status": "failed"}, safe=False)
     users = User.objects.filter(username__icontains=user_name).exclude(
         id=request.user.id
     )[:10]
@@ -99,9 +101,14 @@ def add_private_conversation(request):
 
         try:
             participant = User.objects.get(username=participant_username)
-            existing_conversation = Conversation.objects.filter(
-                conversation_type="private",
-                participants__in=[participant, request.user],
+            existing_conversation = (
+                Conversation.objects.annotate(num_participants=Count("participants"))
+                .filter(
+                    conversation_type="private",
+                    num_participants=2,
+                    participants=participant,
+                )
+                .filter(participants=request.user)
             )
             if len(existing_conversation) > 0:
                 return JsonResponse(
@@ -155,7 +162,7 @@ def add_group_conversation(request):
         except User.DoesNotExist:
             form.add_error("participant_username", "User not found.")
 
-    return JsonResponse({"status": "success", "conversation_id": None})
+    return JsonResponse({"status": "fail", "conversation_id": None})
 
 
 @login_required

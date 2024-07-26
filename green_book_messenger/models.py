@@ -40,6 +40,7 @@ class Message(models.Model):
     sender = models.ForeignKey(User, related_name="messages", on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    username = models.CharField(blank=True, null=True, max_length=200)
 
     def __str__(self):
         return f"Message {self.id} from {self.sender}"
