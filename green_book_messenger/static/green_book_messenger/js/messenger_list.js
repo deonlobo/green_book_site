@@ -361,6 +361,8 @@ function get_users() {
       user_name: username
     },
     success: function (response) {
+      if (response["status"] == "failed")
+        return null;
       $('#search__result__container').empty();
       response.forEach(element => {
         console.log("hereeeee", element);
@@ -397,11 +399,14 @@ function get_users_for_group() {
       user_name: username
     },
     success: function (response) {
+
+      if (response["status"] == "failed")
+        return null;
+
       $('#search__result__group__container').empty();
       response.forEach(element => {
         const isInList = group_member_list.filter(member => member.uname == element.username).length > 0
         const selectedClass = isInList ? "search__list__item--selected" : ""
-        console.log("hereeeee", $('#search__result__group__container'));
         let listItem = `
                                 <div 
                                 data-id=${element.id} 

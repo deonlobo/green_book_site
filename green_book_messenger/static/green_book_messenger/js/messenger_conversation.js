@@ -105,10 +105,11 @@ if (conversation_name != "None") {
     const data = JSON.parse(e.data);
     // Parse the timestamp to a Date object
     const date = new Date(data.timestamp);
+    console.log(data);
 
     const docElement = generate_message_blob(data.message, formatDate(date),
       messenger_template_data['user_id'] == data.user_id,
-      messenger_template_data["conversation_name"]);
+      data.user_name);
 
     const newMessageElement = document.createElement("div");
     newMessageElement.innerHTML = docElement;
@@ -204,10 +205,11 @@ function get_messages_by_conversation(conversation_id) {
       } else {
         messages.forEach(conversation => {
           const data = conversation["fields"]
+          console.log(data);
           const date = new Date(data.timestamp);
           const message_node = generate_message_blob(data.content, formatDate(date),
             messenger_template_data['user_id'] == data.sender,
-            messenger_template_data["conversation_name"]);
+            data.username);
           const newMessageElement = document.createElement("div");
           newMessageElement.innerHTML = message_node;
           conversation_message_container.prepend(newMessageElement)
