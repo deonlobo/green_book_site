@@ -6,18 +6,18 @@
 {% block content %}
 
     <div class="container">
-            {% if messages %}
-                {% for message in messages %}
-                    <br/>
-                    <div class="alert alert-warning alert-dismissible fade show mx-0" role="alert">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <br/>
+                <div class="alert alert-warning alert-dismissible fade show mx-0" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     <div class="container">
 
@@ -83,21 +83,21 @@
 
                     <hr style="color: #3333">
 
-                  <div class="my-1">
-                                <div class="row">
-                                    <div class="col-lg-3 text-left">
-                                        <span style="font-size: 14px; font-weight: bold; color: #333333"> {{ project.upvotesCounts }} </span>Upvote{{ project.upvotesCounts|pluralize }}
-                                    </div>
-                                    <div class="col-lg-6 justify-content-center">
-                                        <span style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}
-                                    </div>
-                                    <div class="col-lg-3 text-right">
-                                        <span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}
-                                    </div>
-                                </div>
+                    <div class="my-1">
+                        <div class="row">
+                            <div class="col-lg-3 text-left">
+                                <span style="font-size: 14px; font-weight: bold; color: #333333"> {{ project.upvotesCounts }} </span>Upvote{{ project.upvotesCounts|pluralize }}
                             </div>
+                            <div class="col-lg-6 justify-content-center">
+                                <span style="font-size: 14px; font-weight: bold; color: #333333"><i> On: </i></span>{{ project.posted_on }}
+                            </div>
+                            <div class="col-lg-3 text-right">
+                                <span style="font-size: 14px; font-weight: bold; color: #333333"><i> By: </i></span>{{ project.posted_by | capfirst }}
+                            </div>
+                        </div>
+                    </div>
                     <hr style="color: #3333">
-
+                    {% if request.user.is_authenticated %}
                     <div class="my-1">
                         <div class="container">
                             <div class="row text-right">
@@ -109,6 +109,7 @@
                             </div>
                         </div>
                     </div>
+                {% endif %}
                 </div>
             </div>
             {% if thoughts %}
@@ -120,7 +121,7 @@
 
                         <div class="col-sm-6 mt-1 {% if forloop.counter|divisibleby:2 %}animate__animated animate__backInRight{% else %}animate__animated animate__backInLeft{% endif %}">
                             <div class="card speech-bubble">
-                                <div class="person-name">
+                                <div class="person-name" style="font-size: medium">
                                     By: {{ thought.posted_by | capfirst }}
                                 </div>
                                 <div class="card-body">
@@ -130,7 +131,9 @@
                                                                     style="font-size: smaller">  {{ thought.posted_on.date | timesince }}
                                             ago</p></div>
                                     </div>
+                                    {% if thought.posted_by == request.user %}
                                     <a href="{% url 'DIYProject:removethought' thought.pk %}" class="btn btn-danger">Remove</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

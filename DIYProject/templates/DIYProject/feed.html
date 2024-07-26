@@ -151,12 +151,12 @@
                                         {% if request.user in project.upvotes.all %}
                                             <div class="col-lg-6 text-center">
                                                 <a href="{% url 'DIYProject:upvote' project.pk %}"
-                                                   class="btn btn-danger mt-2">Downvote Project</a>
+                                                   class="btn btn-outline-danger mt-2">Downvote Project</a>
                                             </div>
                                         {% else %}
                                             <div class="col-lg-6 text-center">
                                                 <a href="{% url 'DIYProject:upvote' project.pk %}"
-                                                   class="btn btn-success mt-2">Upvote Project</a>
+                                                   class="btn btn-outline-success mt-2">Upvote Project</a>
                                             </div>
                                         {% endif %}
 
@@ -165,12 +165,12 @@
                                     {% if project in fav_projects %}
                                         <div class="col-lg-6 text-center">
                                             <a href="{% url 'DIYProject:removefavourite' project.pk %}"
-                                               class="btn btn-danger mt-2">Remove from Favourites</a>
+                                               class="btn btn-outline-danger mt-2">Remove from Favourites</a>
                                         </div>
                                     {% else %}
                                         <div class="col-lg-6 text-center">
                                             <a href="{% url 'DIYProject:addfavourite' project.pk %}"
-                                               class="btn btn-success mt-2">Add to Favourites</a>
+                                               class="btn btn-outline-success mt-2">Add to Favourites</a>
                                         </div>
                                     {% endif %}
                                 </div>

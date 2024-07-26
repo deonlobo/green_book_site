@@ -13,7 +13,7 @@
             position: absolute;
             top: -25px; /* Adjust to position above the speech bubble */
             left: 10px; /* Adjust for padding and alignment */
-            font-size: 0.7em;
+            font-size: small;
             color: #333; /* Adjust color if necessary */
             background: #fff; /* Background for better visibility */
             padding: 2px 5px;
@@ -26,7 +26,7 @@
             position: absolute;
             top: -25px; /* Adjust to position above the speech bubble */
             left: 10px; /* Adjust for padding and alignment */
-            font-size: 1em;
+            font-size: small;
             color: #333; /* Adjust color if necessary */
             background: #fff; /* Background for better visibility */
             padding: 2px 5px;
