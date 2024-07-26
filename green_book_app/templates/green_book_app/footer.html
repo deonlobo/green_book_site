@@ -1,115 +1,37 @@
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'green_book_app/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'green_book_app/css/footer.css' %}">
 {% endblock %}
 
 {% block header %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 {% endblock %}
 
-<footer class="footer-section">
-        <div class="container">
-            <div class="footer-cta pt-5 pb-5">
-                <div class="row">
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="cta-text">
-                                <h4>Find us</h4>
-                                <span>401 Sunset Avenue, Windsor, Ontario N9B 3P4</span>
-                            </div>
-                        </div>
+<footer class="footer-section" style="background-color: #42855B;">
+    <div class="container">
+        <div class="row p-5">
+            <div class="col-6 d-flex flex-column justify-content-center w-100">
+                <h1 style="font-weight: 800;">Greenbook</h1>
+                <p>Innovation Starts Here</p>
+                <span class="position-relative">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Subscribe to our newsletter"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" style="background-color: #231B1B;" type="button" id="button-addon2">Subscribe</button>
                     </div>
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="fas fa-phone"></i>
-                            <div class="cta-text">
-                                <h4>Call us</h4>
-                                <span>2262607833</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-4 mb-30">
-                        <div class="single-cta">
-                            <i class="far fa-envelope-open"></i>
-                            <div class="cta-text">
-                                <h4>Mail us</h4>
-                                <span>greenbook@uwindsor.ca</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </span>
             </div>
-            <div class="footer-content pt-5 pb-5">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-logo">
-                                <a href="index.html"><img src="{% static 'green_book_app/assets/logo_transparent.png' %}" class="img-fluid" alt="logo"></a>
-                            </div>
-                            <div class="footer-text">
-                                <p>Empowering Eco-Innovation: Connect, Create, and Conquer Challenges for a Greener Tomorrow!</p>
-                            </div>
-                            <div class="footer-social-icon">
-                                <span>Follow us</span>
-                                <a href="#"><i class="fab fa-facebook-f facebook-bg"></i></a>
-                                <a href="#"><i class="fab fa-twitter twitter-bg"></i></a>
-                                <a href="#"><i class="fab fa-google-plus-g google-bg"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>Useful Links</h3>
-                            </div>
-                            <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="{% url 'forum:home_forum' %}">Forum</a></li>
-                                <li><a href="#">Diy Projects</a></li>
-                                <li><a href="#">Market Place</a></li>
-                                <li><a href="#">Messenger</a></li>
-                                <li><a href="#">Challenges</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
-                        <div class="footer-widget">
-                            <div class="footer-widget-heading">
-                                <h3>Register</h3>
-                            </div>
-                            <div class="footer-text mb-25">
-                                <p>Don’t miss to register yourself with us</p>
-                            </div>
-                            <div class="subscribe-form">
-                                <form action="{% url 'register_user' %}">
-                                    <input type="text" placeholder="Email Address">
-                                    <button><i class="fab fa-telegram-plane"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-6 d-flex flex-column justify-content-center align-items-end">
+                <h3 style="color: #231B1B; text-align: end;"><b>Resources</b></h3>
+                <a href="" style="color: #231B1B; width: fit-content;">Forum</a>
+                <a href="" style="color: #231B1B; width: fit-content;">DIY Projects</a>
+                <a href="" style="color: #231B1B; width: fit-content;">Messenger</a>
+                <a href="" style="color: #231B1B; width: fit-content;">Marketplace</a>
+                <a href="" style="color: #231B1B; width: fit-content;">Challenges</a>
             </div>
+            <div class="w-100 mt-5" style="text-align: center;">Made with ❤️</div>
+            <div class="w-100 mt-1" style="text-align: center;">Copyright@2024 all rights reserved</div>
+
         </div>
-        <div class="copyright-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-                        <div class="copyright-text">
-                            <p>Copyright &copy; 2024, All Right Reserved <a href="{% url 'home' %}">Green Book</a></p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-                        <div class="footer-menu">
-                            <ul>
-                                <li><a href="{% url 'home' %}">Home</a></li>
-                                <li><a href="#">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
+</footer>
