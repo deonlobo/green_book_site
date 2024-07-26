@@ -35,8 +35,13 @@ def get_conversation_template(request, param_conversation_uuid):
         conversation = Conversation.objects.filter(
             conversation_uuid=param_conversation_uuid
         )
-    participants = conversation[0].get_participants_as_array()
-    peerParticipant = [participant for participant in participants if participant != request.user.id]
+    peerParticipant = None
+    conversation_name = conversation[0].conversation_name
+    if conversation[0].conversation_type == "private":
+        participants = conversation[0].get_participants_as_array()
+        peerParticipant = [participant for participant in participants if participant.id != request.user.id]
+        conversation_name = peerParticipant[0].first_name + " " + peerParticipant[0].last_name
+    
     return render(
         request,
         "green_book_messenger/messenger_conversation_template.html",
@@ -45,7 +50,7 @@ def get_conversation_template(request, param_conversation_uuid):
             "messages": messages,
             "user_id": request.user.id,
             "conversation": conversation[0],
-            "conversation_name": peerParticipant[0].first_name + " " + peerParticipant[0].last_name,
+            "conversation_name": conversation_name,
         },
     )
 
@@ -173,9 +178,25 @@ def toggle_conversation_pin(request):
 def get_pinned_conversations(request):
     filter = request.GET.get("filter", None)
     pinned_conversations_list = Conversation.objects.filter(
-        pinned=True, conversation_name__icontains=filter
+        pinned=True,
+        conversation_name__icontains=filter,
+        participants=request.user,
     )
+    
+    for conversation in pinned_conversations_list:
+        peerParticipant = None
+        conversation_name = conversation.conversation_name
+        if conversation.conversation_type == "private":
+            participants = conversation.get_participants_as_array()
+            print(participants)
+
+            peerParticipant = [participant for participant in participants if participant.id != request.user.id]
+            print(peerParticipant)
+            conversation_name = peerParticipant[0].first_name + " " + peerParticipant[0].last_name
+            conversation.conversation_name = conversation_name
     serialized_list = serializers.serialize("json", pinned_conversations_list)
+
+    print(serialized_list)
     jsonData = {"pinned_conversations": serialized_list}
     return JsonResponse(jsonData)
 
@@ -184,8 +205,24 @@ def get_pinned_conversations(request):
 def get_private_conversations(request):
     filter = request.GET.get("filter", None)
     private_conversations_list = Conversation.objects.filter(
-        conversation_type="private", conversation_name__icontains=filter
+        conversation_type="private",
+        conversation_name__icontains=filter,
+        participants=request.user,
     )
+    for conversation in private_conversations_list:
+        peerParticipant = None
+        conversation_name = conversation.conversation_name
+        participants = conversation.get_participants_as_array()
+        peerParticipant = [
+            participant
+            for participant in participants
+            if participant.id != request.user.id
+        ]
+        conversation_name = (
+            peerParticipant[0].first_name + " " + peerParticipant[0].last_name
+        )
+        conversation.conversation_name = conversation_name
+            
     serialized_list = serializers.serialize("json", private_conversations_list)
     jsonData = {"private_conversations": serialized_list}
     return JsonResponse(jsonData)
@@ -195,7 +232,9 @@ def get_private_conversations(request):
 def get_group_conversations(request):
     filter = request.GET.get("filter", None)
     group_conversation_list = Conversation.objects.filter(
-        conversation_type="private_group", conversation_name__icontains=filter
+        conversation_type="private_group",
+        conversation_name__icontains=filter,
+        participants=request.user,
     )
     serialized_list = serializers.serialize("json", group_conversation_list)
     jsonData = {"group_conversations": serialized_list}
