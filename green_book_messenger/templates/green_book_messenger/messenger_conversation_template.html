@@ -16,20 +16,20 @@
 {% endblock %}
 
 {% block messenger_html %}
-<div id="messenger--container" class="messenger container-fluid position-relative overflow-hidden d-flex flex-column">
+<div id="messenger--container" class="messenger container-fluid position-relative overflow-hidden d-flex flex-column mb-5">
   <div class="row h-100">
     <div class="col-9 mx-auto h-100">
       <div class="row h-100">
         <div class="col-11 d-flex flex-column h-100">
           <div class="row gx-2 messenger__header__container">
             <div class="messenger__header__left col p-1 mx-auto">
-              <div class="messenger__header__left__container d-flex align-items-center p-4">
+              <div class="messenger__header__left__container shadow-sm d-flex align-items-center p-4">
                 <span class="rounded-circle overflow-hidden align-self-middle">
                   <img width="40" height="40"
-                    src="https://api.dicebear.com/9.x/initials/svg?seed={{ conversation.conversation_name }}" alt="" />
+                    src="https://api.dicebear.com/9.x/initials/svg?seed={{ conversation_name }}" alt="" />
                 </span>
                 <span class="ml-3 flex-grow-1">
-                  <h3 class="mb-0"><b>{{ conversation.conversation_name }}</b></h3>
+                  <h3 class="mb-0"><b>{{ conversation_name }}</b></h3>
                 </span>
                 <span class=""><button onclick="redirectToMessengerHome()" id="private_converstation_add_button"
                     class="btn back__btn rounded-circle p-2">
@@ -44,9 +44,9 @@
           </div>
           <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
             <div class="messenger__conversation col d-flex flex-column p-1 mx-auto h-100">
-              <div class="messenger__conversation__div p-4 flex-grow-1 d-flex flex-column justify-content-between h-100">
+              <div class="messenger__conversation__div shadow-sm p-4 flex-grow-1 d-flex flex-column justify-content-between h-100">
                 <div id="messenger__conversation__container"
-                  class="messenger__conversation__container d-flex flex-column-reverse flex-grow-1 pb-4">
+                  class="messenger__conversation__container d-flex flex-column-reverse flex-grow-1 pb-4 pt-4">
 
                 </div>
                 <div class="messenger__input d-flex flex-row align-items-center mt-2">
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="col-1 h-100 py-1">
-          <div id="emoji__container" class="emoji__container row h-100 py-4 d-flex flex-row justify-content-center">
+          <div id="emoji__container" class="emoji__container shadow-sm row h-100 py-4 d-flex flex-row justify-content-center">
 
           </div>
         </div>

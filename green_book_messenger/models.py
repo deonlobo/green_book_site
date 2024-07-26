@@ -29,6 +29,9 @@ class Conversation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     pinned = models.BooleanField(default=False, blank=True, null=True)
 
+    def get_participants_as_array(self):
+        return list(self.participants.all())
+
 
 class Message(models.Model):
     conversation = models.ForeignKey(

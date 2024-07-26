@@ -4,76 +4,79 @@
   transition: all linear 0.5s;
 
   .messenger_private_conversation_model {
-    background-color: #FCF8F3;
+    background-color: #FCFFF7;
     top: 100%;
     z-index: 1000;
 
     .private_converstation_close_button {
-      background: #45526c;
+      background: #231B1B;
       color: #f8f5f1;
       cursor: pointer;
     }
 
     .name__badge {
-      background: #41b06e;
+      background: #42855B;
       color: #f8f5f1;
     }
 
     .user_name_button {
       button {
-        background-color: #41b06e;
-        color: #45526c;
+        background-color: #42855B;
+        color: #231B1B;
       }
     }
 
     .search__result__container {
       .search__list__item {
         &:hover {
-          background: #41b06e;
-          color: #f8f5f1;
+          background: #42855B;
           cursor: pointer;
+
+          h3 {
+            color: #f8f5f1 !important;
+          }
         }
       }
     }
   }
 
   .messenger_group_conversation_model {
-    background-color: #FCF8F3;
+    background-color: #FCFFF7;
     top: 100%;
     z-index: 1000;
 
     .group_converstation_close_button {
-      background: #45526c;
+      background: #231B1B;
       color: #f8f5f1;
       cursor: pointer;
     }
 
     .name__badge {
-      background: #41b06e;
+      background: #42855B;
       color: #f8f5f1;
     }
 
     .user_name_button {
       button {
-        background-color: #41b06e;
-        color: #45526c;
+        background-color: #42855B;
+        color: #231B1B;
       }
     }
 
     .search__result__container {
       .search__list__item {
         &:hover {
-          background: #41b06e;
-          color: #f8f5f1;
+          background: #42855B;
+          color: #f8f5f1 !important;
           cursor: pointer;
         }
 
       }
 
       .search__list__item--selected {
-          background: #41b06e;
-          color: #f8f5f1;
-          cursor: pointer;
+        background: #42855B;
+        color: #f8f5f1 !important;
+        cursor: pointer;
       }
     }
   }
@@ -84,28 +87,28 @@
       height: 0;
 
       button {
-        background-color: #41b06e;
+        background-color: #42855B;
         color: #f8f5f1;
       }
     }
 
     .messenger__header__left {
       .messenger__header__left__container {
-        background-color: #FCF8F3;
+        background-color: #FCFFF7;
         border-radius: 1rem;
 
         .messenger__search__input {
           input {
             background-color: #f8f5f1;
-            color: #45526c;
+            color: #231B1B;
           }
         }
 
         .messenger__header__add__button {
 
           button {
-            background-color: #41b06e;
-            color: #45526c;
+            background-color: #42855B;
+            color: #231B1B;
           }
         }
       }
@@ -113,7 +116,7 @@
 
     .messenger__header__right {
       .messenger__header__right__container {
-        background-color: #FCF8F3;
+        background-color: #FCFFF7;
         border-radius: 1rem;
       }
     }
@@ -126,9 +129,10 @@
       max-height: 100%;
 
       .messenger__list__container {
-        background-color: #FCF8F3;
+        background-color: #FCFFF7;
         border-radius: 1rem;
         overflow-y: auto;
+        height: 95% !important;
 
         .loader {
           z-index: 1;
@@ -175,16 +179,20 @@
             left: 90%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background-color: #41b06e;
+            background-color: #42855B;
           }
 
           &:hover {
-            background: #41b06e;
-            color: #f8f5f1;
+            background: #42855B;
+            color: #f8f5f1 !important;
             cursor: pointer;
 
             .conversation__pin {
               display: block;
+            }
+
+            b {
+              color: #f8f5f1 !important;
             }
           }
 
@@ -192,8 +200,8 @@
         }
 
         .messenger__list__element--selected {
-          background: #41b06e;
-          color: #f8f5f1;
+          background: #42855B;
+          color: #f8f5f1 !important;
         }
       }
     }

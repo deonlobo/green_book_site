@@ -46,4 +46,9 @@ urlpatterns = [
         views.get_private_conversations,
         name="get_private_conversations",
     ),
+    path(
+        "ajax/get_group_conversations",
+        views.get_group_conversations,
+        name="get_group_conversations",
+    ),
 ]
