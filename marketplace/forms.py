@@ -71,7 +71,7 @@ class ProductStep1Form(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.all()
+        self.fields['category'].queryset = Category.objects.filter(is_active=True)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -168,7 +168,7 @@ class CategoryForm(ModelForm):
         model = Category
         fields = ['category_name','is_active']
         widgets = {
-            'category_name': TextInput(attrs={'class': 'form-control'}),
+            'category_name': TextInput(attrs={'class': 'form-control','placeholder':'Category Name'}),
             'is_active': Select(attrs={'class': 'form-control'}),
         }
         labels = {

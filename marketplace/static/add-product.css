@@ -99,9 +99,9 @@ span.round-tab i{
     color:#555555;
 }
 .wizard li.active span.round-tab {
-        background: #ceb99f;
+        background: #42855B;
     color: #fff;
-    border-color: #ceb99f;
+    border-color: #42855B;
 }
 .wizard li.active span.round-tab i{
     color: #5bc0de;
@@ -170,14 +170,23 @@ span.round-tab i{
     padding: 8px 24px;
     border: none;
     border-radius: 4px;
-    margin-top: 30px;
+    margin-top: 1.5rem;
+
+}
+.prev-step{
+    background-color: transparent;
+    border: 2px solid  #42855b ;
+    font-weight: 700;
+    color:  #42855b;
 }
 .next-step{
-	background-color: #9e733f;
-    border-color: #9e733f;
+	background-color: #42855B;
+    border-color: #42855B;
     color: white;
     font-weight: 700;
+    padding: 0.68rem 1.8rem;
 }
+
 .skip-btn{
 	background-color: #cec12d;
 }

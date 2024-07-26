@@ -3,11 +3,7 @@ from .models import *
 from django.utils.html import mark_safe
 from .forms import ProductForm , ProductStep2Form
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
-    form = ProductForm
-    list_display = ('name', 'description', 'price', 'stock', 'category', 'created_at', 'updated_at', 'image_tag')
-    readonly_fields = ('image_tag',)
+
 
 admin.site.register(Category)
 admin.site.register(ProductStep1)
