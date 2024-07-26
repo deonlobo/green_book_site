@@ -117,7 +117,30 @@
                                      {{ product.updated_at }}
                                 </div>
                                 <div class="col-sm-2">
-                                    Description
+                                    Seller First name
+                                    <span class="pull-right">:</span>
+                                </div>
+                                <div class="col-sm-4">
+                                     {{ product.user.user.first_name }}
+                                </div>
+                                                 <div class="col-sm-2">
+                                    Seller Last name
+                                    <span class="pull-right">:</span>
+                                </div>
+                                <div class="col-sm-4">
+                                     {{ product.user.user.last_name }}
+                                </div>
+
+                                 <div class="col-sm-2">
+                                    Seller Address
+                                    <span class="pull-right">:</span>
+                                </div>
+                                <div class="col-sm-10">
+                                     {{ product.user.address }}
+                                </div>
+
+                                <div class="col-sm-2">
+                                    Short Description
                                     <span class="pull-right">:</span>
                                 </div>
                                 <div class="col-sm-10">
@@ -140,7 +163,7 @@
                                                  </div>
                                          </div>
                                     <div class="col-sm-12 text-center m-3">
-                                    <button class="default-btn next-step mt-0 pr-4 pl-4"> Chat</button>
+                                    <button onclick=location.href="{% url 'marketplace:create_chat' product.id %}" class="default-btn next-step mt-0 pr-4 pl-4"> Send Message to Seller</button>
                                 </div>
                                      </div>
 

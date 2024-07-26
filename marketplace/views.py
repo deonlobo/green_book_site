@@ -73,17 +73,7 @@ def view_products(request, category_id, product_id):
     category = Category.objects.get(category_id=category_id)
     return render(request, 'view-product.html', {'product':product,'category':category,'images':imageList,'product_description':product_description})
 
-def add_product(request):
-    if request.method == 'POST':
-        form = AddProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.save()
-            return redirect('view_products', category_id=product.category_id,product_id=product.id)
-    else:
-         form = AddProductForm()
 
-    return render(request, 'add-product.html', {'form':form})
 
 def add_product_step_one(request):
     if not request.user.is_authenticated:
@@ -382,15 +372,4 @@ def create_chat(request, product_step1_id):
     conversation_id = conversation.conversation_uuid
     return redirect("/messenger/{}".format(conversation_id))
 
-# def dumy(request):
-#     if request.method == 'POST':
-#         form = ProductStep2Form(request.POST, request.FILES)
-#         if form.is_valid():
-#             product = form.save(commit=False)
-#             product.save()
-#             return redirect('view_products', category_id=product.category_id,product_id=product.id)
-#     else:
-#          form = ProductStep2Form()
-#
-#     return render(request, 'demo.html', {'form':form})
 

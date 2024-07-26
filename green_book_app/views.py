@@ -42,8 +42,6 @@ def home(request):
         except UserProfile.DoesNotExist:
             user_profile = None
 
-    categories = Category.objects.all()
-
     # middle ware to track user history
     visited_pages = request.session.get("visited_pages", {})
 
@@ -66,7 +64,6 @@ def home(request):
             "date": date_str,
             "time": time_str,
             "user_profile": user_profile,
-            "categories": categories,
             "top_visited_pages": top_visited_pages,
             "membership_duration": membership_duration,
             "active_users": active_users,

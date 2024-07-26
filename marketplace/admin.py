@@ -1,13 +1,14 @@
 from django.contrib import admin
 from .models import *
 from django.utils.html import mark_safe
-from .forms import ProductForm , ProductStep2Form
+from .forms import  ProductStep2Form
 
 
 
 admin.site.register(Category)
 admin.site.register(ProductStep1)
 admin.site.register(ProductStep3)
+admin.site.register(SearchProduct)
 
 
 @admin.register(ProductStep2)
