@@ -19,7 +19,7 @@
             <div class="overlay-text text-center text-white">
                 <h2>Join Us in Living Eco-Friendly</h2>
                 <p>Discover eco-challenges and sustainable practices</p>
-                <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Think Green</p>
+                <p style="color: #B4E197; font-size: 44px; padding-bottom: 20px">Think Green</p>
                 <a href="{% url 'login' %}" class="btn btn-success btn-lg mt-3">Participate</a>
             </div>
         {% endif %}
@@ -48,29 +48,29 @@
 
 
     <div class="container mt-3">
-        <h2 style="color: saddlebrown; text-align: left; margin: 20px">Trending Stories</h2>
+        <h2 style="color: #42855B; text-align: left; margin: 20px">Trending Stories</h2>
         <!-- Carousel of images with captions -->
         <div id="imageCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="{% static 'challenges_images/trend1.png' %}" class="d-block w-100" alt="July Week 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>If everybody cycled as much as the Dutch, global carbon emissions would drop by nearly 700 million tonnes per year</h5>
-                        <p>People who cycle to work have a 45 per cent lower risk of developing cancer, and a 46 per cent lower risk of cardiovascular disease.</p>
+                        <h5 style="color: white;">If everybody cycled as much as the Dutch, global carbon emissions would drop by nearly 700 million tonnes per year</h5>
+                        <p style="color: white;">People who cycle to work have a 45 per cent lower risk of developing cancer, and a 46 per cent lower risk of cardiovascular disease.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{% static 'challenges_images/trend3.png' %}" class="d-block w-100" alt="July Week 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>How ATTITUDE is Pioneering Plastic-Free Beauty</h5>
-                        <p>The 18-year-old Canadian company that began with a few non-toxic household products now hopes to lead a plastic-free beauty revolution.</p>
+                        <h5 style="color: white;">How ATTITUDE is Pioneering Plastic-Free Beauty</h5>
+                        <p style="color: white;">The 18-year-old Canadian company that began with a few non-toxic household products now hopes to lead a plastic-free beauty revolution.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{% static 'challenges_images/trend2.jpg' %}" class="d-block w-100" alt="July Week 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>With frequent mentions from nearly all of our contributors, recycling was seen as one of the key trends in sustainability that we will see in 2024</h5>
-                        <p>The good news is that both brands and the consumer market appear to be shifting their priorities, and this change may become more rapid in the coming years.</p>
+                        <h5 style="color: white;">With frequent mentions from nearly all of our contributors, recycling was seen as one of the key trends in sustainability that we will see in 2024</h5>
+                        <p style="color: white;">The good news is that both brands and the consumer market appear to be shifting their priorities, and this change may become more rapid in the coming years.</p>
                     </div>
                 </div>
             </div>
@@ -147,6 +147,7 @@
         background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
         padding: 20px; /* Padding around the text */
         border-radius: 10px; /* Rounded corners */
+
     }
 
         .carousel-item img {
