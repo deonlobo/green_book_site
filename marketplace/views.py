@@ -370,7 +370,7 @@ def manage_products(request):
 def delete_product(request,product_step1_id):
     product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
     if product_step1_id is not None:
-        # product_step1.delete()
+        product_step1.delete()
         messages.success(request, "Product deleted successfully")
         return redirect('marketplace:manage_products')
     else:
