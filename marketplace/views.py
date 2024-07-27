@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
-from django.db.models import Q, Exists, OuterRef
+from django.db.models import Q, Exists, OuterRef,Count
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -45,7 +45,7 @@ def save(request):
         response.write(category)
     return response
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def category(request, category_id ):
     category = Category.objects.get(category_id=category_id)
     active_step2_subquery = ProductStep2.objects.filter(product_step1=OuterRef('pk'), is_active=True)
@@ -59,7 +59,7 @@ def category(request, category_id ):
     ))
     # products = ProductStep1.objects.filter(status=1).filter(category=category).filter(product_step2__is_active=True)
     return render(request, 'category.html', {'category': category,'products':products})
-
+@login_required(login_url='login')
 def view_products(request, category_id, product_id):
     product = ProductStep1.objects.get(id=product_id)
     product_description = ProductStep3.objects.get(product_step1=product, is_active=True).textarea;
@@ -74,7 +74,7 @@ def view_products(request, category_id, product_id):
     return render(request, 'view-product.html', {'product':product,'category':category,'images':imageList,'product_description':product_description})
 
 
-
+@login_required(login_url='login')
 def add_product_step_one(request):
     if not request.user.is_authenticated:
         messages.success(request, 'You must be logged in to add a product.')
@@ -93,6 +93,7 @@ def add_product_step_one(request):
         form = ProductStep1Form()
     return render(request, 'add-product-step-one.html', {'form' : form})
 
+@login_required(login_url='login')
 def modify_add_product_step_one(request,product_id):
     product = get_object_or_404(ProductStep1, id=product_id)
     if request.method == 'POST':
@@ -111,6 +112,7 @@ def modify_add_product_step_one(request,product_id):
 
     return render(request, 'add-product-step-one.html', {'form': form})
 
+@login_required(login_url='login')
 def modify_add_product_step_two(request,product_id):
     if request.method == 'POST':
         form = ProductStep2Form(request.POST,request.FILES)
@@ -161,6 +163,7 @@ def modify_add_product_step_two(request,product_id):
         return render(request,'add-product-step-two.html',context)
 
 
+@login_required(login_url='login')
 def add_category(request):
     if not request.user.is_authenticated:
         messages.success(request, 'You must be logged in to add a category.')
@@ -178,6 +181,7 @@ def add_category(request):
         return render(request, 'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
 
+@login_required(login_url='login')
 def modify_category(request, category_id):
     category = get_object_or_404(Category, category_id=category_id)
     if request.method == 'POST':
@@ -195,6 +199,7 @@ def modify_category(request, category_id):
     })
 
 
+@login_required(login_url='login')
 def activate_category(request, category_id):
     category = get_object_or_404(Category, category_id=category_id)
     if category is not None:
@@ -207,6 +212,7 @@ def activate_category(request, category_id):
         return render(request,'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
 
+@login_required(login_url='login')
 def delete_category(request, category_id):
     category = get_object_or_404(Category, category_id=category_id)
     if category is not None:
@@ -217,6 +223,7 @@ def delete_category(request, category_id):
         messages.success(request, 'Category does not exist')
         return render(request,'add-category.html', {'form': CategoryForm(), 'categories': Category.objects.all()})
 
+@login_required(login_url='login')
 def add_product_step_two(request, product_id):
     if not request.user.is_authenticated:
         messages.success(request, 'You must be logged in to upload images.')
@@ -250,6 +257,7 @@ def add_product_step_two(request, product_id):
         return render(request,'add-product-step-two.html',context)
 
 
+@login_required(login_url='login')
 def add_product_step_three(request, product_id):
     if request.method == 'POST':
         form = ProductStep3Form(request.POST)
@@ -269,6 +277,7 @@ def add_product_step_three(request, product_id):
         form = ProductStep3Form()
         return render(request, 'add-product-step-three.html', {'form':form,'product_id':product_id})
 
+@login_required(login_url='login')
 def modify_add_product_step_three(request, product_id):
     product_step1 = get_object_or_404(ProductStep1, pk=product_id)
     if request.method == 'POST':
@@ -290,6 +299,7 @@ def modify_add_product_step_three(request, product_id):
         return render(request, 'add-product-step-three.html', {'form':form,'product_id':product_id})
 
 
+@login_required(login_url='login')
 def add_product_step_four(request, product_id):
     if request.method == 'POST':
         product = ProductStep1.objects.get(id=product_id)
@@ -309,6 +319,7 @@ def add_product_step_four(request, product_id):
             imageList.append(base64.b64encode(image.image_upload4).decode('utf-8'))
         return render(request, 'add-product-step-four.html', {'product': product, 'images': imageList,'product_description':product_description})
 
+@login_required(login_url='login')
 def manage_products(request):
     if request.method == "POST":
         searchProduct = SearchProductForm(request.POST)
@@ -354,13 +365,30 @@ def manage_products(request):
         # messages.success(request, 'Product updated successfully!')
         products = ProductStep1.objects.filter(user=get_object_or_404(UserProfile, user=request.user))
         return render(request,"manage-product.html", {'form':form,'products':products})
-@login_required()
+
+@login_required(login_url='login')
+def delete_product(request,product_step1_id):
+    product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
+    if product_step1_id is not None:
+        # product_step1.delete()
+        messages.success(request, "Product deleted successfully")
+        return redirect('marketplace:manage_products')
+    else:
+        messages.success(request, "Product not deleted successfully")
+        return redirect('marketplace:manage_products')
+
+
+
+@login_required(login_url='login')
 def create_chat(request, product_step1_id):
     product_step1 = get_object_or_404(ProductStep1, pk=product_step1_id)
-    existing_conversation = Conversation.objects.filter(
-        conversation_type="private",
-        participants__in=[product_step1.user.user, request.user],
-    )
+    # existing_conversation = Conversation.objects.filter(
+    #     conversation_type="private",
+    #     participants__in=[product_step1.user.user, request.user],
+    # )
+    existing_conversation = (Conversation.objects.annotate(num_participants=Count('participants')).
+                             filter(conversation_type="private", num_participants=2, participants=product_step1.user.user)).filter(participants=request.user)
+
     if len(existing_conversation) >0:
         return redirect("/messenger/{}".format(existing_conversation[0].conversation_uuid))
     conversation = Conversation.objects.create(
