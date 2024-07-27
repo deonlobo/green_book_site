@@ -184,6 +184,14 @@
         .messenger__list__element {
           .conversation__pin {
             display: none;
+            left: 85%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #42855B;
+          }
+
+          .conversation__delete {
+            display: none;
             left: 90%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -196,6 +204,10 @@
             cursor: pointer;
 
             .conversation__pin {
+              display: block;
+            }
+
+            .conversation__delete {
               display: block;
             }
 

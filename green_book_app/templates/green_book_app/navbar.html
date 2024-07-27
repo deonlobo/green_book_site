@@ -42,10 +42,6 @@
         </div>
 
       </li>
-
-      <li class="nav-item active">
-        <a style="color: #231B1B;" class="nav-link" href="{% url 'messenger_list' %}">Messenger</a>
-      </li>
       <li class="nav-item active dropdown">
         <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,8 +79,13 @@
           <a class="dropdown-item" href="{% url 'marketplace:manage_products' %}">Manage Products</a>
         </div>
       </li>
-      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active">
+      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active mr-2">
         <a style="color: #F6FBF4;" class="nav-link" href="{% url 'logout' %}">Log out</a>
+      </li>
+      <li class="nav-item active rounded-circle" style="border-radius: 50%; overflow: hidden;">
+        <span class=" rounded-circle overflow-hidden">
+          <img width="50" height="50" src="https://api.dicebear.com/9.x/initials/svg?seed={{full_name}}" alt="{{full_name}}" />
+        </span>
       </li>
       {% else %}
       <li style="padding: 0.3rem 0.5rem; background: #42855B; color: #F6FBF4;" class="btn nav-item active mr-2">

@@ -1,3 +1,16 @@
+var currentPath = window.location.pathname;
+console.log(currentPath);
+console.log(currentPath.startsWith('/messenger/'));
+// Select the div you want to hide
+var $myDiv = $('#messenger_blob');
+console.log($myDiv);
+// Check if the current path starts with "/messenger/"
+if (currentPath.startsWith('/messenger/')) {
+  $myDiv.hide()
+}
+
+
+
 const messenger_template_data = document.currentScript.dataset
 const conversation_name = messenger_template_data["selected_conversation_uuid"]
 const conversation_message_container = $("#messenger__conversation__container")

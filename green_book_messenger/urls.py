@@ -12,6 +12,11 @@ urlpatterns = [
         name="messenger_conversation",
     ),
     path(
+        "delete_conversation/<int:conversation_id>/",
+        views.delete_conversation,
+        name="delete_conversation",
+    ),
+    path(
         "ajax/get_messages_conversation_id/",
         views.get_messages_by_conversation_id,
         name="get_messages",
