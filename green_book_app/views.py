@@ -10,6 +10,8 @@ from django.utils.timezone import now
 
 from accounts.models import UserProfile, User
 from green_book_messenger.models import Message
+from green_book_challenges.models import Challenge
+from DIYProject.models import Project
 from green_book_site.settings import MEDIA_ROOT
 from marketplace.models import Category
 
@@ -63,6 +65,12 @@ def home(request):
 
     active_users = User.objects.filter(is_active=True).count()
     messages = Message.objects.count()
+
+    challenges_count = Challenge.objects.count()
+    project_count = Project.objects.count()
+    user = request.user
+    full_name = user.get_full_name()
+    print(full_name)
     return render(
         request,
         "green_book_app/home.html",
@@ -74,6 +82,9 @@ def home(request):
             "membership_duration": membership_duration,
             "active_users": active_users,
             "message_count": messages,
+            "challenges_count": challenges_count,
+            "project_count": project_count,
+            "full_name": request.user.get_full_name(),
         },
     )
 

@@ -1,3 +1,15 @@
+// Get the current URL path
+var currentPath = window.location.pathname;
+console.log(currentPath);
+console.log(currentPath.startsWith('/messenger/'));
+// Select the div you want to hide
+var $myDiv = $('#messenger_blob');
+console.log($myDiv);
+// Check if the current path starts with "/messenger/"
+if (currentPath.startsWith('/messenger/')) {
+  $myDiv.hide()
+}
+
 const messenger_template_data = document.currentScript.dataset
 
 let pinned_conversations = [];
@@ -16,6 +28,7 @@ const get_users_for_group_debounce = debounce(() => get_users_for_group())
 let add_button_toggle_state = false;
 let toggle_private_conv_modal_state = false;
 let toggle_group_conv_modal_state = false;
+let toggle_delete_conv_modal_state = false;
 let group_member_list = []
 
 
@@ -170,6 +183,14 @@ function set_group_conversations(input_filter) {
           event.stopPropagation()
           toggle_pin(conversation['fields'].conversation_uuid)
         });
+        $(`#delete-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+          event.stopPropagation()
+          console.log("herer");
+          $("#delete_header").empty()
+          $("#delete_header").append(`Delete Conversation Confirmation named ${conversation['fields'].conversation_name} ?`)
+          open_delete_confirmation_modal()
+
+        });
 
         const group_element = group_node.children().last();
         console.log(group_element);
@@ -220,6 +241,14 @@ function generate_conversation_list_item(conversation_uuid, conversation_name, p
               </svg>
               
               `}
+              </button>
+              
+            </span>
+            <span class="conversation__delete position-absolute">
+            <button class="btn btn__delete" id="delete-btn-${conversation_uuid}" >
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="#CC2936" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 9.5L12 14.5M12 9.5L7 14.5M19.4922 13.9546L16.5608 17.7546C16.2082 18.2115 16.032 18.44 15.8107 18.6047C15.6146 18.7505 15.3935 18.8592 15.1583 18.9253C14.8928 19 14.6042 19 14.0271 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.07989 5 6.2 5H14.0271C14.6042 5 14.8928 5 15.1583 5.07467C15.3935 5.14081 15.6146 5.2495 15.8107 5.39534C16.032 5.55998 16.2082 5.78846 16.5608 6.24543L19.4922 10.0454C20.0318 10.7449 20.3016 11.0947 20.4054 11.4804C20.4969 11.8207 20.4969 12.1793 20.4054 12.5196C20.3016 12.9053 20.0318 13.2551 19.4922 13.9546Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
             </span>
       </div>
@@ -325,6 +354,20 @@ function open_group_conversation_modal() {
     }, 200);
   } else {
     $("#messenger_group_conversation_model").animate({
+      top: "100%"
+    }, 200);
+  }
+}
+
+function open_delete_confirmation_modal() {
+  console.log($("#deleteConversation_modal"));
+  toggle_group_conv_modal_state = !toggle_group_conv_modal_state
+  if (toggle_group_conv_modal_state) {
+    $("#deleteConversation_modal").animate({
+      top: "0%"
+    }, 200);
+  } else {
+    $("#deleteConversation_modal").animate({
       top: "100%"
     }, 200);
   }

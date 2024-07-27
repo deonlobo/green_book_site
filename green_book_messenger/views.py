@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib import messages
+from django.urls import reverse
 
 
 
@@ -66,6 +67,14 @@ def get_messages_by_conversation_id(request):
     jsonData = {"messages": serialized_list}
     return JsonResponse(jsonData)
 
+
+@login_required
+def delete_conversation(request, conversation_id):
+
+    instance = Conversation.objects.filter(conversation_uuid=conversation_id)
+    instance.delete()
+
+    return redirect(reverse("messenger_list"))
 
 @login_required
 def get_users(request):
