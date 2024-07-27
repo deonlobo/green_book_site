@@ -20,6 +20,8 @@ urlpatterns = [
     path('add-product-step-2/<int:product_id>/', views.add_product_step_two, name='add_product_step_two'),
     path('add-product-step-3/<int:product_id>/', views.add_product_step_three, name='add_product_step_three'),
     path('add-product-step-4/<int:product_id>/', views.add_product_step_four, name='add_product_step_four'),
+
+    path('delete-product/<int:product_step1_id>/', views.delete_product, name='delete_product'),
     path('create-chat/<int:product_step1_id>/', views.create_chat, name='create_chat'),
 
 ]

@@ -208,7 +208,7 @@ pre code {
     width: 90%;
     margin-right: 1em;
 }
-.form-inline .btn-primary{
+.form-inline .btn-success{
     font-size: 0.75rem;
 }
 
@@ -325,7 +325,7 @@ pre code {
 
 .advertise-area {
     font-size: 0.7em;
-    width: 25%; /* Initial size */
+    flex: 1;
     display: block; /* Ensure the element is displayed as a block */
     padding: 0.5em 2em 4em 2em; /* Optional: add padding for visibility */
     word-wrap: break-word;

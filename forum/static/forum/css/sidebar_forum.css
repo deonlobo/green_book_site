@@ -2,6 +2,7 @@
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
+    border-top: 1px solid #e3e6e8ff;
 }
 
 .sidebar {

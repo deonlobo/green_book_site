@@ -113,7 +113,7 @@ def ask_question_forum(request):
             # Check if the body field is empty or contains only non-visible content
             if is_blank_html(body):
                 # Add a form error if body is blank or contains only non-visible content
-                messages.error(request, 'The comment cannot be blank')
+                messages.error(request, 'The question cannot be blank')
                 return render(request, 'forum/question_forum.html', {'form': form})
 
             # Save the question
@@ -129,9 +129,12 @@ def ask_question_forum(request):
                 # Extract tags from the form
                 tags = form.cleaned_data['tags']
 
+                # Ensure tags are unique
+                unique_tags = set(tags)
+
                 # Create or get existing tags
                 tag_objects = []
-                for tag_name in tags:
+                for tag_name in unique_tags:
                     tag, created = Tag.objects.get_or_create(name=tag_name)
                     tag_objects.append(tag)
 
