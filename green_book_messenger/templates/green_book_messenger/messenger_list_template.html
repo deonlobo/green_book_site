@@ -10,9 +10,11 @@
 {% block messenger_js %}
 <script data-pinned_conversations_url="{% url 'get_pinned_conversations' %}"
   data-private_conversations_url="{% url 'get_private_conversations' %}"
+  data-group_conversations_url="{% url 'get_group_conversations' %}"
   data-toggle_conversation_pin_url="{% url 'toggle_conversation_pin' %}" data-get_users_url="{% url 'get_users' %}"
   data-csrf_token="{{ csrf_token }}" type="text/javascript"
   data-add_private_conversation_url='{% url "add_private_conversation" %}'
+  data-add_group_conversation_url='{% url "add_group_conversation" %}'
   src="{% static 'green_book_messenger/js/messenger_list.js' %}"></script>
 {% endblock %}
 
@@ -22,7 +24,7 @@
   {% include './group_conversation_modal.html' %}
   <div class="row gx-2 messenger__header__container">
     <div class="messenger__header__left col-9 p-1 mx-auto">
-      <div class="messenger__header__left__container d-flex justify-content-between align-items-center p-4">
+      <div class="messenger__header__left__container shadow-sm d-flex justify-content-between align-items-center p-4">
         <span class="m-0 flex-grow-1 mr-2">
           <input id="messenger__search__input" onkeyup="filter_conversations_debounce()" type="text"
             class="form-control rounded-pill" placeholder="Search Conversations" />
@@ -84,7 +86,7 @@
   </div>
   <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
     <div class="messenger__conversation__list col-9 p-1 position-relative mx-auto">
-      <div id="messenger__list__container" class="messenger__list__container h-100 py-4 position-relative">
+      <div id="messenger__list__container" class="shadow-sm messenger__list__container h-100 py-4 position-relative">
         <div id="list__loader" class="loader position-absolute w-100">
           <div class="loading-container">
             <div class="loading-progress"></div>
@@ -92,7 +94,7 @@
         </div>
         <div id="pinned__list" class="pinned__list"></div>
         <div id="private__list" class="private__list mt-4"></div>
-        <div id="group__list" class="group__list"></div>
+        <div id="group__list" class="group__list mt-4"></div>
       </div>
     </div>
   </div>

@@ -1,5 +1,8 @@
 #greenbook--navbar {
     z-index: 1030; /* Ensure it's higher than the slideshow's z-index */
+    background-color: var(--color-background);
+    color: var(--color-onSurface);
+    border-radius: 2rem;
 }
 
 /* Styles for smaller screens */

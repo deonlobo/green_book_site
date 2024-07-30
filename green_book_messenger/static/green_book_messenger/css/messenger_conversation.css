@@ -1,6 +1,6 @@
 .messenger {
   .back__btn {
-    background-color: #41b06e;
+    background-color: #42855B;
 
     svg {
       transform: rotate(180deg);
@@ -9,7 +9,7 @@
 
   .emoji__container{
     overflow-y: auto;
-    background-color: #FCF8F3;
+    background-color: #FCFFF7;
     border-radius: 1rem;
 
     .emoji__item {
@@ -22,11 +22,11 @@
 
     .messenger__conversation {
       .back__btn {
-        background-color: #41b06e;
+        background-color: #42855B;
       }
 
       .messenger__conversation__div {
-        background-color: #FCF8F3;
+        background-color: #FCFFF7;
         border-radius: 1rem;
 
         .messenger__input {
@@ -39,7 +39,7 @@
 
           .messenger__input__button {
             button {
-              background-color: #41b06e;
+              background-color: #42855B;
               color: #45526c;
             }
           }
@@ -67,7 +67,7 @@
             --_p: 0;
             border-bottom-left-radius: 0 0;
             place-self: start;
-            background-color: #141e46;
+            background-color: #231B1B;
             word-break: break-word;
             /* margin-left: 1rem; */
           }
@@ -76,14 +76,14 @@
             --_p: 100%;
             border-bottom-right-radius: 0 0;
             place-self: end;
-            background-color: #41b06e;
+            background-color: #42855B;
             word-break: break-word;
             /* margin-right: 1rem; */
           }
 
           .messenger_conversation__timestamp {
-            /* background-color: #141E46; */
-            color: #141e467c;
+            /* background-color: #231B1B; */
+            color: #231B1B7c;
           }
         }
       }
