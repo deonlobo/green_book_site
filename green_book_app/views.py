@@ -69,7 +69,11 @@ def home(request):
     challenges_count = Challenge.objects.count()
     project_count = Project.objects.count()
     user = request.user
-    full_name = user.get_full_name()
+    if user.is_authenticated:
+        full_name = user.get_full_name()
+    else:
+        full_name = "User"
+
     print(full_name)
     return render(
         request,
@@ -84,7 +88,7 @@ def home(request):
             "message_count": messages,
             "challenges_count": challenges_count,
             "project_count": project_count,
-            "full_name": request.user.get_full_name(),
+            "full_name": full_name,
         },
     )
 
