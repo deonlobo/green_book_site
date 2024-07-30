@@ -14,7 +14,7 @@
             {% endfor %}
         {% endif %}
     </div>
-    <div class="container mb-5">
+    <div class="container mb-2">
 
         <div class="col-md-6 mx-auto shadow p-5 mt-5 bg-body rounded">
             <h1 class="text-center">Login</h1>
@@ -36,6 +36,10 @@
                 </div>
             </form>
         </div>
+      <div class="col-6 justify-content-center mx-auto px-0 mt-2">
+    <a class="link link-secondary" href="{% url 'register_user' %}"> New User </a> |
+    <a class="link link-secondary" href="{% url 'password_reset' %}"> Forgot Password </a>
+      </div>
     </div>
 
 
