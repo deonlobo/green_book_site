@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('green_book_app.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('accounts.urls')),
+    path('greenbook-accounts/', include('accounts.urls')),
     path('marketplace/',include('marketplace.urls')),
     path("messenger/", include("green_book_messenger.urls")),
     path('forum/',include('forum.urls')),

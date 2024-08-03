@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 
-from accounts.forms import RegisterUserForm
+from accounts.forms import RegisterUserForm, ChangePassUser
 
 
 def login_user(request):
@@ -43,3 +43,15 @@ def register_user(request):
 
     return render(request, 'authenticate/register_user.html',
            {'form': form}, )
+
+def change_password(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            form = ChangePassUser(user = request.user, data = request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('login')
+        else:
+            form = ChangePassUser(user = request.user)
+    context= {'form':form}
+    return render(request,'authenticate/changepass.html',context)

@@ -1,40 +1,46 @@
 {% load static %}
 
 <nav id="greenbook--navbar" class="navbar navbar-expand-lg mx-3 my-2">
-  <a class="navbar-brand" href="{% url 'home' %}">
-    <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
-  </a>
-  <button style="background-color: #231B1B;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span style="color: #F6FBF4;" class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
+    </a>
+    <button style="background-color: #231B1B;" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span style="color: #F6FBF4;" class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a style="color: #231B1B;" class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
-      </li>
-      <li class="nav-item active dropdown">
-        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          DIY Projects
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
-          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:categories' %}">Categories</a>
-          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:newproject' %}">Upload Project</a>
-          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:myprojects' %}">My Projects</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:bookmarks' %}">Bookmarks</a>
-        </div>
-      </li>
-      <li class="nav-item active dropdown">
-        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button"
-          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Marketplace
-        </a>
-        <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
-          {# <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a style="color: #231B1B;" class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
+            </li>
+            <li class="nav-item active dropdown">
+                <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    DIY Projects
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
+                    <a class="dropdown-item" style="color: #231B1B;"
+                       href="{% url 'DIYProject:categories' %}">Categories</a>
+                    <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:newproject' %}">Upload
+                        Project</a>
+                    <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:myprojects' %}">My
+                        Projects</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" style="color: #231B1B;"
+                       href="{% url 'DIYProject:bookmarks' %}">Bookmarks</a>
+                </div>
+            </li>
+            <li class="nav-item active dropdown">
+                <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown"
+                   role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Marketplace
+                </a>
+                <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+                    {# <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
 
           {% for category in product_categories %}
           <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>
@@ -79,12 +85,15 @@
           <a class="dropdown-item" href="{% url 'marketplace:manage_products' %}">Manage Products</a>
         </div>
       </li>
+      <li class="nav-item active" style="display: flex; align-items: center;">
+          <a class="nav-link" href="{% url 'changepassword' %}" style="color: #231B1B;" >Change Password</a>
+      </li>
       <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active mr-2">
         <a style="color: #F6FBF4;" class="nav-link" href="{% url 'logout' %}">Log out</a>
       </li>
       <li class="nav-item active rounded-circle" style="border-radius: 50%; overflow: hidden;">
         <span class=" rounded-circle overflow-hidden">
-          <img width="50" height="50" src="https://api.dicebear.com/9.x/initials/svg?seed={{full_name}}" alt="{{full_name}}" />
+          <img width="50" height="50" src="https://api.dicebear.com/9.x/initials/svg?seed={{user.get_full_name}}" alt="{{user.get_full_name}}" />
         </span>
       </li>
       {% else %}
@@ -97,4 +106,5 @@
       {% endif %}
     </ul>
   </div>
+
 </nav>
