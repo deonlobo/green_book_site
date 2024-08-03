@@ -14,9 +14,9 @@
             {% endfor %}
         {% endif %}
     </div>
-    <div class="container mb-2">
+    <div class="container mb-2"  style="height: 100vh">
 
-        <div class="col-md-6 mx-auto shadow p-5 mt-5 bg-body rounded">
+        <div class="col-md-6 mx-auto shadow p-5 mt-5 bg-body rounded" style="background: #EAFADC">
             <h1 class="text-center">Login</h1>
             <br/>
 
@@ -34,12 +34,15 @@
                 <div class="text-center">
                     <input type="submit" value="Submit" class="btn btn-success" style="background: #42855B;">
                 </div>
+               <div style="display: flex; align-items: center; justify-content: center; margin-top: 1em;">
+                    <a class="link link-secondary" href="{% url 'register_user' %}" style="margin: 0 10px 0 60px; color: dimgrey; text-decoration: none;">New User</a>
+                    <span >|</span>
+                    <a class="link link-secondary" href="{% url 'password_reset' %}" style="margin: 0 10px;color: dimgrey; text-decoration: none;">Forgot Password</a>
+                </div>
+
             </form>
         </div>
-      <div class="col-6 justify-content-center mx-auto px-0 mt-2">
-    <a class="link link-secondary" href="{% url 'register_user' %}"> New User </a> |
-    <a class="link link-secondary" href="{% url 'password_reset' %}"> Forgot Password </a>
-      </div>
+
     </div>
 
 
