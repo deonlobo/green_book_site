@@ -418,14 +418,6 @@
         });
     });
 
-    // Restore scroll position on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const scrollPosition = localStorage.getItem('scrollPosition');
-        if (scrollPosition !== null) {
-            window.scrollTo(0, parseInt(scrollPosition));
-            localStorage.removeItem('scrollPosition'); // Clear the scroll position
-        }
-    });
     </script>
 {% endblock %}
 
