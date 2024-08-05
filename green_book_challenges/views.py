@@ -122,8 +122,8 @@ def submit_completed_task_view(request):
 
 @login_required
 def completed_tasks_list(request):
-    # Fetch all completed tasks for the current user
-    completed_tasks = CompletedTask.objects.exclude(likedtask__user=request.user)
+    # Fetch all completed tasks excluding those that the user has liked and posted
+    completed_tasks = CompletedTask.objects.exclude(likedtask__user=request.user).exclude(user=request.user)
 
     # Render the template with the filtered tasks
     return render(request, 'green_book_challenges/completed_tasks_list.html', {'completed_tasks': completed_tasks})
@@ -159,8 +159,6 @@ def like_completed_task(request, task_id):
         'completed_tasks': completed_tasks,
         'show_alert': show_alert
     })
-
-
 
 @login_required
 def points_and_coupons_view(request):
