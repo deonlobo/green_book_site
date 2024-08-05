@@ -27,10 +27,15 @@ class Conversation(models.Model):
     conversation_name = models.TextField(default="")
     participants = models.ManyToManyField(User, related_name="conversations")
     created_at = models.DateTimeField(auto_now_add=True)
-    pinned = models.BooleanField(default=False, blank=True, null=True)
+    pinned = models.ManyToManyField(
+        User, related_name="pinned_conversations", blank=True
+    )
 
     def get_participants_as_array(self):
         return list(self.participants.all())
+    
+    def is_pinned_for_user(self, user):
+        return self.pinned_by_users.filter(id=user.id).exists()
 
 
 class Message(models.Model):

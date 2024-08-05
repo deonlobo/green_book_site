@@ -173,49 +173,62 @@ def add_group_conversation(request):
 
     return JsonResponse({"status": "fail", "conversation_id": None})
 
-
 @login_required
 def toggle_conversation_pin(request):
-    conversation__uuid = request.GET.get("conversation_uuid", None)
-    print("******************", conversation__uuid)
-    conversation = Conversation.objects.get(conversation_uuid=conversation__uuid)
+    conversation_uuid = request.GET.get("conversation_uuid", None)
+    user = request.user
 
-    if conversation.pinned:
-        conversation.pinned = False
+    if not conversation_uuid:
+        return JsonResponse(
+            {"status": "error", "message": "Conversation UUID not provided"}, status=400
+        )
+
+    # Retrieve the conversation or return 404 if not found
+    conversation = Conversation.objects.get(conversation_uuid=conversation_uuid)
+
+    if conversation.pinned.filter(id=user.id).exists():
+        # If the user has already pinned the conversation, remove them from the list
+        conversation.pinned.remove(user)
+        pin_status = False
     else:
-        conversation.pinned = True
+        # If the user has not pinned the conversation, add them to the list
+        conversation.pinned.add(user)
+        pin_status = True
 
-    conversation.save()
-
-    return JsonResponse({"status": "success", "pin_updated": True})
-
+    return JsonResponse({"status": "success", "pin_updated": pin_status})
 
 @login_required
 def get_pinned_conversations(request):
-    filter = request.GET.get("filter", None)
+    filter = request.GET.get("filter", "")
+    user = request.user
+
     pinned_conversations_list = Conversation.objects.filter(
-        pinned=True,
+        pinned=user,
         conversation_name__icontains=filter,
-        participants=request.user,
+        participants=user,
     )
-    
+
     for conversation in pinned_conversations_list:
         peerParticipant = None
         conversation_name = conversation.conversation_name
         if conversation.conversation_type == "private":
             participants = conversation.get_participants_as_array()
-            print(participants)
 
-            peerParticipant = [participant for participant in participants if participant.id != request.user.id]
-            print(peerParticipant)
-            conversation_name = peerParticipant[0].first_name + " " + peerParticipant[0].last_name
-            conversation.conversation_name = conversation_name
+            # Find the peer participant (other than the current user)
+            peerParticipant = [
+                participant for participant in participants if participant.id != user.id
+            ]
+
+            if peerParticipant:
+                conversation_name = (
+                    f"{peerParticipant[0].first_name} {peerParticipant[0].last_name}"
+                )
+                conversation.conversation_name = conversation_name
+
     serialized_list = serializers.serialize("json", pinned_conversations_list)
 
-    print(serialized_list)
     jsonData = {"pinned_conversations": serialized_list}
     return JsonResponse(jsonData)
-
 
 @login_required
 def get_private_conversations(request):
