@@ -23,7 +23,7 @@
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     DIY Projects
                 </a>
-                <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
+                <div id="diydropdown" class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
                     <a class="dropdown-item"
                        href="{% url 'DIYProject:categories' %}">Categories</a>
@@ -42,7 +42,7 @@
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Marketplace
                 </a>
-                <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="marketplaceDropdown">
+                <div id="marketdropdown" class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="marketplaceDropdown">
                     {# <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
 
           {% for category in product_categories %}
@@ -56,7 +56,7 @@
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Eco-Challenges
         </a>
-        <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
+        <div id="ecodropdown" class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'challenge1' %}">Challenges</a>
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="/challenges/points-and-coupons/">Rewards</a>
@@ -82,7 +82,7 @@
           aria-haspopup="true" aria-expanded="false" style="color: #f6f0ea;" >
           Manage
         </a>
-        <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
+        <div id="managedropdown" class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
           <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Add Products</a>
           <a class="dropdown-item" href="{% url 'marketplace:manage_products' %}">Manage Products</a>
