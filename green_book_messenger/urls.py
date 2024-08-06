@@ -12,7 +12,7 @@ urlpatterns = [
         name="messenger_conversation",
     ),
     path(
-        "delete_conversation/<int:conversation_id>/",
+        "delete_conversation/<str:conversation_id>/",
         views.delete_conversation,
         name="delete_conversation",
     ),

@@ -58,7 +58,6 @@ function set_pinned_conversations(input_filter) {
       "filter": input_filter
     },
     success: function (response) {
-
       const pinned_conversations = JSON.parse(response["pinned_conversations"])
       console.log(pinned_conversations);
       pinned_node.off('click', '.btn__pin');
@@ -76,12 +75,23 @@ function set_pinned_conversations(input_filter) {
       }
       pinned_conversations.forEach(conversation => {
         const list_node = generate_conversation_list_item(conversation['fields'].conversation_uuid,
-          conversation['fields'].conversation_name, true)
+          conversation['fields'].conversation_name, true, "pinned")
         pinned_node.append(list_node)
 
-        $(`#pin-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+        $(`#pin-btn-${conversation['fields'].conversation_uuid}-pinned`).on('click', function (event) {
           event.stopPropagation()
           toggle_pin(conversation['fields'].conversation_uuid)
+        });
+
+        $(`#delete-btn-${conversation['fields'].conversation_uuid}-pinned`).on('click', function (event) {
+          event.stopPropagation()
+          console.log("herer");
+          $("#delete_header").empty()
+          $("#delete_header").append(`Delete Conversation Confirmation named ${conversation['fields'].conversation_name} ?`)
+          $('#delete_link').attr('href', function (i, href) {
+            return href.replace('conversation_id=0', 'conversation_id=' + conversation['fields'].conversation_uuid);
+          });
+          open_delete_confirmation_modal()
         });
 
         const pinned_element = pinned_node.children().last();
@@ -92,8 +102,6 @@ function set_pinned_conversations(input_filter) {
             this.dataset["conversation_uuid"];
           window.location.pathname = "/messenger/" + conversation_uuid + "/";
         })
-
-
       });
     },
     error: function () {
@@ -126,13 +134,28 @@ function set_private_conversations(input_filter) {
       }
       private_conversations.forEach(conversation => {
         console.log("here");
+        const is_pinned = $('#pinned__list div').filter(function () {
+          return $(this).data('conversation_uuid') === conversation['fields'].conversation_uuid;
+        }).length > 0;
         const list_node = generate_conversation_list_item(conversation['fields'].conversation_uuid,
-          conversation['fields'].conversation_name, false)
-        // list_node.click(toggle_pin)
+          conversation['fields'].conversation_name, is_pinned, "private")
         private_node.append(list_node)
-        $(`#pin-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+        $(`#pin-btn-${conversation['fields'].conversation_uuid}-private`).on('click', function (event) {
           event.stopPropagation()
           toggle_pin(conversation['fields'].conversation_uuid)
+        });
+
+        $(`#delete-btn-${conversation['fields'].conversation_uuid}-private`).on('click', function (event) {
+          event.stopPropagation()
+          console.log("herer");
+          $("#delete_header").empty()
+          $("#delete_header").append(`Delete Conversation Confirmation named ${conversation['fields'].conversation_name} ?`)
+          console.log("delete", $('#delete_link'));
+          $('#delete_link').attr('href', function (i, href) {
+            return href.replace('0', conversation['fields'].conversation_uuid);
+          });
+          open_delete_confirmation_modal()
+
         });
 
         const private_element = private_node.children().last();
@@ -175,19 +198,25 @@ function set_group_conversations(input_filter) {
       }
       group_conversations.forEach(conversation => {
         console.log("here");
+        const is_pinned = $('#pinned__list div').filter(function () {
+          return $(this).data('conversation_uuid') === conversation['fields'].conversation_uuid;
+        }).length > 0;
         const list_node = generate_conversation_list_item(conversation['fields'].conversation_uuid,
-          conversation['fields'].conversation_name, false)
+          conversation['fields'].conversation_name, is_pinned, "group")
         // list_node.click(toggle_pin)
         group_node.append(list_node)
-        $(`#pin-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+        $(`#pin-btn-${conversation['fields'].conversation_uuid}-group`).on('click', function (event) {
           event.stopPropagation()
           toggle_pin(conversation['fields'].conversation_uuid)
         });
-        $(`#delete-btn-${conversation['fields'].conversation_uuid}`).on('click', function (event) {
+        $(`#delete-btn-${conversation['fields'].conversation_uuid}-group`).on('click', function (event) {
           event.stopPropagation()
           console.log("herer");
           $("#delete_header").empty()
           $("#delete_header").append(`Delete Conversation Confirmation named ${conversation['fields'].conversation_name} ?`)
+          $('#delete_link').attr('href', function (i, href) {
+            return href.replace('conversation_id=0', 'conversation_id=' + conversation['fields'].conversation_uuid);
+          });
           open_delete_confirmation_modal()
 
         });
@@ -209,7 +238,7 @@ function set_group_conversations(input_filter) {
   });
 }
 
-function generate_conversation_list_item(conversation_uuid, conversation_name, pinned) {
+function generate_conversation_list_item(conversation_uuid, conversation_name, pinned, identifier) {
   return (`
     <div data-conversation_uuid=${conversation_uuid}
             class="position-relative messenger__list__element d-flex p-2 px-4 border-bottom">
@@ -220,7 +249,7 @@ function generate_conversation_list_item(conversation_uuid, conversation_name, p
             <span class="d-flex align-items-center ml-2"><b>${conversation_name}</b></span>
             <span data-conversation_uuid="{{conversation.conversation_uuid}}"
               class="conversation__pin position-absolute">
-              <button class="btn btn__pin" id="pin-btn-${conversation_uuid}">
+              <button class="btn btn__pin" id="pin-btn-${conversation_uuid}-${identifier}">
               ${pinned?`
               
               <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -245,7 +274,7 @@ function generate_conversation_list_item(conversation_uuid, conversation_name, p
               
             </span>
             <span class="conversation__delete position-absolute">
-            <button class="btn btn__delete" id="delete-btn-${conversation_uuid}" >
+            <button class="btn btn__delete" id="delete-btn-${conversation_uuid}-${identifier}" >
                 <svg width="25" height="25" viewBox="0 0 24 24" fill="#CC2936" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 9.5L12 14.5M12 9.5L7 14.5M19.4922 13.9546L16.5608 17.7546C16.2082 18.2115 16.032 18.44 15.8107 18.6047C15.6146 18.7505 15.3935 18.8592 15.1583 18.9253C14.8928 19 14.6042 19 14.0271 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.07989 5 6.2 5H14.0271C14.6042 5 14.8928 5 15.1583 5.07467C15.3935 5.14081 15.6146 5.2495 15.8107 5.39534C16.032 5.55998 16.2082 5.78846 16.5608 6.24543L19.4922 10.0454C20.0318 10.7449 20.3016 11.0947 20.4054 11.4804C20.4969 11.8207 20.4969 12.1793 20.4054 12.5196C20.3016 12.9053 20.0318 13.2551 19.4922 13.9546Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -366,6 +395,7 @@ function open_delete_confirmation_modal() {
     $("#deleteConversation_modal").animate({
       top: "0%"
     }, 200);
+
   } else {
     $("#deleteConversation_modal").animate({
       top: "100%"
