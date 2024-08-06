@@ -24,7 +24,7 @@
   {% include './group_conversation_modal.html' %}
   {% include './delete_conversation_modal.html' %}
   <div class="row gx-2 messenger__header__container">
-    <div class="messenger__header__left col-9 p-1 mx-auto">
+    <div class="messenger__header__left col-12 col-md-9 p-1 mx-auto">
       <div class="messenger__header__left__container shadow d-flex justify-content-between align-items-center p-4">
         <span class="m-0 flex-grow-1 mr-2">
           <input id="messenger__search__input" onkeyup="filter_conversations_debounce()" type="text"
@@ -86,7 +86,7 @@
     </div>
   </div>
   <div class="row gx-2 flex-grow-1 messenger__converstaion__container">
-    <div class="messenger__conversation__list col-9 p-1 position-relative mx-auto">
+    <div class="messenger__conversation__list col-12 col-md-9 p-1 position-relative mx-auto">
       <div id="messenger__list__container" class="shadow messenger__list__container h-100 py-4 position-relative">
         <div id="list__loader" class="loader position-absolute w-100">
           <div class="loading-container">
