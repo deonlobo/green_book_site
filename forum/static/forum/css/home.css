@@ -43,6 +43,7 @@
     border-radius: 9px;
     padding: 5px;
     box-sizing: border-box;
+    background-color: #fbf5ef;
 }
 
 .search-input {
@@ -57,7 +58,7 @@
     outline: none;
     min-width: 150px; /* Ensure a minimum width for the input field */
     font-size: small;
-    background-color: #f8f8f8;
+    background-color: #f6f0ea;
 }
 
 .search-input img {
@@ -135,13 +136,13 @@
 }
 
 .advertise-area .card-header {
-    background-color: #c1eda2;
+    background-color: #42855B;
     height: 3em;
     font-weight: bold;
 }
 
 .advertise-area .card-body {
-    background-color: #EAFADC;
+    background-color: #f6f0ea;
 }
 
 
@@ -164,7 +165,7 @@
 
 .advertise-li a {
     text-decoration: none;
-    color: #333;
+    color: #24231d;
 }
 
 .hot-questions {
@@ -196,12 +197,13 @@
 }
 
 .no-of-votes-item {
-    background-color: #d3efd1;
+    background-color: #42855B;
     border-radius: 2px;
     padding: 2px 5px;
     width: 3em;  /* Fixed width */
     text-align: center;
     word-wrap: break-word;
+    color: #f6f0ea;
 }
 
 /*display questions css*/
@@ -252,17 +254,19 @@
 
 .question-tags li {
     display: inline-block;
-    background-color: #efefef;
     border-radius: 7px;
     padding: 6px 5px;
     margin: 0 2px 2px 2px;
     font-size: 0.7em;
     font-weight: bold;
-    color: #333;
+    background-color: #fbf5ef;
+    color: #24231d;
+    border: 1px solid #24231d;
 }
 
 .question-tags li:hover {
-    background-color: #c8c6c6;
+    background-color: #24231d;
+    color: #f6f0ea;
 }
 
 .tag-user-info {

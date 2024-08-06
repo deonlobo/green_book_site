@@ -6,39 +6,56 @@
 }
 
 .sidebar {
-    background-color: #ffffff;
+    background-color: #f6f0ea;
     width: 200px;
     padding-top: 20px;
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    flex-shrink: 0;
+    /* Prevent sidebar from shrinking */
     min-height: 100vh;
-    border-right: 1px solid #e3e6e8ff;;
-    padding-left: 3em;
+    border-right: 1px solid #e3e6e8ff;
 }
 
 .sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    /* padding-left: 1rem; */
 }
 
 .sidebar ul a {
     font-size: 1em;
     text-decoration: none;
-    color: #333;
+    color: #24231d;
     display: flex;
-    align-items: center; /* Align items vertically centered */
-    padding: 10px; /* Optional: Add padding for better click area */
+    align-items: center;
+    /* Align items vertically centered */
+    padding: 10px;
+    padding-left: 1rem;
+    /* Optional: Add padding for better click area */
 }
 
 .sidebar ul li:hover a {
-    background-color: #ddd; /* Change background color on hover */
-    border-radius: 0.5em;
+    background-color: #42855B;
+    /* Change background color on hover */
+    /* border-radius: 0.5em; */
+    color: #f6f0ea;
+
+    .svg-icon {
+        fill: #f6f0ea;
+        margin-right: 8px;
+        /* Optional: Add space between the icon and text */
+
+    }
 }
 
 .svg-icon {
-    margin-right: 8px; /* Optional: Add space between the icon and text */
+    fill: #24231d;
+    margin-right: 8px;
+    /* Optional: Add space between the icon and text */
+
 }
 
 .content-sidebar {
-    flex: 1; /* Take remaining space */
+    flex: 1;
+    /* Take remaining space */
 }

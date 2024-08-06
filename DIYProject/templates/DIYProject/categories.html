@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container my-2">
+    <div class="container my-2 pt-4" style="height: 100vh;">
 
         <center><h2 class="my-2 animate__animated animate__flipInX">Categories of DIY Projects</h2></center>
 
@@ -15,7 +15,7 @@
                     <img src="{{ category.image.url }}" height="230vw" width="230vh" style="border-radius: 50%; border: #3333 4px;"></img>
                     <a href="{% url 'DIYProject:filtercategory' category.pk %}"
                        class="col-lg-12 btn btn-outline-success w-100 my-2"
-                       style="font-size: medium">{{ category.name }}</a>
+                       style="font-size: medium;">{{ category.name }}</a>
                 </center>
                 </div>
             {% endfor %}

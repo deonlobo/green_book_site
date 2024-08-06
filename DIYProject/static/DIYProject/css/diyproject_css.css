@@ -1,5 +1,5 @@
 body {
-    background-color: #f6fbf4;
+    background-color: #f6f0ea;
 }
 
 .font-background-image {
@@ -37,13 +37,14 @@ body {
     background-image: url('/static/DIYProject/images/water-drop-background.jpg');
     background-size: cover;
     background-position: center center;
-    opacity: 0.5; /* Adjust the opacity to control image transparency */
+    /* opacity: 0.5;Adjust the opacity to control image transparency */
     z-index: 1; /* Ensures the overlay is behind the text */
+    filter: brightness(0.7);
 }
 
 .overlay-text {
     position: relative;
-    color: white; /* Adjust text color */
+    color: #f6f0ea; /* Adjust text color */
     font-size: 2em; /* Adjust font size for h4 */
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: Adds shadow to text for better visibility */
@@ -64,16 +65,26 @@ body {
 .double-write {
     font-size: 50px;
     color: #000;
-    text-shadow: 4px 4px 0 #fff,
-                 -4px -4px 0 #fff,
-                 4px -4px 0 #fff,
-                 -4px 4px 0 #fff,
-                 4px 4px 0 #fff,
-                 -4px -4px 0 #fff,
-                 4px -4px 0 #fff,
-                 -4px 4px 0 #fff;
+    text-shadow: 1px 1px 0 #42855B,
+                 2px 2px 0 #42855B,
+                 3px 3px 0 #42855B,
+                 4px 4px 0 #42855B,
+                 5px 5px 0 #42855B,
+                 6px 6px 0 #42855B,
+                 7px 7px 0 #42855B,
+                 8px 8px 0 #42855B;
 }
 
 .justify-text {
     text-align: justify;
+}
+
+
+btn-success {
+    background-color: #42855B !important;
+}
+
+btn-outline-success {
+    color: #42855B !important;
+    border-color: #42855B !important;
 }

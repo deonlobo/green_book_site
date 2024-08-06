@@ -1,5 +1,5 @@
 body {
-  overflow-x: unset;
+    overflow-x: unset;
 }
 
 .content-sidebar {
@@ -7,90 +7,129 @@ body {
 }
 
 .question-header {
-    border-bottom: 1px solid #e3e6e8ff; /* Light gray border */
+    border-bottom: 1px solid #e3e6e8ff;
+    /* Light gray border */
     color: #4e4d4d;
     max-width: 80%;
 }
 
 /* Flex container for question actions and body */
 .question-actions {
-    display: flex; /* Use flexbox for layout */
-    align-items: flex-start; /* Align items to the top */
+    display: flex;
+    /* Use flexbox for layout */
+    align-items: flex-start;
+    /* Align items to the top */
     margin: 0em 2em 2em 0em;
 }
 
 /* Style for the vote buttons container */
 .question-vote {
-    width: 100px; /* Fixed width for the vote buttons container */
+    width: 100px;
+    /* Fixed width for the vote buttons container */
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
+    flex-direction: column;
+    /* Stack buttons vertically */
     align-items: center;
-    gap: 5px; /* Space between buttons */
+    gap: 5px;
+    /* Space between buttons */
 }
 
 /* Style for the vote buttons */
 .vote-button {
-    width: 40px; /* Fixed width for circular buttons */
-    height: 40px; /* Fixed height for circular buttons */
-    border-radius: 50%; /* Make buttons circular */
-    display: flex; /* Use flexbox to center SVGs */
-    align-items: center; /* Center SVGs vertically */
-    justify-content: center; /* Center SVGs horizontally */
-    background-color: #ffffff; /* Button background color */
-    border: 1px solid #cabebe;; /* Remove default border */
-    cursor: pointer; /* Pointer cursor on hover */
-    padding: 0; /* Remove padding */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    width: 40px;
+    /* Fixed width for circular buttons */
+    height: 40px;
+    /* Fixed height for circular buttons */
+    border-radius: 50%;
+    /* Make buttons circular */
+    display: flex;
+    /* Use flexbox to center SVGs */
+    align-items: center;
+    /* Center SVGs vertically */
+    justify-content: center;
+    /* Center SVGs horizontally */
+    background-color: #fbf5ef;
+    /* Button background color */
+    border: 1px solid #cabebe;
+    ;
+    /* Remove default border */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    padding: 0;
+    /* Remove padding */
+    transition: background-color 0.3s;
+    /* Smooth transition for hover effect */
 }
 
 /* Hover effect for vote buttons */
 .vote-button:hover {
-    background-color: #ffe1b1; /* Darker color on hover */
+    background-color: #42855B;
+
+    /* Darker color on hover */
+    .vote-button svg {
+        fill: #fbf5ef;
+    }
 }
 
 /* Style for SVG icons */
 .vote-button svg {
-    width: 24px; /* Size of the SVG icon */
-    height: 24px; /* Size of the SVG icon */
+    width: 24px;
+    /* Size of the SVG icon */
+    height: 24px;
+    /* Size of the SVG icon */
 }
 
 /* Ensure the SVG paths are filled with white */
 .vote-button svg path {
-    fill: #2e2929; /* Color of the SVG icon */
+    fill: #2e2929;
+    /* Color of the SVG icon */
 }
 
 /* Optional: Add some extra styling for active/selected state */
 .vote-button.active {
-    background-color: #004080; /* Different color when active */
+    background-color: #004080;
+    /* Different color when active */
 }
 
 /* Flex container for question body and tags */
 .question-body-container {
-    flex: 1; /* Take up remaining space */
+    flex: 1;
+    /* Take up remaining space */
     display: flex;
-    flex-direction: column; /* Stack body and tags vertically */
-    overflow: hidden; /* Clear floats to ensure content wraps properly */
+    flex-direction: column;
+    /* Stack body and tags vertically */
+    overflow: hidden;
+    /* Clear floats to ensure content wraps properly */
 }
 
 /* Style for the figure element */
 .image.image-style-align-left {
-    float: left; /* Align the figure to the left */
-    margin-right: 15px; /* Add some space to the right of the figure */
-    margin-bottom: 15px; /* Add some space below the figure */
+    float: left;
+    /* Align the figure to the left */
+    margin-right: 15px;
+    /* Add some space to the right of the figure */
+    margin-bottom: 15px;
+    /* Add some space below the figure */
 }
 
 /* Style for the figure element */
 .image.image-style-align-right {
-    float: right; /* Align the figure to the left */
-    margin-right: 15px; /* Add some space to the right of the figure */
-    margin-bottom: 15px; /* Add some space below the figure */
+    float: right;
+    /* Align the figure to the left */
+    margin-right: 15px;
+    /* Add some space to the right of the figure */
+    margin-bottom: 15px;
+    /* Add some space below the figure */
 }
 
 /* Style for the figure element */
 .image.image-style-side {
-    float: right; /* Align the figure to the left */
-    margin-right: 15px; /* Add some space to the right of the figure */
-    margin-bottom: 15px; /* Add some space below the figure */
+    float: right;
+    /* Align the figure to the left */
+    margin-right: 15px;
+    /* Add some space to the right of the figure */
+    margin-bottom: 15px;
+    /* Add some space below the figure */
 }
 
 /* Style for the figure element */
@@ -98,44 +137,68 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto; /* Center the figure element */
-    margin-bottom: 15px; /* Add some space below the figure */
-    width: fit-content; /* Adjust width to fit the content */
+    margin: 0 auto;
+    /* Center the figure element */
+    margin-bottom: 15px;
+    /* Add some space below the figure */
+    width: fit-content;
+    /* Adjust width to fit the content */
 }
 
 /* Style for the image element inside the figure */
 .image_resized img {
-    max-width: 100%; /* Make sure the image doesn't overflow the figure */
-    height: auto; /* Maintain the aspect ratio of the image */
-    display: block; /* Remove extra space below the image */
+    max-width: 100%;
+    /* Make sure the image doesn't overflow the figure */
+    height: auto;
+    /* Maintain the aspect ratio of the image */
+    display: block;
+    /* Remove extra space below the image */
 }
 
 /* Basic styling for code elements */
 code {
-  font-family: "Courier New", Courier, monospace; /* Monospace font for better readability */
-  background-color: #f5f5f5;  /* Light grey background */
-  border: 1px solid #e1e1e8;  /* Light grey border */
-  border-radius: 3px;  /* Rounded corners */
-  padding: 2px 4px;  /* Padding around the text */
-  font-size: 0.9em;  /* Slightly smaller font size */
-  color: #d63384;  /* Magenta text color */
+    font-family: "Courier New", Courier, monospace;
+    /* Monospace font for better readability */
+    background-color: #f5f5f5;
+    /* Light grey background */
+    border: 1px solid #e1e1e8;
+    /* Light grey border */
+    border-radius: 3px;
+    /* Rounded corners */
+    padding: 2px 4px;
+    /* Padding around the text */
+    font-size: 0.9em;
+    /* Slightly smaller font size */
+    color: #d63384;
+    /* Magenta text color */
 }
 
 /* Styling for code blocks (pre elements) */
 pre {
-  background-color: #f5f5f5;  /* Light grey background */
-  border: 1px solid #e1e1e8;  /* Light grey border */
-  border-radius: 3px;  /* Rounded corners */
-  padding: 10px;  /* Padding around the text */
-  font-size: 0.9em;  /* Slightly smaller font size */
-  overflow: auto;  /* Scroll if the content overflows */
+    background-color: #f5f5f5;
+    /* Light grey background */
+    border: 1px solid #e1e1e8;
+    /* Light grey border */
+    border-radius: 3px;
+    /* Rounded corners */
+    padding: 10px;
+    /* Padding around the text */
+    font-size: 0.9em;
+    /* Slightly smaller font size */
+    overflow: auto;
+    /* Scroll if the content overflows */
 }
 
 pre code {
-  background-color: transparent;  /* Inherit the background from pre element */border: none;
-  padding: 0;  /* No padding for code inside pre */
-  color: inherit;  /* Inherit the color from pre element */
+    background-color: transparent;
+    /* Inherit the background from pre element */
+    border: none;
+    padding: 0;
+    /* No padding for code inside pre */
+    color: inherit;
+    /* Inherit the color from pre element */
 }
+
 /* Style for the tags */
 .question-detail .question-tags ul {
     list-style-type: none;
@@ -144,22 +207,22 @@ pre code {
 
 .question-tags li {
     display: inline-block;
-    background-color: #efefef;
+    background-color: #fbf5ef;
+    color: #24231d;
+    border: 1px solid #24231d;
     border-radius: 7px;
     padding: 6px 5px;
     margin: 0 2px 2px 2px;
     font-size: 0.7em;
     font-weight: bold;
-    color: #333;
 }
 
 .question-tags li:hover {
-    background-color: #e3e3e3;
+    background-color: #24231d;
+    color: #fbf5ef;
 }
 
-.question-detail .question-tags li + li {
-
-}
+.question-detail .question-tags li+li {}
 
 .comments {
     font-size: 0.75rem;
@@ -173,12 +236,14 @@ pre code {
 }
 
 .comment-elements {
-    word-break: break-word; /* Ensures long words break correctly */
+    word-break: break-word;
+    /* Ensures long words break correctly */
 }
 
-.comment-elements p{
+.comment-elements p {
     margin: 0.4rem 0 0.3rem 0rem;
 }
+
 .comment-by {
     font-style: italic;
     color: gray;
@@ -194,6 +259,7 @@ pre code {
     color: darkgrey;
     text-decoration: none;
 }
+
 .add-question-comment a:hover {
     color: grey;
 }
@@ -208,11 +274,13 @@ pre code {
     align-items: center;
     font-size: 0.75rem;
 }
+
 .form-group {
     width: 90%;
     margin-right: 1em;
 }
-.form-inline .btn-success{
+
+.form-inline .btn-success {
     font-size: 0.75rem;
 }
 
@@ -224,7 +292,8 @@ pre code {
 .answer {
     border-bottom: 1px solid #e3e6e8ff
 }
-.answer-header{
+
+.answer-header {
     color: #706e6e;
     border-bottom: 1px solid #e3e6e8ff
 }
@@ -235,7 +304,7 @@ pre code {
     margin: 2em 2em 0em 0em;
 }
 
-.answered-by{
+.answered-by {
     font-style: italic;
     color: gray;
     text-align: end;
@@ -268,7 +337,7 @@ pre code {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff;
+    background-color: #f6f0ea;
     border: 1px solid #cabebe;
     cursor: pointer;
     padding: 0;
@@ -276,7 +345,7 @@ pre code {
 }
 
 .answer-vote .vote-button:hover {
-    background-color: #ffe1b1;
+    background-color: #42855B;
 }
 
 .answer-vote .vote-button svg {
@@ -317,21 +386,26 @@ pre code {
 
 .detail-section-main {
     display: flex;
-    flex-wrap: wrap; /* Ensure elements wrap on smaller screens */
+    flex-wrap: wrap;
+    /* Ensure elements wrap on smaller screens */
     margin-top: 2rem;
     flex-direction: row;
 }
 
 .detail-area {
-    flex: 65% /* Initial size */;
+    flex: 65%
+        /* Initial size */
+    ;
     max-width: 60em;
 }
 
 .advertise-area {
     font-size: 0.7em;
     flex: 1;
-    display: block; /* Ensure the element is displayed as a block */
-    padding: 0.5em 2em 4em 2em; /* Optional: add padding for visibility */
+    display: block;
+    /* Ensure the element is displayed as a block */
+    padding: 0.5em 2em 4em 2em;
+    /* Optional: add padding for visibility */
     word-wrap: break-word;
     color: #4c4b4b;
 }
@@ -343,13 +417,14 @@ pre code {
 }
 
 .advertise-area .card-header {
-    background-color: #c1eda2;
+    background-color: #42855B;
     height: 3em;
     font-weight: bold;
+    color: #f6f0ea;
 }
 
 .advertise-area .card-body {
-    background-color: #EAFADC;
+    background-color: #f6f0ea;
 }
 
 .advertise-area .card-body ul {
@@ -371,7 +446,7 @@ pre code {
 
 .advertise-li a {
     text-decoration: none;
-    color: #333;
+    color: #24231d;
 }
 
 .hot-questions {
@@ -385,17 +460,25 @@ pre code {
 .hot-question-link {
     flex: 1;
     text-decoration: none;
-    display: flex;  /* Ensure the <a> element itself is a flex container */
-    align-items: center;  /* Vertically align items inside the <a> element */
-    overflow: hidden;  /* Hide overflow content */
+    display: flex;
+    /* Ensure the <a> element itself is a flex container */
+    align-items: center;
+    /* Vertically align items inside the <a> element */
+    overflow: hidden;
+    /* Hide overflow content */
 }
 
 .hot-question-link a {
-    display: -webkit-box;  /* Use webkit box model for multi-line truncation */
-    -webkit-line-clamp: 2; /* Limit text to 2 lines */
-    -webkit-box-orient: vertical; /* Vertical box orientation */
-    overflow: hidden;  /* Hide text overflow */
-    text-overflow: ellipsis;  /* Show ellipsis for overflow text */
+    display: -webkit-box;
+    /* Use webkit box model for multi-line truncation */
+    -webkit-line-clamp: 2;
+    /* Limit text to 2 lines */
+    -webkit-box-orient: vertical;
+    /* Vertical box orientation */
+    overflow: hidden;
+    /* Hide text overflow */
+    text-overflow: ellipsis;
+    /* Show ellipsis for overflow text */
 }
 
 .no-of-votes {
@@ -403,12 +486,14 @@ pre code {
 }
 
 .no-of-votes-item {
-    background-color: #d3efd1;
+    background-color: #42855B;
     border-radius: 2px;
     padding: 2px 5px;
-    width: 3em;  /* Fixed width */
+    width: 3em;
+    /* Fixed width */
     text-align: center;
     word-wrap: break-word;
+    color: #f6f0ea;
 }
 
 .answer-the-question {
@@ -419,6 +504,6 @@ pre code {
     margin-right: 3em;
 }
 
-.your-answer-header{
+.your-answer-header {
     color: #706e6e;
 }

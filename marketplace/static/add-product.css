@@ -19,7 +19,7 @@ button:focus,
 	box-shadow: none;
 }
 .form-control:disabled, .form-control[readonly]{
-	background-color: #fff;
+	background-color: #f6f0ea;
 }
 /*----------step-wizard------------*/
 .d-flex{
@@ -34,7 +34,7 @@ button:focus,
 
 /*---------signup-step-------------*/
 .bg-color{
-	background-color: #333;
+	background-color: #24231d;
 }
 .signup-step-container{
 	padding: 2rem 0;
@@ -85,7 +85,7 @@ span.round-tab {
     line-height: 30px;
     display: inline-block;
     border-radius: 50%;
-    background: #fff;
+    background: #f6f0ea;
     z-index: 2;
     position: absolute;
     left: 0;
@@ -100,7 +100,7 @@ span.round-tab i{
 }
 .wizard li.active span.round-tab {
         background: #42855B;
-    color: #fff;
+    color: #f6f0ea;
     border-color: #42855B;
 }
 .wizard li.active span.round-tab i{
@@ -175,14 +175,14 @@ span.round-tab i{
 }
 .prev-step{
     background-color: transparent;
-    border: 2px solid  #42855b ;
+    border: 2px solid  #42855B ;
     font-weight: 700;
-    color:  #42855b;
+    color:  #42855B;
 }
 .next-step{
 	background-color: #42855B;
     border-color: #42855B;
-    color: white;
+    color: #f6f0ea;
     font-weight: 700;
     padding: 0.68rem 1.8rem;
 }
@@ -226,7 +226,7 @@ span.round-tab i{
     font-weight: 400;
     line-height: 2;
     color: #495057;
-    background-color: #fff;
+    background-color: #f6f0ea;
     border: 1px solid #ced4da;
     border-radius: .25rem;
 }
@@ -317,7 +317,7 @@ input[type="checkbox"]::before{
     border: 1px solid #999;
     left: 0px;
     top: 0px;
-    background-color: #fff;
+    background-color: #f6f0ea;
     border-radius: 2px;
 }
 input[type="checkbox"]::after{
@@ -328,8 +328,8 @@ input[type="checkbox"]::after{
 }
 input[type="checkbox"]:checked::after{
     content: "";
-    border-left: 1px solid #fff;
-    border-bottom: 1px solid #fff;
+    border-left: 1px solid #f6f0ea;
+    border-bottom: 1px solid #f6f0ea;
     transform: rotate(-45deg);
 }
 input[type="checkbox"]:checked::before{

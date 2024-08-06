@@ -1,45 +1,48 @@
 {% load static %}
 
-<nav id="greenbook--navbar" class="navbar navbar-expand-lg mx-3 my-2">
+<nav id="greenbook--navbar" class="navbar navbar-expand-lg px-3 mb-2" style="background-color: #42855B; border-radius: 0; color: #f6f0ea;">
     <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static '/green_book_app/assets/logo_transparent2.png' %}" alt="Logo" style="height: 1.75em">
+        <svg style="height: 2rem; width: auto;" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-5.0 -10.0 110.0 135.0">
+          <path
+            d="m59.375 44.531c6.0078-0.007812 11.766-2.3945 16.012-6.6445 4.25-4.2461 6.6367-10.004 6.6445-16.012v-9.375c0-1.0352-0.41016-2.0312-1.1445-2.7617-0.73047-0.73438-1.7266-1.1445-2.7617-1.1445h-9.375c-5.0195 0.007812-9.8945 1.6836-13.859 4.7617-3.9688 3.0781-6.8008 7.3828-8.0547 12.246-3.4961-2.918-7.9062-4.5117-12.461-4.5078h-12.5c-1.0352 0-2.0312 0.41016-2.7617 1.1445-0.73438 0.73047-1.1445 1.7266-1.1445 2.7617v3.125c0.003906 5.1797 2.0664 10.145 5.7266 13.805 3.6602 3.6602 8.625 5.7227 13.805 5.7266h8.5938v14.391c-5.3945 0.85547-10.375 3.4102-14.219 7.293-3.8398 3.8828-6.3438 8.8906-7.1445 14.293l-0.47266 3.3164c-0.16016 1.1211 0.17578 2.2539 0.91797 3.1094 0.74219 0.85547 1.8164 1.3477 2.9492 1.3477h43.75c1.1328 0 2.207-0.49219 2.9492-1.3477 0.74219-0.85547 1.0781-1.9883 0.91797-3.1094l-0.47266-3.3125v-0.003907c-0.80078-5.4023-3.3047-10.41-7.1445-14.293-3.8438-3.8828-8.8242-6.4375-14.219-7.293v-17.516zm-5.4688-13.281c0.003906-3.9336 1.5703-7.707 4.3516-10.492 2.7852-2.7812 6.5586-4.3477 10.492-4.3516h5.4688v5.4688c-0.003906 3.9336-1.5703 7.707-4.3516 10.492-2.7852 2.7812-6.5586 4.3477-10.492 4.3516h-5.4688zm-16.406 8.5938c-6.1641-0.007812-11.273-4.7852-11.695-10.938h8.5703c6.1641 0.007812 11.273 4.7852 11.695 10.938zm29.836 43.75h-34.668c1.125-5.3438 4.6523-9.8672 9.5586-12.266s10.645-2.3984 15.551 0 8.4336 6.9219 9.5586 12.266z" />
+        </svg>
     </a>
-    <button style="background-color: #231B1B;" class="navbar-toggler" type="button" data-toggle="collapse"
+    <button style="background-color: #f6f0ea;" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span style="color: #F6FBF4;" class="navbar-toggler-icon"></span>
+        <span style="color: #f6f0ea;" class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a style="color: #231B1B;" class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
+                <a style="color: #f6f0ea;" class="nav-link" href="{% url 'forum:home_forum' %}">Forum</a>
             </li>
             <li class="nav-item active dropdown">
-                <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                <a style="color: #f6f0ea;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     DIY Projects
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href='{% url 'DIYProject:home' %}'>Home</a>
-                    <a class="dropdown-item" style="color: #231B1B;"
+                    <a class="dropdown-item"
                        href="{% url 'DIYProject:categories' %}">Categories</a>
-                    <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:newproject' %}">Upload
+                    <a class="dropdown-item" href="{% url 'DIYProject:newproject' %}">Upload
                         Project</a>
-                    <a class="dropdown-item" style="color: #231B1B;" href="{% url 'DIYProject:myprojects' %}">My
+                    <a class="dropdown-item" href="{% url 'DIYProject:myprojects' %}">My
                         Projects</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" style="color: #231B1B;"
+                    <a class="dropdown-item"
                        href="{% url 'DIYProject:bookmarks' %}">Bookmarks</a>
                 </div>
             </li>
             <li class="nav-item active dropdown">
-                <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown"
+                <a style="color: #f6f0ea;" class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown"
                    role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Marketplace
                 </a>
-                <div class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+                <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="marketplaceDropdown">
                     {# <a class="dropdown-item" href="/marketplace/category/{{category.pk}}/">{{ category.category_name }}</a>#}
 
           {% for category in product_categories %}
@@ -49,11 +52,11 @@
 
       </li>
       <li class="nav-item active dropdown">
-        <a style="color: #231B1B;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+        <a style="color: #f6f0ea;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Eco-Challenges
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'challenge1' %}">Challenges</a>
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="/challenges/points-and-coupons/">Rewards</a>
@@ -64,7 +67,7 @@
         </div>
       </li>
       <li class="nav-item active">
-        <a style="color: #231B1B;" class="nav-link" href="{% url 'contact_page' %}">Contact</a>
+        <a style="color: #f6f0ea;" class="nav-link" href="{% url 'contact_page' %}">Contact</a>
       </li>
     </ul>
     {# <form class="form-inline my-2 my-lg-0">#}
@@ -76,32 +79,32 @@
       {% if user.is_authenticated %}
       <li class="nav-item active dropdown" style="display: flex; align-items: center;">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false" style="color: #231B1B;" >
+          aria-haspopup="true" aria-expanded="false" style="color: #f6f0ea;" >
           Manage
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu" style="background-color: #f6f0ea;" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'marketplace:add_category' %}">Manage Category</a>
           <a class="dropdown-item" href="{% url 'marketplace:add_product' %}">Add Products</a>
           <a class="dropdown-item" href="{% url 'marketplace:manage_products' %}">Manage Products</a>
         </div>
       </li>
-      <li class="nav-item active" style="display: flex; align-items: center; margin-right: 0.2em;">
-          <a class="nav-link" href="{% url 'changepassword' %}" style="color: #231B1B;" >Change Password</a>
+      <li style="padding: 0.1rem 0.5rem; background: #24231d; color: #24231d;" class="btn nav-item active mr-2">
+          <a class="nav-link" href="{% url 'changepassword' %}" style="color: #f6f0ea;" >Change Password</a>
       </li>
-      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active mr-2">
-        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'logout' %}">Log out</a>
+      <li style="padding: 0.1rem 0.5rem; background: #24231d; color: #24231d;" class="btn nav-item active mr-2">
+        <a style="color: #f6f0ea;" class="nav-link" href="{% url 'logout' %}">Log out</a>
       </li>
       <li class="nav-item active rounded-circle" style="border-radius: 50%; overflow: hidden;">
         <span class=" rounded-circle overflow-hidden">
-          <img width="50" height="50" src="https://api.dicebear.com/9.x/initials/svg?seed={{full_name}}" alt="{{user.get_full_name}}" />
+          <img width="50" height="50" src="https://api.dicebear.com/9.x/initials/svg?seed={{user.get_full_name}}" alt="{{user.get_full_name}}" />
         </span>
       </li>
       {% else %}
-      <li style="padding: 0.3rem 0.5rem; background: #42855B; color: #F6FBF4;" class="btn nav-item active mr-2">
-        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'login' %}">Login</a>
+      <li style="padding: 0.1rem 0.5rem; background: #24231d; color: #24231d;" class="btn nav-item active mr-2">
+        <a style="color: #f6f0ea;" class="nav-link" href="{% url 'login' %}">Login</a>
       </li>
-      <li style="padding: 0.3rem 0.5rem; background: #231B1B; color: #F6FBF4;" class="btn nav-item active">
-        <a style="color: #F6FBF4;" class="nav-link" href="{% url 'register_user' %}">Join Us</a>
+      <li style="padding: 0.1rem 0.5rem; background: #24231d; color: #24231d;" class="btn nav-item active">
+        <a style="color: #f6f0ea;" class="nav-link" href="{% url 'register_user' %}">Join Us</a>
       </li>
       {% endif %}
     </ul>

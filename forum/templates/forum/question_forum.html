@@ -23,9 +23,9 @@
         {% endif %}
     </div>
 
-    <div class="question-body">
-        <div class="question-container">
-        <h2>Create a Question</h2>
+    <div class="question-body" style="background-color: #fbf5ef;">
+        <div class="question-container" style="background-color: #fbf5ef;">
+        <h2>Ask a Question</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}

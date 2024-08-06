@@ -6,7 +6,7 @@
 }
 
 .question-container {
-    background-color: #fff;
+    background-color: #f6f0ea;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 70%;
@@ -37,6 +37,7 @@
     border: none;
     outline: none;
     min-width: 150px; /* Ensure a minimum width for the input field */
+    background-color: #fbf5ef;
 }
 
 #search-results {
@@ -67,7 +68,7 @@
 
 .search-result-item:hover {
     background: #7c7171;
-    color: #fff;
+    color: #f6f0ea;
 }
 
 #tag-list {
@@ -80,11 +81,12 @@
 }
 
 .tag-item {
-    background: #f0f0f0;
+    background: #42855B;
     border-radius: 4px;
     padding: 5px;
     display: flex;
     align-items: center;
+    color: #f6f0ea;
 }
 
 .remove-tag {
@@ -92,4 +94,5 @@
     background: transparent;
     cursor: pointer;
     margin-left: 5px;
+    color: #f6f0ea;
 }

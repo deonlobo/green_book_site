@@ -1,15 +1,16 @@
-
 {% extends 'green_book_app/base.html' %}
 {% load static %}
 
 {% block content %}
 
 
-    <div class="container animate__animated animate__fadeInDownBig">
+<div class="container animate__animated animate__fadeInDownBig py-4">
     <form action="{% url 'DIYProject:newproject' %}" method="post" enctype="multipart/form-data">
 
-    {% csrf_token %}
-        <center><h2 class="my-2">Create a New DIY Project</h2></center>
+        {% csrf_token %}
+        <center>
+            <h2 class="my-2">Create a New DIY Project</h2>
+        </center>
 
         <div class="form-group">
             <label>{{ form.title.label }}</label>
@@ -45,6 +46,6 @@
     </form>
 
 
-    </div>
+</div>
 
 {% endblock %}

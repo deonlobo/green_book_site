@@ -11,7 +11,7 @@
     }
 
     .points-container, .leaderboard-container, .coupon-container {
-        background: #fff;
+        background: #f6f0ea;
         padding: 20px;
         margin: 20px 0;
         border-radius: 15px;
@@ -21,8 +21,8 @@
 
     .points-container {
         text-align: center;
-        background: linear-gradient(135deg, #42855b, #f6fbf4);
-        color: white;
+        background: linear-gradient(135deg, #42855B, #f6f0ea);
+        color: #f6f0ea;
     }
 
     .points-container:hover {
@@ -66,7 +66,7 @@
 
     .leaderboard-header {
         background: #42855B;
-        color: white;
+        color: #f6f0ea;
         padding: 15px 20px;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
@@ -105,7 +105,7 @@
         width: 100%;
         padding: 30px;
         background: #FFD700;
-        color: #333;
+        color: #24231d;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -170,7 +170,7 @@
     }
 </style>
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0" style="margin-top: -1rem;">
     <!-- Image with text overlay -->
     <div class="position-relative">
         <img src="{% static 'challenges_images/rewards.jpg' %}" class="img-fluid w-100" style="height: 500px;" alt="Eco-friendly lifestyle">
@@ -180,7 +180,7 @@
                 <h2>Keep Up the Good Work!</h2>
                 <p>Commit to an eco-friendly lifestyle.</p>
                 <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Rewards</p>
-                <a href="{% url 'completed_tasks_list' %}" class="btn" style="background-color: #b18a35; color: white;">My Feed</a>
+                <a href="{% url 'completed_tasks_list' %}" class="btn" style="background-color: #42855B; color: #f6f0ea;">My Feed</a>
             </div>
 
     </div>
@@ -198,7 +198,7 @@
 
     <div class="leaderboard-container">
         <div class="leaderboard-header">
-            <h3 style="color: white">Leaderboard</h3>
+            <h3 style="color: #f6f0ea">Leaderboard</h3>
         </div>
         <ul class="leaderboard-list">
             {% for entry in leaderboard %}

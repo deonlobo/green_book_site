@@ -1,35 +1,46 @@
 {% extends 'green_book_app/base.html' %}
 
 {% block content %}
-    <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <br/>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-            {% endfor %}
-        {% endif %}
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <br />
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-    <div class="container mb-2" style="height: 100vh">
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="container-fluid d-flex align-items-center" style="height: 100vh">
 
-        <div class="col-md-6 mx-auto shadow p-5 mt-5 bg-body rounded" style="background: #EAFADC">
-            <h1 class="text-center">Change Password</h1>
-            <br/>
+    <div class="col-12 mx-auto p-5 bg-body rounded" style="background: transparent">
+        <div class="row">
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://lottie.host/986cab8b-d695-41fe-a549-5ef7d09c0ed7/HAAwqnTnsh.json"
+                    background="##f6f0ea" speed="1" style="width: 300px; height: 300px" loop autoplay
+                    direction="1" mode="normal"></lottie-player>
+            </div>
+            <div class="col-12 col-md-6">
+                <h1 class="text-center">Change Password</h1>
+                <br />
 
-            <form action="{% url 'changepassword' %}" method=POST>
-                {% csrf_token %}
-                  {{ form }}
-                <div class="text-center mt-4">
-                    <input type="submit" value="Change Password" class="btn btn-secondary" style="background: #42855B">
-                </div>
-            </form>
+                <form action="{% url 'changepassword' %}" method=POST>
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="text-center mt-4">
+                        <input type="submit" value="Change Password" class="btn btn-secondary"
+                            style="background: #42855B">
+                    </div>
+                </form>
+            </div>
         </div>
-      
     </div>
+
+</div>
 
 
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <style>
-.position-relative {
+    .position-relative {
         position: relative;
         width: 100%;
     }
@@ -39,48 +39,55 @@
     }
 
     .card img {
-        height: 200px; /* Adjust height as needed */
+        height: 200px;
+        /* Adjust height as needed */
         object-fit: cover;
     }
 
     .card-body {
-        flex: 1; /* Make sure the card body takes the remaining space */
+        flex: 1;
+        /* Make sure the card body takes the remaining space */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 </style>
-    <div class="container-fluid p-0">
+<div class="container-fluid p-0" style="margin-top: -1rem;">
     <!-- Image with text overlay -->
     <div class="position-relative">
-        <img src="{% static 'challenges_images/accepted_challenge.jpg' %}" class="img-fluid w-100" style="height: 500px;" alt="Eco-friendly lifestyle">
+        <img src="{% static 'challenges_images/accepted_challenge.jpg' %}" class="img-fluid w-100"
+            style="height: 500px;" alt="Eco-friendly lifestyle">
         <!-- overlay text -->
 
-            <div class="overlay-text text-center text-white">
-                <h2>Keep Up the Good Work!</h2>
-                <p>Commit to an eco-friendly lifestyle.</p>
-                <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Live | Protect | Evolve</p>
-                <a href="{% url 'completed_tasks_list' %}" class="btn" style="background-color: #b18a35; color: white;">My Feed</a>
-            </div>
+        <div class="overlay-text text-center text-white">
+            <h2>Keep Up the Good Work!</h2>
+            <p>Commit to an eco-friendly lifestyle.</p>
+            <p style="color: lightgreen; font-size: 44px; padding-bottom: 20px">Live | Protect | Evolve</p>
+            <a href="{% url 'completed_tasks_list' %}" class="btn" style="background-color: #42855B; color: #f6f0ea;">My
+                Feed</a>
+        </div>
 
     </div>
-    </div>
+</div>
 
 <h2 style="color: #42855B; text-align: left; margin: 20px">Accepted Challenges</h2>
 <div class="container">
     <div class="row">
         {% for accepted_challenge in accepted_challenges %}
         <div class="col-md-4 mb-4 d-flex align-items-stretch">
-            <div class="card">
-                <img src="{{ accepted_challenge.challenge.image.url }}" class="card-img-top" alt="{{ accepted_challenge.challenge.title }}">
+            <div class="card shadow border-0" style="background-color: #fbf5ef;">
+                <img src="{{ accepted_challenge.challenge.image.url }}" class="card-img-top"
+                    alt="{{ accepted_challenge.challenge.title }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ accepted_challenge.challenge.title }}</h5>
                     <p class="card-text">{{ accepted_challenge.challenge.task }}</p>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" style="width: 150px; background-color: #007300; color: white; border: none; align-self: center"
-        data-toggle="modal" data-target="#postFormModal" data-challenge-id="{{ accepted_challenge.challenge.id }}">
-    Post
-</button>
+                    <button type="button" class="btn btn-primary"
+                        style="width: 150px; background-color: #007300; color: #f6f0ea; border: none; align-self: center"
+                        data-toggle="modal" data-target="#postFormModal"
+                        data-challenge-id="{{ accepted_challenge.challenge.id }}">
+                        Post
+                    </button>
 
                 </div>
             </div>
@@ -91,104 +98,33 @@
     </div>
 </div>
 
-    <!-- Display Completed Tasks -->
+<!-- Display Completed Tasks -->
 <h2 style="color: #42855B; text-align: left; margin: 20px">Your Posts</h2>
-    <div class="container">
-<div class="row">
-    {% for completed_task in completed_tasks %}
-    <div class="col-md-4 mb-4 d-flex align-items-stretch">
-        <div class="card">
-            <img src="{{ completed_task.image.url }}" class="card-img-top" alt="{{ completed_task.title }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ completed_task.challenge }}</h5>
-                <p class="card-text">{{ completed_task.caption }}</p>
+<div class="container">
+    <div class="row">
+        {% for completed_task in completed_tasks %}
+        <div class="col-md-4 mb-4 d-flex align-items-stretch">
+            <div class="card shadow border-0" style="background-color: #fbf5ef;">
+                <img src="{{ completed_task.image.url }}" class="card-img-top" alt="{{ completed_task.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ completed_task.challenge }}</h5>
+                    <p class="card-text">{{ completed_task.caption }}</p>
+                </div>
             </div>
         </div>
+        {% empty %}
+        <p>No completed tasks yet.</p>
+        {% endfor %}
     </div>
-    {% empty %}
-    <p>No completed tasks yet.</p>
-    {% endfor %}
 </div>
-    </div>
-
-{##}
-{##}
-{#<!-- Pop-up Form Modal -->#}
-{#<div class="modal fade" id="postFormModal" tabindex="-1" role="dialog" aria-labelledby="postFormModalLabel" aria-hidden="true">#}
-{#    <div class="modal-dialog" role="document">#}
-{#        <div class="modal-content">#}
-{#            <div class="modal-header">#}
-{#                <h5 class="modal-title" id="postFormModalLabel">Submit Completed Task</h5>#}
-{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#                    <span aria-hidden="true">&times;</span>#}
-{#                </button>#}
-{#            </div>#}
-{#            <div class="modal-body">#}
-{#                <!-- Django Form -->#}
-{#                <!-- Inside your modal body -->#}
-{#                <form id="completedTaskForm" method="post" action="{% url 'submit_completed_task' %}" enctype="multipart/form-data">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="form-group">#}
-{#                        <label for="id_challenge">Select Challenge</label>#}
-{#                        <select class="form-control" id="id_challenge" name="challenge">#}
-{#                            {% for accepted_challenge in accepted_challenges %}#}
-{#                                <option value="{{ accepted_challenge.challenge.id }}">{{ accepted_challenge.challenge.title }}</option>#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                    </div>#}
-{#                    {{ completed_task_form.as_p }}  <!-- Renders all other fields as paragraphs -->#}
-{#                    <button type="submit" class="btn btn-primary">Submit</button>#}
-{#                </form>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-{##}
-{#<script>#}
-{#    $('#postFormModal').on('show.bs.modal', function(event) {#}
-{#        var button = $(event.relatedTarget); // Button that triggered the modal#}
-{#        var challengeId = button.data('challenge-id'); // Extract challenge ID from data-* attributes#}
-{#        var modal = $(this);#}
-{#        modal.find('#id_challenge').val(challengeId); // Set the challenge ID in the dropdown#}
-{#    });#}
-{##}
-{#    document.getElementById('completedTaskForm').addEventListener('submit', function(event) {#}
-{#        event.preventDefault();#}
-{#        var formData = new FormData(this);#}
-{##}
-{#        fetch("{% url 'submit_completed_task' %}", {#}
-{#            method: 'POST',#}
-{#            body: formData,#}
-{#            headers: {#}
-{#                'X-CSRFToken': '{{ csrf_token }}'#}
-{#            },#}
-{#        })#}
-{#        .then(response => response.json())#}
-{#        .then(data => {#}
-{#            if (data.success) {#}
-{#                $('#postFormModal').modal('hide');#}
-{#                alert('Completed task submitted successfully!');#}
-{#                location.reload();#}
-{#            } else {#}
-{#                console.log(data.errors);#}
-{#                alert('Failed to submit completed task. Please try again.');#}
-{#            }#}
-{#        })#}
-{#        .catch(error => console.error('Error:', error));#}
-{#    });#}
-{#</script>#}
-
-
-
-
-
 
 
 
 <!-- Pop-up Form Modal -->
-<div class="modal fade" id="postFormModal" tabindex="-1" role="dialog" aria-labelledby="postFormModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+<div class="modal fade" id="postFormModal" tabindex="-1" role="dialog" aria-labelledby="postFormModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content" style="background-color: #fbf5ef;">
             <div class="modal-header">
                 <h5 class="modal-title" id="postFormModalLabel">Submit Completed Task</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -198,18 +134,19 @@
             <div class="modal-body">
                 <!-- Django Form -->
                 <!-- Inside your modal body -->
-                <form id="completedTaskForm" method="post" action="{% url 'submit_completed_task' %}" enctype="multipart/form-data">
+                <form id="completedTaskForm" method="post" action="{% url 'submit_completed_task' %}"
+                    enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="id_challenge">Select Challenge</label>
                         <select class="form-control" id="id_challenge" name="challenge">
                             {% for accepted_challenge in accepted_challenges %}
-                                <option value="{{ accepted_challenge.challenge.id }}">{{ accepted_challenge.challenge.title }}</option>
+                            <option value="{{ accepted_challenge.challenge.id }}">{{accepted_challenge.challenge.title}}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    {{ completed_task_form.as_p }}  <!-- Renders all other fields as paragraphs -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{ completed_task_form.as_p }} <!-- Renders all other fields as paragraphs -->
+                    <button style="background-color: #42855B;" type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -217,39 +154,39 @@
 </div>
 
 <script>
-    $('#postFormModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var challengeId = button.data('challenge-id'); // Extract challenge ID from data-* attributes
-        var modal = $(this);
-        modal.find('#id_challenge').val(challengeId); // Set the challenge ID in the dropdown
-    });
+        $('#postFormModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var challengeId = button.data('challenge-id'); // Extract challenge ID from data-* attributes
+            var modal = $(this);
+            modal.find('#id_challenge').val(challengeId); // Set the challenge ID in the dropdown
+        });
 
-    document.getElementById('completedTaskForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var formData = new FormData(this);
+        document.getElementById('completedTaskForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
 
-        fetch("{% url 'submit_completed_task' %}", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                $('#postFormModal').modal('hide');
-                alert('Completed task submitted successfully!');
-                location.reload();
-            } else {
-                console.log(data.errors);
-                alert('Failed to submit completed task. Please try again.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
+            fetch("{% url 'submit_completed_task' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        $('#postFormModal').modal('hide');
+                        alert('Completed task submitted successfully!');
+                        location.reload();
+                    } else {
+                        console.log(data.errors);
+                        alert('Failed to submit completed task. Please try again.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
 </script>
 {% endblock %}
 
-    {% block footer %}
+{% block footer %}
 {% endblock %}

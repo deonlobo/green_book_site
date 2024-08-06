@@ -32,9 +32,10 @@
     flex: 1;
     border: none;
     outline: none;
-    min-width: 150px; /* Ensure a minimum width for the input field */
+    min-width: 150px;
+    /* Ensure a minimum width for the input field */
     font-size: small;
-    background-color: #f8f8f8;
+    background-color: #f6f0ea;
 }
 
 .search-input img {
@@ -42,7 +43,7 @@
 }
 
 
-.question-tags{
+.question-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
@@ -50,34 +51,43 @@
 
 .tag-item {
     display: inline-block;
-    background-color: #efefef;
+    background-color: #fbf5ef;
+    color: #24231d;
+    border: 1px solid #24231d;
     border-radius: 7px;
     padding: 6px 5px;
     font-size: 0.7em;
     font-weight: bold;
-    color: #333;
+    color: #24231d;
     margin-right: auto;
 }
 
 .tag-item:hover {
-    background-color: #c8c6c6;
+    background-color: #24231d;
+    color: #fbf5ef;
 }
 
 .card {
     width: 14em;
     min-height: 7em;
     padding: 1.2em;
+    background-color: #fbf5ef;
+    border: 0px;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
 }
 
 .card-body-custom {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure the card body takes the full height of the card */
+    height: 100%;
+    /* Ensure the card body takes the full height of the card */
 }
 
 .tag-info {
-    margin-top: auto; /* Pushes the .tag-info to the bottom */
-    text-align: left; /* Ensures tags are aligned to the left */
+    margin-top: auto;
+    /* Pushes the .tag-info to the bottom */
+    text-align: left;
+    /* Ensures tags are aligned to the left */
     color: grey;
     font-size: small;
     font-style: italic;

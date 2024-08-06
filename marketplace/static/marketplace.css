@@ -3,7 +3,7 @@
 
 .category .header {
     background-color: #9e733f;
-    color: white;
+    color: #f6f0ea;
     padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@
 }
 
 .product {
-    background-color: #fff;
+    background-color: #f6f0ea;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -92,7 +92,7 @@
 }
 
 .quality-fill {
-    background-color: #42855b;
+    background-color: #42855B;
     height: 100%;
     border-radius: 5px;
 }
@@ -129,7 +129,7 @@
     background-color: #ffa41c;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: #f6f0ea;
     cursor: pointer;
     padding: 10px 15px;
     font-size: 1em;
@@ -151,7 +151,7 @@
     top: 10px;
     left: 10px;
     background-color: #ff9900;
-    color: white;
+    color: #f6f0ea;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 0.8em;
@@ -182,17 +182,17 @@
     width: 100%;
     border: 1px solid #42855B;
     margin: 1px;
-    color: white;
+    color: #f6f0ea;
     background-color: #42855B;
         padding: 0.2rem;
 
 }
 .product .icons .icon-link .fa-comment:before {
-    color: white;
+    color: #f6f0ea;
 }
 
 .product .icons .icon-link .fa-eye:before {
-    color: white;
+    color: #f6f0ea;
 }
 
 .product .fas{
@@ -201,7 +201,7 @@
 }
 
 .carousel-control-prev, .carousel-control-next {
-    background-color: #B4E197;
+    background-color: #42855B;
     width: 3rem;
 }
 
@@ -211,7 +211,7 @@
     margin: auto 14rem;
     padding: 7px 0;
     text-align: left;
-    border-bottom: 4px solid #42855b;
+    border-bottom: 4px solid #42855B;
     box-shadow: none;
 }
 
@@ -224,14 +224,14 @@
     vertical-align: bottom;
     border: 2px solid #42855B;
     background-color: #42855B;
-    color: white;
+    color: #f6f0ea;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #DEF9C4;
+    background-color: #f6f0ea;
 }
 a:hover {
-    color: #42855b;
+    color: #42855B;
     text-decoration: underline;
 }
 
@@ -257,7 +257,7 @@ label {
 
 option:hover{
     background-color: #42855B;
-    color: white;
+    color: #f6f0ea;
 }
 .seller {
      display: block;
@@ -312,6 +312,6 @@ option:hover{
         font-size: 10px;
     padding: 0;
     margin: 0;
-    color: #42855b;
+    color: #42855B;
     font-weight: 700;
 }

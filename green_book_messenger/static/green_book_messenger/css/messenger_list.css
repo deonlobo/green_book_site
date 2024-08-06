@@ -4,12 +4,12 @@
   transition: all linear 0.5s;
 
   .messenger_private_conversation_model {
-    background-color: #FCFFF7;
+    background-color: #f6f0ea;
     top: 100%;
     z-index: 1000;
 
     .private_converstation_close_button {
-      background: #231B1B;
+      background: #24231d;
       color: #f8f5f1;
       cursor: pointer;
     }
@@ -22,7 +22,7 @@
     .user_name_button {
       button {
         background-color: #42855B;
-        color: #231B1B;
+        color: #24231d;
       }
     }
 
@@ -41,12 +41,12 @@
   }
 
   .messenger_group_conversation_model {
-    background-color: #FCFFF7;
+    background-color: #f6f0ea;
     top: 100%;
     z-index: 1000;
 
     .group_converstation_close_button {
-      background: #231B1B;
+      background: #24231d;
       color: #f8f5f1;
       cursor: pointer;
     }
@@ -59,7 +59,7 @@
     .user_name_button {
       button {
         background-color: #42855B;
-        color: #231B1B;
+        color: #24231d;
       }
     }
 
@@ -102,13 +102,13 @@
 
     .messenger__header__left {
       .messenger__header__left__container {
-        background-color: #FCFFF7;
+        background-color: #fbf5ef;
         border-radius: 1rem;
 
         .messenger__search__input {
           input {
-            background-color: #f8f5f1;
-            color: #231B1B;
+            background-color: #fbf5ef;
+            color: #24231d;
           }
         }
 
@@ -116,7 +116,7 @@
 
           button {
             background-color: #42855B;
-            color: #231B1B;
+            color: #24231d;
           }
         }
       }
@@ -124,7 +124,7 @@
 
     .messenger__header__right {
       .messenger__header__right__container {
-        background-color: #FCFFF7;
+        background-color: #f6f0ea;
         border-radius: 1rem;
       }
     }
@@ -137,7 +137,7 @@
       max-height: 100%;
 
       .messenger__list__container {
-        background-color: #FCFFF7;
+        background-color: #fbf5ef;
         border-radius: 1rem;
         overflow-y: auto;
         height: 95% !important;

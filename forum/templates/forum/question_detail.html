@@ -198,7 +198,7 @@
 
         </div>
         <div class="advertise-area">
-            <div class="card">
+            <div class="card shadow">
               <div class="card-header d-flex align-items-center">
                 Featured on Green Book
               </div>
@@ -341,8 +341,6 @@
                 localStorage.removeItem('scrollPosition'); // Clear the scroll position
             }
         });
-
-        {# Answer section #}
         document.querySelectorAll('.add-answer-comment-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();

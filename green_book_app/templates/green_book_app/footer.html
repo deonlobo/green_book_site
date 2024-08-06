@@ -7,30 +7,37 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 {% endblock %}
 
-<footer class="footer-section" style="background-color: #42855B;">
+<footer class="footer-section" style="background-color: #42855B; overflow: hidden;">
+    <div class="position-absolute" style="bottom: -60%; right: 15%;">
+        <svg style="height: 40rem; width: auto; opacity: 0.2;" xmlns="http://www.w3.org/2000/svg" version="1.1"
+            viewBox="-5.0 -10.0 110.0 135.0">
+            <path
+                d="m59.375 44.531c6.0078-0.007812 11.766-2.3945 16.012-6.6445 4.25-4.2461 6.6367-10.004 6.6445-16.012v-9.375c0-1.0352-0.41016-2.0312-1.1445-2.7617-0.73047-0.73438-1.7266-1.1445-2.7617-1.1445h-9.375c-5.0195 0.007812-9.8945 1.6836-13.859 4.7617-3.9688 3.0781-6.8008 7.3828-8.0547 12.246-3.4961-2.918-7.9062-4.5117-12.461-4.5078h-12.5c-1.0352 0-2.0312 0.41016-2.7617 1.1445-0.73438 0.73047-1.1445 1.7266-1.1445 2.7617v3.125c0.003906 5.1797 2.0664 10.145 5.7266 13.805 3.6602 3.6602 8.625 5.7227 13.805 5.7266h8.5938v14.391c-5.3945 0.85547-10.375 3.4102-14.219 7.293-3.8398 3.8828-6.3438 8.8906-7.1445 14.293l-0.47266 3.3164c-0.16016 1.1211 0.17578 2.2539 0.91797 3.1094 0.74219 0.85547 1.8164 1.3477 2.9492 1.3477h43.75c1.1328 0 2.207-0.49219 2.9492-1.3477 0.74219-0.85547 1.0781-1.9883 0.91797-3.1094l-0.47266-3.3125v-0.003907c-0.80078-5.4023-3.3047-10.41-7.1445-14.293-3.8438-3.8828-8.8242-6.4375-14.219-7.293v-17.516zm-5.4688-13.281c0.003906-3.9336 1.5703-7.707 4.3516-10.492 2.7852-2.7812 6.5586-4.3477 10.492-4.3516h5.4688v5.4688c-0.003906 3.9336-1.5703 7.707-4.3516 10.492-2.7852 2.7812-6.5586 4.3477-10.492 4.3516h-5.4688zm-16.406 8.5938c-6.1641-0.007812-11.273-4.7852-11.695-10.938h8.5703c6.1641 0.007812 11.273 4.7852 11.695 10.938zm29.836 43.75h-34.668c1.125-5.3438 4.6523-9.8672 9.5586-12.266s10.645-2.3984 15.551 0 8.4336 6.9219 9.5586 12.266z" />
+        </svg>
+    </div>
     <div class="container">
         <div class="row p-5">
             <div class="col-6 d-flex flex-column justify-content-center w-100">
-                <h1 style="font-weight: 800; color: #F6FBF4;">Greenbook</h1>
-                <p style="color: #F6FBF4;">Innovation Starts Here</p>
+                <h1 style="font-weight: 800; color: #f6f0ea;">Greenbook</h1>
+                <p style="color: #f6f0ea;">Innovation Starts Here</p>
                 <span class="position-relative">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Subscribe to our newsletter"
                             aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" style="background-color: #DEF9C4;" type="button" id="button-addon2">Subscribe</button>
+                        <button class="btn btn-outline-secondary" style="background-color: #24231d; color: #f6f0ea;" type="button" id="button-addon2">Subscribe</button>
                     </div>
                 </span>
             </div>
             <div class="col-6 d-flex flex-column justify-content-center align-items-end">
-                <h3 style="color: #F6FBF4; text-align: end;"><b style="color: #F6FBF4;">Resources</b></h3>
-                <a href="{% url 'forum:home_forum' %}" style="color: #F6FBF4; width: fit-content;">Forum</a>
-                <a href="{% url 'DIYProject:home' %}" style="color: #F6FBF4; width: fit-content;">DIY Projects</a>
-                <a href="{% url 'home' %}" style="color: #F6FBF4; width: fit-content;">Messenger</a>
-                <a href="{% url 'home' %}" style="color: #F6FBF4; width: fit-content;">Marketplace</a>
-                <a href="{% url 'challenge1' %}" style="color: #F6FBF4; width: fit-content;">Challenges</a>
+                <h3 style="color: #f6f0ea; text-align: end;"><b style="color: #f6f0ea;">Resources</b></h3>
+                <a href="{% url 'forum:home_forum' %}" style="color: #f6f0ea; width: fit-content;">Forum</a>
+                <a href="{% url 'DIYProject:home' %}" style="color: #f6f0ea; width: fit-content;">DIY Projects</a>
+                <a href="{% url 'home' %}" style="color: #f6f0ea; width: fit-content;">Messenger</a>
+                <a href="{% url 'home' %}" style="color: #f6f0ea; width: fit-content;">Marketplace</a>
+                <a href="{% url 'challenge1' %}" style="color: #f6f0ea; width: fit-content;">Challenges</a>
             </div>
-            <div class="w-100 mt-5" style="text-align: center; color: #F6FBF4;">Made with ❤️</div>
-            <div class="w-100 mt-1" style="text-align: center; color: #F6FBF4;">Copyright@2024 all rights reserved</div>
+            <div class="w-100 mt-5" style="text-align: center; color: #f6f0ea;">Made with ❤️</div>
+            <div class="w-100 mt-1" style="text-align: center; color: #f6f0ea;">Copyright@2024 all rights reserved</div>
 
         </div>
     </div>

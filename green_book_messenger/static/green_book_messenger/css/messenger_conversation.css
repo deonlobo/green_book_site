@@ -9,7 +9,7 @@
 
   .emoji__container{
     overflow-y: auto;
-    background-color: #FCFFF7;
+    background-color: #f6f0ea;
     border-radius: 1rem;
 
     .emoji__item {
@@ -26,7 +26,7 @@
       }
 
       .messenger__conversation__div {
-        background-color: #FCFFF7;
+        background-color: #f6f0ea;
         border-radius: 1rem;
 
         .messenger__input {
@@ -67,7 +67,7 @@
             --_p: 0;
             border-bottom-left-radius: 0 0;
             place-self: start;
-            background-color: #231B1B;
+            background-color: #24231d;
             word-break: break-word;
             /* margin-left: 1rem; */
           }
@@ -82,8 +82,8 @@
           }
 
           .messenger_conversation__timestamp {
-            /* background-color: #231B1B; */
-            color: #231B1B7c;
+            /* background-color: #24231d; */
+            color: #24231d7c;
           }
         }
       }

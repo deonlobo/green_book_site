@@ -41,14 +41,14 @@
     {% endif %}
     <div class="feed">
         {% for task in completed_tasks %}
-            <div class="card">
+            <div class="card shadow" style="background-color: #fbf5ef;">
                 <img src="{{ task.image.url }}" class="card-img-top" alt="{{ task.title }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ task.title }}</h5>
                     <p class="card-text">{{ task.caption }}</p>
                     <form method="post" action="{% url 'like_completed_task' task.id %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary" style="background: #B4E197; color: black">Like</button>
+                        <button type="submit" class="btn btn-primary" style="background: #42855B; color: #fbf5ef">Like</button>
                     </form>
                     <p class="mt-2">Likes: {{ task.likes }}</p>
                 </div>

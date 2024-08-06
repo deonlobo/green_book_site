@@ -2,25 +2,42 @@
 {% load static %}
 
 {% block css %}
-     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'green_book_app/css/contact.css' %}">
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'green_book_app/css/contact.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-center mb-4">Meet Our Talented Team</h1>
-    <div class="row">
-        {% for member in team_members %}
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static member.image_url %}" class="card-img-top" alt="{{ member.name }}">
-                <div class="card-body text-center" style="background: #EAFADC;">
-                    <h5 class="card-title">{{ member.name }}</h5>
-                    <p class="card-text">Student ID: {{ member.student_id }}</p>
+
+<div class="h-100 py-5 d-flex align-items-center">
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-4">
+                <h2 class="h1">Meet the Team</h2>
+                <p></p>
+            </div>
+            <div class="col-lg-8">
+                <div class="row">
+                    {% for member in team_members %}
+
+                    <div class="col-sm-6 mb-4">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-3"
+                                src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{member.name}}b"
+                                alt="" width="64" height="64">
+                            <div>
+                                <h3 class="h6 mb-0">{{ member.name }}</h3>
+                                <!-- <p class="text-primary mb-0">Co-Founder / CEO</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- More people... -->
+
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
+
 {% endblock %}
