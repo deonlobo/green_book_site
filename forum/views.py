@@ -431,7 +431,7 @@ def user_details(request, id):
     ).order_by('-total_votes')
 
     # Step 1: Compute total votes for each answer
-    answers_with_votes = Answer.objects.annotate(
+    answers_with_votes = Answer.objects.filter(asked_by=user).annotate(
         total_votes=Count('answer_votes', filter=Q(answer_votes__vote_type='upvote')) - Count('answer_votes', filter=Q(
             answer_votes__vote_type='downvote'))
     )

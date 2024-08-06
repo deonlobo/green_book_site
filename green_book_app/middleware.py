@@ -12,7 +12,7 @@ class TrackPageVisitsMiddleware(MiddlewareMixin):
         path = request.path
 
         print(path)
-        ignore_paths = ["/ajax/", "/search", "/display-search-tags/"]
+        ignore_paths = ["/ajax", "/search", "/display-search-tags/", "admin"]
         # Count the number of slashes in the path
         if path.count('/') > 2 and not any(ignore in path for ignore in ignore_paths):
             # Update the visit count
