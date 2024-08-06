@@ -1,15 +1,15 @@
 <div id="deleteConversation_modal"
   class="messenger_private_conversation_model position-absolute w-100 h-100 ml-n4 zindex-modal d-flex justify-content-center"
   style="overflow-y: auto;">
-  <div class="card" style="width: 50%; height: fit-content; background-color: #f8f8f8">
+  <div class="card" style="width: 50%; height: fit-content; background-color: #f6f0ea">
     <div id="delete_header" class="card-header">
       
     </div>
     <div class="card-body">
       <h5 class="card-title">Warning</h5>
-      <p class="card-text">Once delete the operation is irreversible.</p>
-      <a onclick="open_delete_confirmation_modal()" href="#" class="btn btn-primary" style="background-color: #231B1B;">No</a>
-      <a href="{% url 'delete_conversation' conversation_id=12 %}" class="btn btn-primary" style="background-color: #CC2936;">Yes</a>
+      <p class="card-text">Once deleted the operation is irreversible.</p>
+      <a onclick="open_delete_confirmation_modal()" href="#" class="btn btn-primary" style="background-color: #24231d;">No</a>
+      <a id="delete_link" href="{% url 'delete_conversation' conversation_id=0 %}" class="btn btn-primary" style="background-color: #CC2936;">Yes</a>
     </div>
   </div>
 </div>
