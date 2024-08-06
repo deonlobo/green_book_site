@@ -51,6 +51,35 @@
     select,
     textarea {
       background-color: #fbf5ef !important;
+
+      &:focus {
+        border-color: #42855B !important;
+      }
+    }
+
+    .form-control:focus {
+      border-color: #42855B !important;
+      box-shadow: 0 0 0 .2rem #42855B;
+    }
+
+    .btn-success{
+      background-color: #42855B;
+      color: #f6f0ea;
+    }
+
+    .btn-accept {
+      background-color: #42855B !important;
+      color: #f6f0ea !important;
+    }
+
+    .btn-outline-success {
+      border: 1px solid #42855B;
+      color: #42855B;
+
+      &:hover {
+        background-color: #42855B;
+        color: #f6f0ea;
+      }
     }
 
     input[type=submit] {
@@ -74,12 +103,16 @@
       background-color: var(--color-Surface);
     }
 
-    #diydropdown, #marketdropdown, #ecodropdown, #managedropdown {
+    #diydropdown,
+    #marketdropdown,
+    #ecodropdown,
+    #managedropdown {
       a {
         &:hover {
           background-color: #42855B;
           color: #f6f0ea;
         }
+
         &:focus {
           background-color: #42855B;
         }

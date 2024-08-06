@@ -39,7 +39,7 @@
             1000 points added to the user!
         </div>
     {% endif %}
-    <div class="feed">
+    <div class="feed" style="margin-bottom: 5rem;">
         {% for task in completed_tasks %}
             <div class="card shadow" style="background-color: #fbf5ef;">
                 <img src="{{ task.image.url }}" class="card-img-top" alt="{{ task.title }}">
